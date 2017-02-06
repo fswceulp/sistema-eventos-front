@@ -5,4 +5,14 @@ import '../../public/css/style.css';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent { }
+export class AppComponent {
+  eventos: string[];
+
+  constructor() {
+    this.eventos = [
+      'XIX Congresso de Computação e Sistemas de Informação - ENCOINFO 2017',
+      'XIII Simpósio Brasileiro de Sistemas de Informação - SBSI',
+      'XXXVII Congresso da Sociedade Brasileira de Computação - CSBC'
+    ];
+  }
+}
