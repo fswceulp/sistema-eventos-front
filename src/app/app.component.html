@@ -1,11 +1,18 @@
 <main>
     <h1>Eventos</h1>
-
+    <p>Clique na sigla do evento para ver detalhes.</p>
     <ul>
-      <li *ngFor="let evento of eventos">
-        <h3>{{ evento.sigla }} - {{ evento.ano }}</h3>
-        <p>{{ evento.nome }} - {{ evento.mes }}/{{evento.ano}}</p>
+      <li *ngFor="let evento of eventos" (click)="mostrarDetalhes(evento)">
+        {{ evento.sigla }}
       </li>
     </ul>
+
+    <div *ngIf="eventoSelecionado">
+        <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+        <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
+          em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
+        no(a) {{eventoSelecionado.local}}.</p>
+        <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>        
+    </div>
 
 </main>
