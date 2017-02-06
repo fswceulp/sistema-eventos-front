@@ -2,7 +2,10 @@
     <h1>Eventos</h1>
 
     <ul>
-      <li *ngFor="let evento of eventos">{{ evento }}</li>
+      <li *ngFor="let evento of eventos">
+        <h3>{{ evento.sigla }} - {{ evento.ano }}</h3>
+        <p>{{ evento.nome }} - {{ evento.mes }}/{{evento.ano}}</p>
+      </li>
     </ul>
 
 </main>

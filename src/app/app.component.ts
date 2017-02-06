@@ -6,13 +6,31 @@ import '../../public/css/style.css';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  eventos: string[];
+  eventos: any[];
 
   constructor() {
     this.eventos = [
-      'XIX Congresso de Computação e Sistemas de Informação - ENCOINFO 2017',
-      'XIII Simpósio Brasileiro de Sistemas de Informação - SBSI',
-      'XXXVII Congresso da Sociedade Brasileira de Computação - CSBC'
+      {
+        "id": 1,
+        "nome": "XIX Congresso de Computação e Sistemas de Informação",
+        "sigla": "ENCOINFO",
+        "ano": 2017,
+        "mes": "maio"
+      },
+      {
+        "id": 2,
+        "nome": "XIII Simpósio Brasileiro de Sistemas de Informação",
+        "sigla": "SBSI",
+        "ano": 2017,
+        "mes": "junho"
+      },
+      {
+        "id": 3,
+        "nome": "XXXVII Congresso da Sociedade Brasileira de Computação",
+        "sigla": "CSBC",
+        "ano": 2017,
+        "mes": "julho"
+      }
     ];
   }
 }
