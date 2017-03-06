@@ -1,9 +1,41 @@
 <main>
     <h1>Eventos</h1>
-    <p>Clique na sigla do evento para ver detalhes.</p>
+    <h2>Cadastro de eventos</h2>
+    <div [hidden]="enviado">
+      <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
+        <div>
+          <label>
+            Nome: 
+            <input type="text" id="nome" name="nome" 
+              [(ngModel)]="evento.nome" #nome="ngModel"
+              placeholder="Nome do evento" required>
+              <div [hidden]="nome.valid || nome.pristine">Você deve informar o nome do evento.</div>
+          </label>
+        </div>
+
+        <div>
+          <label>
+            Sigla: 
+            <input type="text" id="sigla" name="sigla" 
+              [(ngModel)]="evento.sigla" #sigla="ngModel"
+              placeholder="Sigla do evento" required>
+              <div [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div> 
+          </label>
+        </div>
+
+        <button type="submit" [disabled]="!formCadastro.form.valid">Salvar</button> 
+        <button type="button" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+      </form>
+    </div>
+    <div [hidden]="!enviado">
+      <p>Dados cadastrados com sucesso!</p>
+      <p><button (click)="novoEvento(); enviado = false">Cadastrar novo evento</button>
+    </div>
+
+    <h2>Eventos existentes</h2>
     <ul>
-      <li *ngFor="let evento of eventos" (click)="mostrarDetalhes(evento)">
-        {{ evento.sigla }}
+      <li *ngFor="let evento of eventos">
+        {{ evento.sigla }} <button (click)="mostrarDetalhes(evento)">Detalhes</button>
       </li>
     </ul>
 
