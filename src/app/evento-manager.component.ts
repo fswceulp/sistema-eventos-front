@@ -6,11 +6,12 @@ import { Evento } from './Evento';
     templateUrl: './evento-manager.component.html'
 })
 export class EventoManagerComponent {
+  idAtual: number = 3;
   eventos: Evento[];
   eventoSelecionado: Evento = null;
   eventoExcluir: Evento = null;
   eventoEditar: Evento = null;
-  evento: Evento = new Evento(0, '', '', '','','','','','');
+  evento: Evento = new Evento(this.idAtual+1, '', '', '','','','','','');
   enviado: boolean = false;
   editar: boolean = false;
   posEditar: number;
@@ -24,7 +25,7 @@ export class EventoManagerComponent {
   }
 
   preencherNovoEvento(): void {
-    this.evento = new Evento(0, '', '', '','','','','','');
+    this.evento = new Evento(this.idAtual + 1, '', '', '','','','','','');
   }
 
   mostrarDetalhes(evento: Evento) : void {
@@ -41,6 +42,7 @@ export class EventoManagerComponent {
     }
     else{
       this.eventos.push(this.evento);
+      this.idAtual = this.evento.id;
     }    
     this.enviado = true;
   }
@@ -53,6 +55,7 @@ export class EventoManagerComponent {
     this.eventoEditar = evento;
     this.posEditar = this.eventos.indexOf(this.eventoEditar);
     
+    this.evento.id = this.eventoEditar.id;
     this.evento.nome = this.eventoEditar.nome;
     this.evento.sigla = this.eventoEditar.sigla;
     this.evento.inicio = this.eventoEditar.inicio;
