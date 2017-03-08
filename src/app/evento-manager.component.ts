@@ -8,6 +8,7 @@ import { Evento } from './Evento';
 export class EventoManagerComponent {
   eventos: Evento[];
   eventoSelecionado: Evento = null;
+  eventoExcluir: Evento = null;
   evento: Evento = new Evento(0, '', '', '','','','','','');
   enviado: boolean = false;
 
@@ -35,5 +36,20 @@ export class EventoManagerComponent {
 
   novoEvento() : void {
     this.preencherNovoEvento();
+  }
+
+  editarEvento(evento: Evento){
+
+  }
+
+  excluirEvento(evento: Evento): void{
+    this.eventoExcluir = evento;
+    for(let i=0; i<this.eventos.length; i++)
+    {
+      if(this.eventos[i].id == this.eventoExcluir.id)
+      {
+        this.eventos.splice(i,1);
+      }
+    }
   }
 }

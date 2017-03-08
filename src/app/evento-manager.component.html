@@ -85,16 +85,18 @@
   </td>
   <td>
     <button (click)="mostrarDetalhes(evento)">Detalhes</button>
-    <button (click)="editaEvento(evento)">Editar</button>
+    <button (click)="editarEvento(evento)">Editar</button>
     <button (click)="excluirEvento(evento)">Excluir</button>
   </td>
   </tr>
 </table>
 
-<div *ngIf="eventoSelecionado">
-    <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
-    <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
-        em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
-    no(a) {{eventoSelecionado.local}}.</p>
-    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
+<div class="panel panel-default" *ngIf="eventoSelecionado">
+  <div class="panel-body">
+      <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+      <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
+          em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
+      no(a) {{eventoSelecionado.local}}.</p>
+      <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
+  </div>
 </div>
