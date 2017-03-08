@@ -44,12 +44,7 @@ export class EventoManagerComponent {
 
   excluirEvento(evento: Evento): void{
     this.eventoExcluir = evento;
-    for(let i=0; i<this.eventos.length; i++)
-    {
-      if(this.eventos[i].id == this.eventoExcluir.id)
-      {
-        this.eventos.splice(i,1);
-      }
-    }
+    let pos = this.eventos.indexOf(this.eventoExcluir);
+    this.eventos.splice(pos,1);
   }
 }
