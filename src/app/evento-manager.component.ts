@@ -9,8 +9,11 @@ export class EventoManagerComponent {
   eventos: Evento[];
   eventoSelecionado: Evento = null;
   eventoExcluir: Evento = null;
+  eventoEditar: Evento = null;
   evento: Evento = new Evento(0, '', '', '','','','','','');
   enviado: boolean = false;
+  editar: boolean = false;
+  posEditar: number;
 
   constructor() {
     this.eventos = [
@@ -30,7 +33,15 @@ export class EventoManagerComponent {
 
   onSubmit() : void {
     console.log(this.evento);
-    this.eventos.push(this.evento);
+    if(this.editar)
+    {
+      this.eventos.splice(this.posEditar,1, this.evento);
+      this.posEditar = null;
+      this.editar = false;
+    }
+    else{
+      this.eventos.push(this.evento);
+    }    
     this.enviado = true;
   }
 
@@ -39,7 +50,19 @@ export class EventoManagerComponent {
   }
 
   editarEvento(evento: Evento){
-
+    this.eventoEditar = evento;
+    this.posEditar = this.eventos.indexOf(this.eventoEditar);
+    
+    this.evento.nome = this.eventoEditar.nome;
+    this.evento.sigla = this.eventoEditar.sigla;
+    this.evento.inicio = this.eventoEditar.inicio;
+    this.evento.termino = this.eventoEditar.termino;
+    this.evento.url = this.eventoEditar.url;
+    this.evento.cidade = this.eventoEditar.cidade;
+    this.evento.estado = this.eventoEditar.estado;
+    this.evento.local = this.eventoEditar.local;
+    
+    this.editar = true;
   }
 
   excluirEvento(evento: Evento): void{
