@@ -6,11 +6,11 @@ import { Evento } from './Evento';
     templateUrl: './evento-manager.component.html'
 })
 export class EventoManagerComponent {
-  idAtual: number = 3;
   eventos: Evento[];
   eventoSelecionado: Evento = null;
   eventoExcluir: Evento = null;
   eventoEditar: Evento = null;
+  idAtual: number = 3;
   evento: Evento = new Evento(this.idAtual+1, '', '', '','','','','','');
   enviado: boolean = false;
   editar: boolean = false;
@@ -38,7 +38,6 @@ export class EventoManagerComponent {
     {
       this.eventos.splice(this.posEditar,1, this.evento);
       this.posEditar = null;
-      this.editar = false;
     }
     else{
       this.eventos.push(this.evento);

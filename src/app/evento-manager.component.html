@@ -1,5 +1,6 @@
 <h1>Eventos</h1>
-<h2>Cadastro de eventos</h2>
+<h2 [hidden]="editar">Cadastro de eventos</h2>
+<h2 [hidden]="!editar">Editar evento</h2>
 <div [hidden]="enviado">
     <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
     <div class="form-group">
@@ -73,9 +74,11 @@
     </form>
 </div>
 <div [hidden]="!enviado" class="alert alert-success">
-    <p>Dados cadastrados com sucesso!</p>
-    <p><button class="btn btn-default" (click)="novoEvento(); enviado = false; formCadastro.reset()">Cadastrar novo evento</button>
+    <p [hidden]="editar">Dados cadastrados com sucesso!</p>
+    <p [hidden]="!editar">Dados alterados com sucesso!</p>
+    <p><button class="btn btn-default" (click)="novoEvento(); enviado = false; editar = false; formCadastro.reset()">Cadastrar novo evento</button>
 </div>
+
 <hr>
 <h3>Eventos existentes</h3>
 <table class="table table-striped" style="width:100%">
@@ -85,7 +88,7 @@
   </td>
   <td>
     <button (click)="mostrarDetalhes(evento)">Detalhes</button>
-    <button (click)="editarEvento(evento)" [disabled] ="enviado">Editar</button>
+    <button (click)="editarEvento(evento);" [disabled] ="enviado">Editar</button>
     <button (click)="excluirEvento(evento)">Excluir</button>
   </td>
   </tr>
