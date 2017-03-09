@@ -71,5 +71,6 @@ export class EventoManagerComponent {
     this.eventoExcluir = evento;
     let pos = this.eventos.indexOf(this.eventoExcluir);
     this.eventos.splice(pos,1);
+    this.eventoSelecionado = null;
   }
 }
