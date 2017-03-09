@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { Evento } from './Evento';
 
 @Component({
@@ -8,19 +9,24 @@ import { Evento } from './Evento';
 export class EventoManagerComponent {
   eventos: Evento[];
   eventoSelecionado: Evento = null;
-  evento: Evento = new Evento(0, '', '');
+  eventoEditar: Evento = null;
+  eventoExcluir: Evento = null;
+  evento: Evento = new Evento(0, '','','','','','','','');
   enviado: boolean = false;
-
+  editado: boolean = false;
+  pos:any;
+  modo = "cadastrar";
+/*(id, nome, sigla, inicio, termino, url, cidade, estado, local)*/
   constructor() {
     this.eventos = [
-      new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
-      new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-      new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC')
+      new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO','15-05-2017','18-05-2017','http://ulbra-to.br/encoinfo/site/','Palmas','TO','CEULP/ULBRA'),
+      new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI','05-06-2017','08-06-2017','http://sbsi2017.dcc.ufla.br/','Lavras','MG','UFLA'),
+      new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC','02-06-2017','06-06-2017','http://csbc2017.mackenzie.br/','São Paulo','SP','Universidade Presbiteriana Mackenzie')
     ];
   }
 
   preencherNovoEvento(): void {
-    this.evento = new Evento(0, "", "");
+    this.evento = new Evento(0,"","","","","","","","");
   }
 
   mostrarDetalhes(evento: Evento) : void {
@@ -31,9 +37,45 @@ export class EventoManagerComponent {
     console.log(this.evento);
     this.eventos.push(this.evento);
     this.enviado = true;
+    this.modo = null;
+    this.eventoSelecionado= null;
+  }
+
+  alterar(){
+     console.log(this.evento,this.pos);
+     this.eventos.splice(this.pos,1,this.evento);
+     this.editado = true;
+     this.modo = null;
   }
 
   novoEvento() : void {
     this.preencherNovoEvento();
+    this.enviado = false; 
+    this.eventoEditar = null;
+    this.editado = false;
+    this.modo = "cadastrar";
+  }
+
+  editar(evento: Evento){
+    this.modo = "editar";
+    this.eventoSelecionado= null;
+    this.eventoEditar = evento;
+    this.pos = this.eventos.indexOf(this.eventoEditar)
+    this.evento.id = this.eventoEditar.id;
+    this.evento.nome = this.eventoEditar.nome;
+    this.evento.sigla = this.eventoEditar.sigla;
+    this.evento.inicio = this.eventoEditar.inicio;
+    this.evento.termino = this.eventoEditar.termino;
+    this.evento.url = this.eventoEditar.url;
+    this.evento.cidade = this.eventoEditar.cidade;
+    this.evento.estado = this.eventoEditar.estado;
+    this.evento.local = this.eventoEditar.local;
+  }
+
+  excluir(evento: Evento){
+    this.eventoExcluir = evento;
+    this.eventoSelecionado= null;
+    this.pos=this.eventos.indexOf(this.eventoExcluir);
+    this.eventos.splice(this.pos,1)
   }
 }

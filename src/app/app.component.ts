@@ -8,5 +8,4 @@ import '../../public/css/style.css';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
 }
