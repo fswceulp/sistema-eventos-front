@@ -1,0 +1,30 @@
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+td, th {
+	border: 1px solid #ccc;
+	text-align: left;
+	padding: 4px;
+}
+
+tr:nth-child(even) {
+	background-color: #d9d9d9;
+}
+
+td:last-child>button{
+	width:100%;
+	padding:2px;
+	border-radius:0;
+}
+
+tr:hover{
+	background-color: #f2f2f2;
+}
+
+tr:first-child{
+	background-color: inherit;
+}

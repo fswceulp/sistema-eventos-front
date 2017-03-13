@@ -2,26 +2,60 @@
 <h2>Cadastro de eventos</h2>
 <div [hidden]="enviado">
     <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
-    <div class="form-group">
-        <label for="nome">
-        Nome
-        </label>
-        <input type="text" id="nome" name="nome" class="form-control"
-            [(ngModel)]="evento.nome" #nome="ngModel"
-            placeholder="Nome do evento" required>
-        <div class="alert alert-danger" [hidden]="nome.valid || nome.pristine">Você deve informar o nome do evento.</div>
-    </div>
+		<div class="form-group">
+			<label for="ident">Id</label>
+			<input type="number" min="0" id="ident" name="ident" class="form-control" [(ngModel)]="evento.id" #ident="ngModel" placeholder="Id do evento" required>
+			<div class="alert alert-danger" [hidden]="ident.valid || ident.pristine">Você deve informar o id do evento.</div> 
+		</div>
+		
+		<div class="form-group">
+			<label for="nome">Nome</label>
+			<input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="evento.nome" #nome="ngModel" placeholder="Nome do evento" required>
+			<div class="alert alert-danger" [hidden]="nome.valid || nome.pristine">Você deve informar o nome do evento.</div>
+		</div>
 
-    <div class="form-group">
-        <label for="sigla">Sigla</label>
-        <input type="text" id="sigla" name="sigla" class="form-control"
-            [(ngModel)]="evento.sigla" #sigla="ngModel"
-            placeholder="Sigla do evento" required>
-        <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div> 
-    </div>
-
-    <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button> 
-    <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+		<div class="form-group">
+			<label for="sigla">Sigla</label>
+			<input type="text" id="sigla" name="sigla" class="form-control" [(ngModel)]="evento.sigla" #sigla="ngModel" placeholder="Sigla do evento" required>
+			<div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div> 
+		</div>
+		
+		<div class="form-group">
+			<label for="inicio">Início</label>
+			<input type="date" id="inicio" name="inicio" class="form-control" [(ngModel)]="evento.inicio" #inicio="ngModel" placeholder="Início do evento" required>
+			<div class="alert alert-danger" [hidden]="inicio.valid || inicio.pristine">Você deve informar o início do evento.</div> 
+		
+			<label for="inicio">Término</label>
+			<input type="date" id="termino" name="termino" class="form-control" [(ngModel)]="evento.termino" #termino="ngModel" placeholder="Término do evento" required>
+			<div class="alert alert-danger" [hidden]="termino.valid || termino.pristine">Você deve informar o término do evento.</div> 
+		</div>
+		
+		<div class="form-group">
+			<label for="inicio">Url</label>
+			<input type="text" id="url" name="url" class="form-control" [(ngModel)]="evento.url" #url="ngModel" placeholder="Url do evento" required>
+			<div class="alert alert-danger" [hidden]="url.valid || url.pristine">Você deve informar a url do evento.</div> 
+		</div>
+		
+		<div class="form-group">
+			<label for="inicio">Cidade</label>
+			<input type="text" id="cidade" name="cidade" class="form-control" [(ngModel)]="evento.cidade" #cidade="ngModel" placeholder="Cidade do evento" required>
+			<div class="alert alert-danger" [hidden]="cidade.valid || cidade.pristine">Você deve informar a cidade do evento.</div> 
+		</div>
+		
+		<div class="form-group">
+			<label for="inicio">Estado</label>
+			<input type="text" id="estado" name="estado" class="form-control" [(ngModel)]="evento.estado" #estado="ngModel" placeholder="Estado do evento" required>
+			<div class="alert alert-danger" [hidden]="estado.valid || estado.pristine">Você deve informar o estado do evento.</div> 
+		</div>
+		
+		<div class="form-group">
+			<label for="inicio">Local</label>
+			<input type="text" id="local" name="local" class="form-control" [(ngModel)]="evento.local" #local="ngModel" placeholder="Local do evento" required>
+			<div class="alert alert-danger" [hidden]="local.valid || local.pristine">Você deve informar o local do evento.</div> 
+		</div>
+		
+		<button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button> 
+		<button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
     </form>
 </div>
 <div [hidden]="!enviado" class="alert alert-success">
@@ -30,16 +64,35 @@
 </div>
 
 <h2>Eventos existentes</h2>
-<ul>
-    <li *ngFor="let evento of eventos">
-    {{ evento.sigla }} <button (click)="mostrarDetalhes(evento)">Detalhes</button>
-    </li>
-</ul>
 
-<div *ngIf="eventoSelecionado">
-    <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
-    <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
-        em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
-    no(a) {{eventoSelecionado.local}}.</p>
-    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>        
-</div>
+
+<table>
+	<tr>
+		<th>ID</th>
+		<th>Sigla</th>
+		<th>Nome</th>
+		<th>Início</th>
+		<th>Término</th>
+		<th>Url</th>
+		<th>Cidade</th>
+		<th>Estado</th>
+		<th>Local</th>
+		<th>Opções</th>
+	</tr>
+	<tr *ngFor="let evento of eventos">
+		<td>{{evento.id}}</td>
+		<td>{{evento.sigla }}</td>
+		<td>{{evento.nome}}</td>
+		<td>{{evento.inicio}}</td>
+		<td>{{evento.termino}}</td>
+		<td><a [href]="evento.url">{{evento.url}}</a></td>
+		<td>{{evento.cidade}}</td>
+		<td>{{evento.estado}}</td>
+		<td>{{evento.local}}</td>
+		<td>
+			<button (click)="editarEvento(evento)" class="btn btn-warning">Editar</button>
+			<button (click)="excluirEvento(evento)"class="btn btn-danger">Excluir</button>
+		</td>
+		
+	</tr>
+</table>
