@@ -8,8 +8,11 @@ import { Evento } from './Evento';
 export class EventoManagerComponent {
   eventos: Evento[];
   eventoSelecionado: Evento = null;
+  eventoEditar: Evento = null;
+  idEvento: number = 3;
   evento: Evento = new Evento(0, '', '');
   enviado: boolean = false;
+  editado: boolean = false;
 
   constructor() {
     this.eventos = [
@@ -20,7 +23,7 @@ export class EventoManagerComponent {
   }
 
   preencherNovoEvento(): void {
-    this.evento = new Evento(0, "", "");
+    this.evento = new Evento(this.idEvento+1, "", "", "","","","","","");
   }
 
   mostrarDetalhes(evento: Evento) : void {
@@ -29,11 +32,39 @@ export class EventoManagerComponent {
 
   onSubmit() : void {
     console.log(this.evento);
-    this.eventos.push(this.evento);
-    this.enviado = true;
+    if(this.editado){
+      var posicao = this.eventos.indexOf(this.eventoEditar);
+      this.eventos[posicao] = this.evento;
+      this.enviado = true;
+    }
+    else{
+      this.eventos.push(this.evento);
+      this.enviado = true;
+    }
+
   }
 
   novoEvento() : void {
     this.preencherNovoEvento();
+  }
+
+  editarEvento(evento: Evento){
+      this.eventoEditar = evento;
+
+      this.evento.nome = evento.nome;
+      this.evento.sigla = evento.sigla;
+      this.evento.inicio = evento.inicio;
+      this.evento.termino = evento.termino;
+      this.evento.url = evento.url;
+      this.evento.cidade = evento.cidade;
+      this.evento.estado = evento.estado;
+      this.evento.local = evento.local;
+      this.editado = true;
+
+  }
+
+  excluirEvento(evento: Evento) : void{
+    var posicao = this.eventos.indexOf(evento);
+    this.eventos.splice(posicao, 1);
   }
 }

@@ -3,9 +3,7 @@
 <div [hidden]="enviado">
     <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
     <div class="form-group">
-        <label for="nome">
-        Nome
-        </label>
+        <label for="nome">Nome</label>
         <input type="text" id="nome" name="nome" class="form-control"
             [(ngModel)]="evento.nome" #nome="ngModel"
             placeholder="Nome do evento" required>
@@ -17,10 +15,46 @@
         <input type="text" id="sigla" name="sigla" class="form-control"
             [(ngModel)]="evento.sigla" #sigla="ngModel"
             placeholder="Sigla do evento" required>
-        <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div> 
+        <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div>
     </div>
 
-    <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button> 
+    <div class="form-group">
+        <label for="data-inicio">Data de Inicio</label>
+        <input type="date" id="data-inicio" name="data-inicio" class="form-control"
+            [(ngModel)]="evento.inicio" #sigla="ngModel" placeholder="Ex.: 12/03/17">
+    </div>
+
+    <div class="form-group">
+        <label for="data-fim">Data de Término</label>
+        <input type="date" id="data-fim" name="data-fim" class="form-control"
+            [(ngModel)]="evento.termino" #sigla="ngModel" placeholder="Ex.: 12/03/17">
+    </div>
+
+    <div class="form-group">
+        <label for="url">URL</label>
+        <input type="text" id="url" name="url" class="form-control"
+            [(ngModel)]="evento.url" #sigla="ngModel" placeholder="Ex.: https:\\www.evento.com.br">
+    </div>
+
+    <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" class="form-control"
+            [(ngModel)]="evento.cidade" #sigla="ngModel" placeholder="Cidade do Evento">
+    </div>
+
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <input type="text" id="estado" name="estado" class="form-control"
+            [(ngModel)]="evento.estado" #sigla="ngModel" placeholder="Estado do Evento">
+    </div>
+
+    <div class="form-group">
+        <label for="local">Local</label>
+        <input type="text" id="local" name="local" class="form-control"
+            [(ngModel)]="evento.local" #sigla="ngModel" placeholder="Local do Evento" >
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
     <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
     </form>
 </div>
@@ -29,17 +63,35 @@
     <p><button class="btn btn-default" (click)="novoEvento(); enviado = false">Cadastrar novo evento</button>
 </div>
 
-<h2>Eventos existentes</h2>
-<ul>
-    <li *ngFor="let evento of eventos">
-    {{ evento.sigla }} <button (click)="mostrarDetalhes(evento)">Detalhes</button>
-    </li>
-</ul>
+<br/>
+<div class="panel panel-default">
+  <div class="panel-heading">Eventos existentes</div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome do Evento</th>
+        <th>Sigla</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let evento of eventos">
+        <td>{{ evento.nome }}</td>
+        <td>{{ evento.sigla}}</td>
+        <td><button class="btn btn-success" (click)="mostrarDetalhes(evento)">Detalhes</button></td>
+        <td><button class="btn btn-warning" (click)="editarEvento(evento)"><i class='glyphicon glyphicon-pencil'></i></button></td>
+        <td><button class="btn btn-danger" (click)="excluirEvento(evento)"><i class='glyphicon glyphicon-remove'></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <div *ngIf="eventoSelecionado">
+  <div class="page-header">
     <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+  </div>
     <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
         em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
     no(a) {{eventoSelecionado.local}}.</p>
-    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>        
+    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
 </div>
