@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Evento_1 = require("./Evento");
 var EventoManagerComponent = (function () {
@@ -16,6 +17,7 @@ var EventoManagerComponent = (function () {
         this.evento = new Evento_1.Evento(0, '', '');
         this.enviado = false;
         this.editando = false;
+        this.editado = false;
         this.eventos = [
             new Evento_1.Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
             new Evento_1.Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
@@ -34,19 +36,23 @@ var EventoManagerComponent = (function () {
         this.eventos.splice(posicao, 1);
     };
     EventoManagerComponent.prototype.editar = function (evento) {
-        this.evento = evento;
+        this.edicaoEvento = new Evento_1.Evento(evento.id, evento.nome, evento.sigla, evento.inicio, evento.termino, evento.url, evento.cidade, evento.estado, evento.local);
+        this.evento = this.edicaoEvento;
         this.editando = true;
     };
     EventoManagerComponent.prototype.onSubmit = function () {
         console.log(this.evento);
         if (!this.editando) {
+            console.log("teste");
             this.eventos.push(this.evento);
             this.enviado = true;
         }
         else {
             var pos;
-            pos = this.eventos.indexOf(this.evento);
+            pos = this.eventos.indexOf(this.edicaoEvento);
             this.eventos[pos] = this.evento;
+            this.editando = false;
+            this.editado = true;
         }
     };
     EventoManagerComponent.prototype.novoEvento = function () {
