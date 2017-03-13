@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Evento_1 = require("./Evento");
 var EventoManagerComponent = (function () {
@@ -17,6 +18,7 @@ var EventoManagerComponent = (function () {
         this.idEvento = 3;
         this.evento = new Evento_1.Evento(0, '', '');
         this.enviado = false;
+        this.editar = false;
         this.editado = false;
         this.eventos = [
             new Evento_1.Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
@@ -32,15 +34,19 @@ var EventoManagerComponent = (function () {
     };
     EventoManagerComponent.prototype.onSubmit = function () {
         console.log(this.evento);
-        if (this.editado) {
+        if (this.editar) {
             var posicao = this.eventos.indexOf(this.eventoEditar);
             this.eventos[posicao] = this.evento;
-            this.enviado = true;
+            this.editado = true;
+            this.novoEvento();
         }
         else {
             this.eventos.push(this.evento);
             this.enviado = true;
         }
+    };
+    EventoManagerComponent.prototype.esconderMensagem = function () {
+        this.editado = false;
     };
     EventoManagerComponent.prototype.novoEvento = function () {
         this.preencherNovoEvento();
@@ -55,7 +61,7 @@ var EventoManagerComponent = (function () {
         this.evento.cidade = evento.cidade;
         this.evento.estado = evento.estado;
         this.evento.local = evento.local;
-        this.editado = true;
+        this.editar = true;
     };
     EventoManagerComponent.prototype.excluirEvento = function (evento) {
         var posicao = this.eventos.indexOf(evento);

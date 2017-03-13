@@ -1,5 +1,9 @@
 <h1>Eventos</h1>
 <h2>Cadastro de eventos</h2>
+<div [hidden]="!editado" class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" (click)="esconderMensagem()" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Sucesso!</strong> Dados do evento atualizados.
+</div>
 <div [hidden]="enviado">
     <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
     <div class="form-group">

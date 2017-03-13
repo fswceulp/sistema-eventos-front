@@ -12,6 +12,7 @@ export class EventoManagerComponent {
   idEvento: number = 3;
   evento: Evento = new Evento(0, '', '');
   enviado: boolean = false;
+  editar: boolean = false;
   editado: boolean = false;
 
   constructor() {
@@ -32,16 +33,21 @@ export class EventoManagerComponent {
 
   onSubmit() : void {
     console.log(this.evento);
-    if(this.editado){
+    if(this.editar){
       var posicao = this.eventos.indexOf(this.eventoEditar);
       this.eventos[posicao] = this.evento;
-      this.enviado = true;
+      this.editado = true;
+      this.novoEvento();
     }
     else{
       this.eventos.push(this.evento);
       this.enviado = true;
     }
 
+  }
+
+  esconderMensagem(): void{
+    this.editado = false;
   }
 
   novoEvento() : void {
@@ -59,7 +65,7 @@ export class EventoManagerComponent {
       this.evento.cidade = evento.cidade;
       this.evento.estado = evento.estado;
       this.evento.local = evento.local;
-      this.editado = true;
+      this.editar = true;
 
   }
 
