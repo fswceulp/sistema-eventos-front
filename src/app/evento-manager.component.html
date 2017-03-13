@@ -30,16 +30,21 @@
 </div>
 
 <h2>Eventos existentes</h2>
-<ul>
-    <li *ngFor="let evento of eventos">
-    {{ evento.sigla }} <button (click)="mostrarDetalhes(evento)">Detalhes</button>
-    </li>
-</ul>
+<table border="1">
+    <tr *ngFor="let evento of eventos">
+        <td>
+        {{ evento.sigla }} <button (click)="mostrarDetalhes(evento)">Detalhes</button></td><td> <button (click)="deletar(evento.id)">Deletar</button>
+        </td>
+        <td> <button (click)="deletar(evento.id)">Editar</button>
+        </td>
+    </tr>
+</table>
 
 <div *ngIf="eventoSelecionado">
     <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
     <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
         em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
     no(a) {{eventoSelecionado.local}}.</p>
-    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>        
+    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p><br>
+    <button (click)="contar()">Editar</button>
 </div>

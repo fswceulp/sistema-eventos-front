@@ -36,4 +36,19 @@ export class EventoManagerComponent {
   novoEvento() : void {
     this.preencherNovoEvento();
   }
+
+  /*-------------------------------------------------------------------------------------------------*/
+
+  deletar(id: Evento) : void {
+    var variavel;
+
+    this.eventos.forEach(function (evento, index) {
+     if(evento.id == id){
+        console.log(index);
+          //this.eventos.splice(index, 1);
+          variavel=index;
+      }
+    })
+    this.eventos.splice(variavel, 1);
+  }
 }
