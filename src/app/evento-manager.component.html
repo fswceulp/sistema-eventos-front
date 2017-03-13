@@ -94,7 +94,8 @@
 
 
         <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
-        <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+        <button type="button" class="btn btn-danger" (click)="novoEvento(); formCadastro.reset();" [disabled]="!formCadastro.form.valid">Cancelar</button>
+        <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset();">Novo</button>
     </form>
 </div>
 <div [hidden]="!enviado" class="alert alert-success">

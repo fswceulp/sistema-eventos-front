@@ -24,10 +24,11 @@ export class EventoManagerComponent {
 
     preencherNovoEvento():void {
         this.evento = new Evento(0, "", "", '', '', '', '', '', '');
+        this.eventoSelecionado = null;
     }
 
     mostrarDetalhes(evento:Evento):void {
-        if (this.eventoSelecionado != null) {
+        if (this.eventoSelecionado != null && this.eventoSelecionado==evento) {
             this.eventoSelecionado = null;
         }
         else {
@@ -38,7 +39,15 @@ export class EventoManagerComponent {
     editarEvento(evento:Evento):void {
         this.editado = true;
         this.eventoEditado = evento;
-        this.evento = evento;
+        this.evento.id = evento.id;
+        this.evento.nome = evento.nome;
+        this.evento.sigla = evento.sigla;
+        this.evento.inicio = evento.inicio;
+        this.evento.termino = evento.termino;
+        this.evento.url = evento.url;
+        this.evento.cidade = evento.cidade;
+        this.evento.estado = evento.estado;
+        this.evento.local = evento.local;
     }
 
     excluirEvento(evento:Evento):void {
@@ -48,13 +57,14 @@ export class EventoManagerComponent {
     onSubmit():void {
         console.log(this.evento);
         if(this.editado){
-            this.eventos.splice(this.eventos.indexOf(this.eventoEditado),1,this.eventoEditado);
+            this.eventos.splice(this.eventos.indexOf(this.eventoEditado),1,this.evento);
             this.editado = false;
         }
         else{
             this.eventos.push(this.evento);
         }
         this.enviado = true;
+        this.eventoSelecionado = null;
     }
 
     novoEvento():void {
