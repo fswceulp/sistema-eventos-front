@@ -20,4 +20,3 @@ var Evento = (function () {
     return Evento;
 }());
 exports.Evento = Evento;
-//# sourceMappingURL=Evento.js.map

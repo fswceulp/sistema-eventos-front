@@ -41,7 +41,7 @@ export class EventoManagerComponent {
       this.eventos.push(this.evento);
       this.enviado = true;
     }
-
+	this.evento = new Evento(this.idEvento+1, "", "", "","","","","","");
   }
 
   novoEvento() : void {
@@ -64,7 +64,10 @@ export class EventoManagerComponent {
   }
 
   excluirEvento(evento: Evento) : void{
-    var posicao = this.eventos.indexOf(evento);
-    this.eventos.splice(posicao, 1);
+	  if(confirm("Confirme se deseja realmente excluir o evento")){
+		var posicao = this.eventos.indexOf(evento);
+		this.eventos.splice(posicao, 1);
+		confirm("Evento excluido com sucesso!")
+	  }
+	}
   }
-}
