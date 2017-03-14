@@ -14,4 +14,15 @@ export class Evento {
         this.nome = nome;
         this.sigla = sigla;
     }
+
+    constructor(id: number, nome: string, sigla: string, incio: string, termino: string, url: string, cidade: string, estado: string, local: string) {
+        this.id = id;
+        this.nome = nome;
+        this.sigla = sigla;
+        this.inicio = inicio;
+        this.termino = termino;
+        this.url = url;
+        this.cidade = cidade;
+        this.estado = estado;
+    }
 }

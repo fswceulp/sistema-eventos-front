@@ -20,7 +20,7 @@ export class EventoManagerComponent {
   }
 
   preencherNovoEvento(): void {
-    this.evento = new Evento(0, "", "");
+    this.evento = new Evento(0, "", "", "", "", "", "","", "");
   }
 
   mostrarDetalhes(evento: Evento) : void {

@@ -20,6 +20,55 @@
         <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div> 
     </div>
 
+    <div class="form-group">
+        <label for="inicio">Inicio</label>
+        <input type="text" id="inicio" name="inicio" class="form-control"
+            [(ngModel)]="evento.inicio" #inicio="ngModel"
+            placeholder="Inicio do evento" required>
+        <div class="alert alert-danger" [hidden]="inicio.valid || inicio.pristine">Você deve informar o inicio do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="termino">Termino</label>
+        <input type="text" id="termino" name="termino" class="form-control"
+            [(ngModel)]="evento.termino" #termino="ngModel"
+            placeholder="Termino do evento" required>
+        <div class="alert alert-danger" [hidden]="termino.valid || termino.pristine">Você deve informar o termino do evento.</div> 
+    </div>
+
+    <div class="form-group">
+        <label for="url">URL</label>
+        <input type="text" id="url" name="url" class="form-control"
+            [(ngModel)]="evento.url" #url="ngModel"
+            placeholder="URL do evento" required>
+        <div class="alert alert-danger" [hidden]="url.valid || url.pristine">Você deve informar a url do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" class="form-control"
+            [(ngModel)]="evento.cidade" #cidade="ngModel"
+            placeholder="Cidade do evento" required>
+        <div class="alert alert-danger" [hidden]="cidade.valid || cidade.pristine">Você deve informar a url do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <input type="text" id="estado" name="estado" class="form-control"
+            [(ngModel)]="evento.estado" #estado="ngModel"
+            placeholder="Estado do evento" required>
+        <div class="alert alert-danger" [hidden]="estado.valid || estado.pristine">Você deve informar o estado do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="local">Local</label>
+        <input type="text" id="local" name="local" class="form-control"
+            [(ngModel)]="evento.local" #local="ngModel"
+            placeholder="Local do evento" required>
+        <div class="alert alert-danger" [hidden]="local.valid || local.pristine">Você deve informar o local do evento.</div>
+    </div>
+
+
     <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button> 
     <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
     </form>
@@ -33,7 +82,7 @@
 <table border="1">
     <tr *ngFor="let evento of eventos">
         <td>
-        {{ evento.sigla }} <button (click)="mostrarDetalhes(evento)">Detalhes</button></td><td> <button (click)="deletar(evento.id)">Deletar</button>
+        {{ evento.sigla }} </td><td><button (click)="mostrarDetalhes(evento)">Detalhes</button></td><td> <button (click)="deletar(evento.id)">Deletar</button>
         </td>
         <td> <button (click)="deletar(evento.id)">Editar</button>
         </td>
@@ -46,5 +95,4 @@
         em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
     no(a) {{eventoSelecionado.local}}.</p>
     <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p><br>
-    <button (click)="contar()">Editar</button>
 </div>
