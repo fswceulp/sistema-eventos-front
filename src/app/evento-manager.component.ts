@@ -36,7 +36,7 @@ export class EventoManagerComponent {
     console.log(this.evento);
     if(this.editar)
     {
-      this.eventos.splice(this.posEditar,1, this.evento);
+      this.eventos[this.posEditar] = this.evento;
       this.posEditar = null;
     }
     else{
