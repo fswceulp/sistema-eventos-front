@@ -7,7 +7,7 @@ import { EventoManagerComponent } from './evento-manager.component';
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule
+        FormsModule,
     ],
     declarations: [
         AppComponent,
