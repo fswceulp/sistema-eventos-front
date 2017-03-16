@@ -1,14 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Evento } from './Evento';
+import { Http } from '@angular/http';
+import { EventoManagerService } from './evento-manager.service';
 
 @Component({
     selector: 'evento-manager',
     templateUrl: './evento-manager.component.html',
-    styleUrls: ['./evento-manager.component.css']
+    styleUrls: ['./evento-manager.component.css'],
+    providers: [Http]
 })
-export class EventoManagerComponent {
-  eventos: Evento[];
+export class EventoManagerComponent implements OnInit {
+  
+  eventos : Evento[];
   eventoSelecionado: Evento = null;
+  quantidade: number;
   eventoExcluir: Evento = null;
   eventoEditar: Evento = null;
   idAtual: number = 3;
@@ -19,14 +24,19 @@ export class EventoManagerComponent {
   editar: boolean = false;
   posEditar: number;
 
- constructor() {
-    this.eventos = [
-      new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO','15-05-2017','18-05-2017','http://ulbra-to.br/encoinfo/site/','Palmas','TO','CEULP/ULBRA'),
-      new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI','05-06-2017','08-06-2017','http://sbsi2017.dcc.ufla.br/','Lavras','MG','UFLA'),
-      new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC','02-06-2017','06-06-2017','http://csbc2017.mackenzie.br/','São Paulo','SP','Universidade Presbiteriana Mackenzie'),
-      new Evento(4, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'teste','05-06-2017','08-06-2017','http://sbsi2017.dcc.ufla.br/','Lavras','MG','UFLA'),
-      new Evento(5, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'teste2','02-06-2017','06-06-2017','http://csbc2017.mackenzie.br/','São Paulo','SP','Universidade Presbiteriana Mackenzie')
-    ];
+ 
+  constructor(private eventoManagerService: EventoManagerService) {}
+
+  ngOnInit(){
+    this.eventoManagerService.getEventos()
+      .subscribe(
+        resEventos => {
+          this.eventos = resEventos;
+          this.quantidade = this.eventos.length;
+        },
+        error => console.error('Error: ' + error),
+        () => console.log('Completed!')
+      );
   }
 
   preencherNovoEvento(): void {
@@ -52,6 +62,7 @@ export class EventoManagerComponent {
       this.idAtual = this.evento.id;
       this.msg = "cadastrado";
       this.tela = "eventos";
+      this.quantidade ++;
     }    
     this.enviado = true;
   }
@@ -82,5 +93,6 @@ export class EventoManagerComponent {
     let pos = this.eventos.indexOf(this.eventoExcluir);
     this.eventos.splice(pos,1);
     this.eventoSelecionado = null;
+    this.quantidade --;
   }
 }

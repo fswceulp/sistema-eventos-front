@@ -1,0 +1,5 @@
+[
+    {"id":1, "nome": "XIX Congresso de Computação e Sistemas de Informação", "sigla": "ENCOINFO","inicio":"15-05-2017","termino":"18-05-2017", "url":"http://ulbra-to.br/encoinfo/site/","cidade":"Palmas","estado":"TO","local": "CEULP/ULBRA"},
+    {"id":2,"nome": "XIII Simpósio Brasileiro de Sistemas de Informação", "sigla": "SBSI","inicio":"05-06-2017","termino":"08-06-2017","url":"http://sbsi2017.dcc.ufla.br/","cidade":"Lavras","estado":"MG","local":"UFLA"},
+    {"id":3, "nome": "XXXVII Congresso da Sociedade Brasileira de Computação", "sigla": "CSBC","inicio":"02-06-2017","termino":"06-06-2017","url":"http://csbc2017.mackenzie.br/","cidade":"São Paulo","estado":"SP","local":"Universidade Presbiteriana Mackenzi"}
+]

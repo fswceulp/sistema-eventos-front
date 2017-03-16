@@ -2,11 +2,14 @@
     <nav class="navbar navbar-inverse">
     <div class="container-fluid" class="col-md-12"> <!-- Barra de navegação -->
         <div class="navbar-header">
-        <a class="navbar-brand" href="#">LpWeb</a>
+        <a class="navbar-brand" href="#" (click)="tela = 'home'; enviado = true; msg = ''"> 
+            <span class="glyphicon glyphicon-home" aria-hidden="true" title="Home"></span>
+        </a>
         </div>
         <ul class="nav navbar-nav">
-        <li><a href="#" (click)="tela = 'home'; enviado = true; msg = ''">Home</a></li>
-        <li><a [hidden]="tela != 'evento'" href="#" (click)="tela = 'eventos'; enviado = true; msg = ''">Eventos</a></li>
+        <li><a [hidden]="tela != 'evento'" href="#" (click)="tela = 'eventos'; enviado = true; msg = ''">
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true" title="Todos os Eventos"></span>
+        </a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Cadatrar Usuário </a></li>
@@ -19,16 +22,19 @@
         <div class="col-md-8 panel panel-default" id="listaEventos">
             <div class="panel panel-body">
                 <h1>Eventos</h1>
-                <div class="list-group">
-                    <a href="#" class="list-group-item" (click)="mostrarDetalhes(eventos[0]); tela = 'evento'">{{ eventos[0].sigla }}</a>
-                    <a href="#" class="list-group-item" (click)="mostrarDetalhes(eventos[1]); tela = 'evento'">{{ eventos[1].sigla }}</a>
-                    <a href="#" class="list-group-item" (click)="mostrarDetalhes(eventos[2]); tela = 'evento'">{{ eventos[2].sigla }}</a>
+                <div class="list-group" *ngFor="let evento of eventos">
+                    <a href="#" class="list-group-item" (click)="mostrarDetalhes(evento); tela = 'evento'">
+                        <h5>{{ evento.sigla }}</h5>
+                    </a>
+                </div>
+                <div *ngIf = "quantidade == 0">
+                    <h3 class="alert alert-warning">Não há eventos cadastrados!</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-4" id="qtdEventos">
                 <h3>Eventos Cadastrados</h3>
-                <h2>{{eventos.length}}</h2>  
+                <h2>{{quantidade}}</h2>  
                 <hr>
                 <button id="btnVerTodos" class="btn btn-default" (click)=" tela = 'eventos'">Ver todos</button>
             <br>
@@ -139,8 +145,11 @@
                 <div class="list-group">
                     <h2>Eventos</h2>
                     <a *ngFor="let evento of eventos" href="#" class="list-group-item" (click)="mostrarDetalhes(evento); tela = 'evento'">
-                        {{ evento.sigla }}
+                        <h5>{{ evento.sigla }}</h5>
                     </a>
+                    <div *ngIf = "quantidade == 0">
+                        <h3 class="alert alert-warning">Não há eventos cadastrados!</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -152,7 +161,7 @@
 
     <div id="telaExcluirEvento" class="col-md-12" [hidden]="tela != 'excluir'"> <!-- Tela Excluir Evento -->
         <div class="alert alert-danger" role="alert">
-            <h2>Deseja realmente excluir o evento?</h2>
+            <h3>Deseja realmente excluir o evento?</h3>
         </div>
         
         <button type="button" class="btn btn-danger" (click)="excluirEvento(eventoSelecionado); tela = 'eventos';">
