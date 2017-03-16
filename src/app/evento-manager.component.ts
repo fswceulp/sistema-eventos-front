@@ -34,6 +34,7 @@ export class EventoManagerComponent {
   mostrarDetalhes(evento: Evento) : void {
     this.eventoSelecionado = evento;
     this.modo = "visualizar";
+    this.pos=this.eventos.indexOf(evento);
   }
 
   onSubmit() : void {
@@ -44,20 +45,25 @@ export class EventoManagerComponent {
     this.eventoSelecionado= null;
   }
 
-  alterar(){
-     console.log(this.evento,this.pos);
-     this.eventos.splice(this.pos,1,this.evento);
-     this.eventoSelecionado = this.evento;
-     this.editado = true;
-     this.modo = "visualizar";
-  }
-
   novoEvento() : void {
     this.preencherNovoEvento();
     this.enviado = false; 
     this.eventoEditar = null;
     this.editado = false;
     this.modo = "cadastrar";
+  }
+
+  alterar(){
+     console.log(this.evento);
+     this.eventos[this.pos] = this.evento;
+     this.eventoSelecionado = this.evento;
+     this.editado = true;
+     this.modo = "visualizar";
+  }
+
+  excluirEvento(evento: Evento){
+    this.modo = "eventos";
+    this.eventos.splice(this.pos,1)
   }
 
   listarEventos(){
@@ -81,23 +87,7 @@ export class EventoManagerComponent {
 
   editar(evento: Evento){
     this.modo = "editar";
-    this.eventoEditar = evento;
-    this.pos = this.eventos.indexOf(this.eventoEditar)
-    this.evento.id = this.eventoEditar.id;
-    this.evento.nome = this.eventoEditar.nome;
-    this.evento.sigla = this.eventoEditar.sigla;
-    this.evento.inicio = this.eventoEditar.inicio;
-    this.evento.termino = this.eventoEditar.termino;
-    this.evento.url = this.eventoEditar.url;
-    this.evento.cidade = this.eventoEditar.cidade;
-    this.evento.estado = this.eventoEditar.estado;
-    this.evento.local = this.eventoEditar.local;
-  }
-
-  excluirEvento(evento: Evento){
-    this.eventoExcluir = this.eventoSelecionado;
-    this.modo = "eventos";
-    this.pos=this.eventos.indexOf(this.eventoExcluir);
-    this.eventos.splice(this.pos,1)
+    this.eventoEditar = new Evento(evento.id, evento.nome, evento.sigla, evento.inicio, evento.termino, evento.url, evento.cidade, evento.estado, evento.local);
+    this.evento = this.eventoEditar;
   }
 }
