@@ -1,7 +1,7 @@
 <h1>Eventos</h1>
 <div [hidden]="tela!='novoEvento' && tela!='editarEvento'">
     <h2>Cadastro de eventos</h2>
-    <form (ngSubmit)="onSubmit();" #formCadastro="ngForm">
+    <form (ngSubmit)="onSubmit(); formCadastro.reset();" #formCadastro="ngForm">
         <div class="form-group">
             <label for="nome">
                 Nome

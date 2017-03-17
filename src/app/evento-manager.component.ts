@@ -29,6 +29,7 @@ export class EventoManagerComponent {
     preencherNovoEvento():void {
         this.evento = new Evento(0, "", "", '', '', '', '', '', '');
         this.eventoSelecionado = null;
+        this.eventoEditado=null;
     }
 
     mostrarDetalhes(evento:Evento):void {
@@ -77,8 +78,7 @@ export class EventoManagerComponent {
             this.eventos.push(this.evento);
             this.tela = 'cadSucesso';
         }
-
-        this.eventoSelecionado = null;
+        this.preencherNovoEvento();
     }
 
     novoEvento():void {
