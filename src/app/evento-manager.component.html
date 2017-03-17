@@ -1,6 +1,6 @@
 <h1>Eventos</h1>
-<h2>Cadastro de eventos</h2>
-<div [hidden]="enviado">
+<div [hidden]="tela!='novoEvento' && tela!='editarEvento'">
+    <h2>Cadastro de eventos</h2>
     <form (ngSubmit)="onSubmit();" #formCadastro="ngForm">
         <div class="form-group">
             <label for="nome">
@@ -92,45 +92,127 @@
             </div>
         </div>
 
-
+        <button type="button" class="btn btn-primary" (click)="tela='home';">Voltar</button>
         <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
         <button type="button" class="btn btn-danger" (click)="novoEvento(); formCadastro.reset();" [disabled]="!formCadastro.form.valid">Cancelar</button>
         <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset();">Novo</button>
     </form>
 </div>
-<div [hidden]="!enviado" class="alert alert-success">
-    <p>Dados cadastrados com sucesso!</p>
-    <p>
-        <button class="btn btn-default" (click)="novoEvento();formCadastro.reset(); enviado = false">Cadastrar novo evento</button>
+
+<div [hidden]="tela!='cadSucesso'">
+    <div class="alert alert-success">
+        <button type="button" class="close" (click)="tela='home';">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p>Dados cadastrados com sucesso!</p>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="tela='home';">Voltar</button>
 </div>
 
-<h2>Eventos existentes</h2>
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>Sigla</th>
-        <th>Ações</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let evento of eventos">
-        <td>{{ evento.sigla }}</td>
-        <td>
-            <a href="#detalhes" class="btn btn-info" (click)="mostrarDetalhes(evento)">Detalhes</a>
-            <a class="btn btn-success" (click)="editarEvento(evento)">Editar</a>
-            <a class="btn btn-danger" (click)="excluirEvento(evento)">Excluir</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div [hidden]="tela!='editadoSucesso'">
+    <div class="alert alert-success">
+        <button type="button" class="close" (click)="tela='home';">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p>Dados alterados com sucesso!</p>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="tela='home';">Voltar</button>
+</div>
 
-<div *ngIf="eventoSelecionado" id="detalhes" class="alert alert-info">
-    <button type="button" class="close" (click)="mostrarDetalhes(evento)">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
-    <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
-        em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
-        no(a) {{eventoSelecionado.local}}.</p>
-    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
+<div [hidden]="tela!='home'">
+    <h2>Eventos existentes</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Ações</th>
+            <th>Nome</th>
+            <th>Sigla</th>
+            <th>Data Inicio</th>
+            <th>Data Termino</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Local</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let evento of eventos; let i=index;">
+                <td *ngIf="i<3"><button type="button" class="btn btn-info" (click)="verEvento(evento);">Visualizar</button></td>
+                <td *ngIf="i<3">{{ evento.nome }}</td>
+                <td *ngIf="i<3">{{ evento.sigla }}</td>
+                <td *ngIf="i<3">{{ evento.inicio }}</td>
+                <td *ngIf="i<3">{{ evento.termino }}</td>
+                <td *ngIf="i<3">{{ evento.cidade }}</td>
+                <td *ngIf="i<3">{{ evento.estado }}</td>
+                <td *ngIf="i<3">{{ evento.local }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <button type="button" class="btn btn-primary" (click)="tela='todosEventos';">Ver todos</button>
+    <button type="button" class="btn btn-success" (click)="tela='novoEvento';">+ Novo Evento</button>
+</div>
+
+
+<div [hidden]="tela!='todosEventos'">
+    <h2>Eventos existentes</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Ações</th>
+            <th>Nome</th>
+            <th>Sigla</th>
+            <th>Data Inicio</th>
+            <th>Data Termino</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Local</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let evento of eventos">
+            <td><button type="button" class="btn btn-info" (click)="verEvento(evento);">Visualizar</button></td>
+            <td>{{ evento.nome }}</td>
+            <td>{{ evento.sigla }}</td>
+            <td>{{ evento.inicio }}</td>
+            <td>{{ evento.termino }}</td>
+            <td>{{ evento.cidade }}</td>
+            <td>{{ evento.estado }}</td>
+            <td>{{ evento.local }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <button type="button" class="btn btn-primary" (click)="tela='home';">Voltar</button>
+    <button type="button" class="btn btn-success" (click)="tela='novoEvento';">+ Novo Evento</button>
+</div>
+
+
+<div [hidden]="tela!='verEvento'">
+    <h2>Detalhes do Evento</h2>
+    <div *ngIf="eventoSelecionado" id="detalhes" class="alert alert-info">
+        <button type="button" class="close" (click)="tela='home';">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+        <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
+            em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
+            no(a) {{eventoSelecionado.local}}.</p>
+        <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="tela='home';">Voltar</button>
+    <button type="button" class="btn btn-success" (click)="editarEvento(eventoSelecionado);">Editar</button>
+    <button type="button" class="btn btn-danger" (click)="excluirEvento(eventoSelecionado);">Excluir</button>
+</div>
+
+<div [hidden]="tela!='eventoExcluido'">
+    <h2>Excluir Evento</h2>
+    <div *ngIf="eventoSelecionado" id="eventoExcluido" class="alert alert-success">
+        <button type="button" class="close" (click)="tela='home';">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        Id: {{eventoSelecionado.id}}<br/>
+        Evento: {{eventoSelecionado.sigla}}<br/><br/>
+        <b>Excluido com sucesso!</b>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="tela='home';">Voltar</button>
 </div>
