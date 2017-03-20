@@ -1,11 +1,33 @@
 <h1>Eventos</h1>
-<h2>Cadastro de eventos</h2>
-<div [hidden]="enviado">
+
+<div [hidden]="home"> <!--Home -->
+	<div class="col-xs-12 col-md-8">
+		<table class="table table-striped" style="width:80%">
+		<tr *ngFor="let evento of eventos | slice:0:3">
+			<td > <a href="#" class="list-group-item" (click)="mostrarDetalhes(evento);home=true;descricao=false;ultimaTela='home'"> {{ evento.sigla }}</a> </td>
+		</tr>
+	</table>
+	</div>
+	
+	<div>
+		<p>Quantidade de Eventos Atuais </p>
+		<h1 style="font-size:100px"> {{eventos.length}}</h1>
+	</div>
+	<hr>
+	<div class="col-xs-6 col-sm-2">
+		<button type="button" class="btn btn-default" (click)="home= true;lista=false">Todos os Eventos</button>
+	</div>
+	<div *ngIf="eventos.length==0" class="col-xs-6 col-sm-2">
+		<button type="button" class="btn btn-default" (click)="novoEvento(); enviado = false; formCadastro.reset();cadastro=false;home=true">Cadastrar novo evento</button>
+	</div>
+</div>
+
+<div [hidden]="cadastro"> <!--Cadastro e edição -->
+
+	<h2>Cadastro de eventos</h2>
     <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
     <div class="form-group">
-        <label for="nome">
-        Nome
-        </label>
+        <label for="nome">Nome</label>
         <input type="text" id="nome" name="nome" class="form-control"
             [(ngModel)]="evento.nome" #nome="ngModel"
             placeholder="Nome do evento" required>
@@ -17,29 +39,104 @@
         <input type="text" id="sigla" name="sigla" class="form-control"
             [(ngModel)]="evento.sigla" #sigla="ngModel"
             placeholder="Sigla do evento" required>
-        <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div> 
+        <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div>
     </div>
 
-    <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button> 
+    <div class="form-group">
+        <label for="inicio">Início</label>
+        <input type="text" id="inicio" name="inicio" class="form-control"
+            [(ngModel)]="evento.inicio" #inicio="ngModel"
+            placeholder="Data de início do evento" required>
+        <div class="alert alert-danger" [hidden]="inicio.valid || inicio.pristine">Você deve informar a data de início do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="termino">Término</label>
+        <input type="text" id="termino" name="termino" class="form-control"
+            [(ngModel)]="evento.termino" #termino="ngModel"
+            placeholder="Data de término do evento" required>
+        <div class="alert alert-danger" [hidden]="termino.valid || termino.pristine">Você deve informar a data de término do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="url">Url</label>
+        <input type="text" id="url" name="url" class="form-control"
+            [(ngModel)]="evento.url" #url="ngModel"
+            placeholder="Url do evento" required>
+        <div class="alert alert-danger" [hidden]="url.valid || url.pristine">Você deve informar a url do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" class="form-control"
+            [(ngModel)]="evento.cidade" #cidade="ngModel"
+            placeholder="Cidade do evento" required>
+        <div class="alert alert-danger" [hidden]="cidade.valid || cidade.pristine">Você deve informar a cidade do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <input type="text" id="estado" name="estado" class="form-control"
+            [(ngModel)]="evento.estado" #estado="ngModel"
+            placeholder="Estado do evento" required>
+        <div class="alert alert-danger" [hidden]="estado.valid || estado.pristine">Você deve informar o estado do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="local">Local</label>
+        <input type="text" id="local" name="local" class="form-control"
+            [(ngModel)]="evento.local" #local="ngModel"
+            placeholder="Local do evento" required>
+        <div class="alert alert-danger" [hidden]="local.valid || local.pristine">Você deve informar o local do evento.</div>
+    </div>
+
+    <button type="submit" class="btn btn-default" [disabled]="!formCadastro.form.valid">Salvar</button>
+	
     <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+	
+	<button class="btn btn-default" (click)="cadastro=true;lista=false">sair</button>
     </form>
 </div>
-<div [hidden]="!enviado" class="alert alert-success">
-    <p>Dados cadastrados com sucesso!</p>
-    <p><button class="btn btn-default" (click)="novoEvento(); enviado = false">Cadastrar novo evento</button>
+
+<div [hidden]="lista"><!--Eventos existentes -->
+	<h3>Eventos existentes</h3>
+	<table class="table table-striped" style="width:100%">
+		<tr *ngFor="let evento of eventos">
+			<td > 
+				<a href="#" class="list-group-item" (click)="mostrarDetalhes(evento);descricao=false;lista=true;ultimaTela=lista"> {{ evento.sigla }}</a>
+			</td>
+		</tr>
+	</table>
+	<div *ngIf="eventos.length==0" >
+		<hr>
+		<h2>NÃO HÁ EVENTOS CADASTRADOS!</h2>
+		<hr>
+	</div>
+	<button type="button" class="btn btn-default" (click)="novoEvento(); enviado = false; formCadastro.reset();cadastro=false;lista=true;descricao=true">Cadastrar novo evento</button>
+	<button type="button" class="btn btn-default" (click)="home= false;lista=true">Sair</button>
 </div>
 
-<h2>Eventos existentes</h2>
-<ul>
-    <li *ngFor="let evento of eventos">
-    {{ evento.sigla }} <button (click)="mostrarDetalhes(evento)">Detalhes</button>
-    </li>
-</ul>
-
-<div *ngIf="eventoSelecionado">
-    <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
-    <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
-        em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
-    no(a) {{eventoSelecionado.local}}.</p>
-    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>        
+<div [hidden]="msg" class="col-md-6 .col-md-offset-3">
+	<div  class="alert alert-success">
+		<h2 [hidden]="msg">Deseja excluir este evento!</h2>
+		<button class="btn btn-danger" (click)="excluirEvento(eventoSelecionado);tela();msg=true"><i class="glyphicon glyphicon-remove"></i></button>	
+		<button class="btn btn-default" (click)="msg=true;descricao=false">Não</button>
+	</div>
 </div>
+	
+<div [hidden]="descricao"><!--Descrição do Evento Selecionado-->
+	<div class="panel panel-default"  *ngIf="eventoSelecionado">
+		<div class="panel-body">
+			<h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+			<p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
+			em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
+			no(a) {{eventoSelecionado.local}}.</p>
+			<p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
+		</div>
+		<button type="button" class="btn btn-default" (click)="tela();descricao=true;eventoSelecionado=null">Sair</button>
+		<button type="button" class="btn btn-warning" (click)="editarEvento(eventoSelecionado);cadastro=false;descricao=true" [disabled] ="descricao"><i class="glyphicon glyphicon-pencil"></i></button>
+		<button type="button" class="btn btn-danger" (click)="msg=false;descricao=true"><i class="glyphicon glyphicon-trash"></i></button>
+	</div>
+</div>
+
+

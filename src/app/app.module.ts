@@ -10,7 +10,7 @@ import { EventoManagerComponent } from './evento-manager.component';
     ],
     declarations: [
         AppComponent,
-        EventoManagerComponent
+        EventoManagerComponent,
     ],
     bootstrap: [ AppComponent ]
 })
