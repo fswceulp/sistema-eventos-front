@@ -14,8 +14,6 @@
   </div>
 </nav>
 
-
-
 <div [hidden]="!home">
 	<h2>Página principal</h2>
 	<button class="btn" (click)="todosEventos()">Ver todos</button>
@@ -88,9 +86,12 @@
 </div>
 
 <div [hidden]="!formulario">
-	<h2>Cadastro de eventos</h2>
-	<div [hidden]="!editar" class="alert alert-warning">
-		<p><strong>Atenção!</strong> As alterações realizadas nos campos são automaticamente refletidas</p>
+	<div [hidden]="editar">
+		<h2>Cadastro de eventos</h2>
+	</div>
+	<div [hidden]="!editar">
+		<h2>Editar evento</h2>
+		<p class="alert alert-warning"><strong>Atenção!</strong> As alterações realizadas nos campos são automaticamente refletidas</p>
 	</div>
     <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
 		<div class="form-group">
