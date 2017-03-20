@@ -1,8 +1,61 @@
-<h1>Eventos</h1>
+<div  *ngIf="modulo == 'home'" class="alert alert-info">
+<h1>Home</h1>
 <br>
-<h2>Cadastro de eventos</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Eventos</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let evento of eventos let i = index; trackBy: trackByFn">
+		<td *ngIf="i<3">{{ evento.nome }} </td>
+		<td *ngIf="i<3">
+			<button class="btn btn-info" (click)="mostrarDetalhes(evento)">Detalhes</button>
+		</td>
+    </tr>
+</table>
+<button class="btn btn-info" align="center" (click)="modulo='eventos'">Ver todos </button> 
+<button class="btn btn-success" align="center" (click)="modulo='form'">Novo evento </button> 
+</div>
+<div *ngIf="modulo == 'eventodetais'">
+<h2>Detalhes</h2>
 <br>
-<div [hidden]="enviado">
+<div class="alert alert-info">
+
+    <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+    <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
+        em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
+    no(a) {{eventoSelecionado.local}}.</p>
+    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>  
+</div>
+<br>
+<button class="btn btn-info" align="center" (click)="modulo='home'"> Home </button> 
+<button class="btn btn-warning" (click)="editarEvento(eventoSelecionado)">Editar</button>
+<button class="btn btn-danger" (click)="excluirEvento(eventoSelecionado)">Excluir</button>
+</div>
+
+<div *ngIf="modulo == 'eventos'">
+<br>
+<h2>Eventos existentes</h2>
+<br>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let evento of eventos">
+		<td>{{ evento.nome }} </td>
+		<td>
+			<button class="btn btn-info" (click)="mostrarDetalhes(evento)">Detalhes</button>
+		</td>
+    </tr>
+</table>
+<button class="btn btn-info" align="center" (click)="modulo='home'">Home </button> 
+</div>
+<div *ngIf="modulo == 'form'">
     <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
     <div class="form-group">
         <label for="nome">
@@ -64,41 +117,6 @@
     </div>
     <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button> 
     <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+	<button class="btn btn-info" align="center" (click)="modulo='home'"> Voltar </button> 
     </form>
-</div>
-<div [hidden]="!enviado" class="alert alert-success">
-    <p>Dados cadastrados com sucesso!</p>
-    <p><button class="btn btn-default" (click)="novoEvento(); enviado = false">Cadastrar novo evento</button>
-</div>
-<br>
-<h2>Eventos existentes</h2>
-<br>
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th>Sigla</th>
-        <th>Ações</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let evento of eventos">
-		<td>{{ evento.sigla }} </td>
-		<td>
-			<button class="btn btn-info" (click)="mostrarDetalhes(evento)">Detalhes</button>
-		</td>
-		<td>
-			<button class="btn btn-warning" (click)="editarEvento(evento)">Editar</button>
-		</td>
-		<td>
-			<button class="btn btn-danger" (click)="excluirEvento(evento)">Excluir</button>
-		</td>
-    </tr>
-</table>
-<div  *ngIf="eventoSelecionado" class="alert alert-info">
-
-    <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
-    <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
-        em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
-    no(a) {{eventoSelecionado.local}}.</p>
-    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>  
 </div>

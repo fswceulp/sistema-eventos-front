@@ -1,0 +1,15 @@
+{	
+	"evento":[
+		{
+			"id":"1", 
+			"nome":"XIX Congresso de Computação e Sistemas de Informação", 
+			"sigla":"ENCOINFO", 
+			"inicio":"01/01/2017",
+			"termino":"01/02/2017",
+			"url":"www.ecoinfo.com.br",
+			"cidade":"Palmas",
+			"estado":"Tocantins",
+			"local":"Auditório Ulbra"
+		}
+	]
+}
