@@ -135,9 +135,19 @@
     <table class="table table-bordered table-condensed">
       <tbody>
         <tr *ngFor="let evento of eventos">
-          <td class="col-md-12" (click)="tela = 'evento'; telaAnterior='eventos'; eventoSelecionado=evento">
+          <!-- <td class="col-md-12" (click)="tela = 'evento'; telaAnterior='eventos'; eventoSelecionado=evento">
             {{ evento.sigla }}
+          </td> -->
+          <td class="col-md-12" (click)="eventoSelecionado = evento; tela = 'evento'; telaAnterior = 'home'">
+            <div class="panel panel-default">
+              <div class="panel-heading">{{evento.nome}}</div>
+              <div class="panel-body">
+                {{ evento.sigla }}
+              </div>
+            </div>
           </td>
+
+
           <!-- <td class="col-md-1">
           <button (click)="mostrarDetalhes(evento)" class="btn btn-info glyphicon glyphicon-zoom-in"></button>
         </td>

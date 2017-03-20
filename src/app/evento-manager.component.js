@@ -11,8 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Evento_1 = require("./Evento");
+var http_1 = require("@angular/http");
+var evento_manager_service_1 = require("./evento-manager.service");
 var EventoManagerComponent = (function () {
-    function EventoManagerComponent() {
+    function EventoManagerComponent(eventoManagerService) {
+        this.eventoManagerService = eventoManagerService;
         this.eventoSelecionado = null;
         this.enviado = false;
         this.editando = false;
@@ -23,39 +26,15 @@ var EventoManagerComponent = (function () {
         this.contIds = this.eventos.length;
         this.evento = new Evento_1.Evento(this.contIds + 1, '', '');
         this.tela = "home";
-        if (localStorage.getItem('eventos')) {
-            var retorno;
-            retorno = JSON.parse(localStorage.getItem('eventos'));
-            this.preencheEventosFromLocalStorage(retorno);
-            this.atualizaContadorIds();
-            if (this.eventos.length >= 3) {
-                for (var i in this.eventos) {
-                    if (parseInt(i) <= 2) {
-                        this.eventosHome.push(this.eventos[i]);
-                    }
-                    else {
-                        break;
-                    }
-                }
-            }
-            if (this.eventos.length > 0 && this.eventosHome.length == 0) {
-                this.eventosHome = [];
-                for (var i in this.eventos) {
-                    this.eventosHome.push(this.eventos[i]);
-                }
-            }
-        }
-        else {
-            var eventos = [
-                new Evento_1.Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
-                new Evento_1.Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-                new Evento_1.Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC'),
-                new Evento_1.Evento(4, 'XXII Evento Para Testes', 'TESTE')
-            ];
-            localStorage.setItem('eventos', JSON.stringify(eventos));
-            this.atualizaContadorIds();
-        }
     }
+    EventoManagerComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.eventoManagerService.getEventosFromFile()
+            .subscribe(function (resposta) {
+            _this.eventos = resposta;
+            _this.atualizaEventosHome();
+        }, function (error) { return console.error('Error: ' + error); }, function () { return console.log('Completed!'); });
+    };
     EventoManagerComponent.prototype.atualizaContadorIds = function () {
         this.contIds = this.eventos.length;
     };
@@ -76,6 +55,8 @@ var EventoManagerComponent = (function () {
                 this.eventosHome.push(this.eventos[i]);
             }
         }
+    };
+    EventoManagerComponent.prototype.leituraArquivo = function () {
     };
     EventoManagerComponent.prototype.preencheEventosFromLocalStorage = function (retorno) {
         var array;
@@ -137,7 +118,6 @@ var EventoManagerComponent = (function () {
         var posicao;
         posicao = this.eventos.indexOf(evento);
         this.eventos.splice(posicao, 1);
-        localStorage.setItem('eventos', JSON.stringify(this.eventos));
         this.deletado = true;
         if (this.eventos.length < 3) {
             this.atualizaEventosHome();
@@ -150,20 +130,17 @@ var EventoManagerComponent = (function () {
     EventoManagerComponent.prototype.onSubmit = function () {
         console.log(this.evento);
         if (!this.editando) {
-            console.log("teste");
             this.eventos.push(this.evento);
-            localStorage.setItem('eventos', JSON.stringify(this.eventos));
             this.enviado = true;
         }
         else {
             var pos;
             pos = this.eventos.indexOf(this.evento);
             this.eventos[pos] = this.evento;
-            localStorage.setItem('eventos', JSON.stringify(this.eventos));
             this.editando = false;
             this.editado = true;
         }
-        if (this.eventos.length < 3) {
+        if (this.eventos.length <= 3) {
             this.atualizaEventosHome();
         }
     };
@@ -176,9 +153,10 @@ EventoManagerComponent = __decorate([
     core_1.Component({
         selector: 'evento-manager',
         templateUrl: './evento-manager.component.html',
-        styleUrls: ['./evento-manager.component.css']
+        styleUrls: ['./evento-manager.component.css'],
+        providers: [http_1.Http]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [evento_manager_service_1.EventoManagerService])
 ], EventoManagerComponent);
 exports.EventoManagerComponent = EventoManagerComponent;
 //# sourceMappingURL=evento-manager.component.js.map

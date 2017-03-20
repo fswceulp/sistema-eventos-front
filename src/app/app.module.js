@@ -11,6 +11,8 @@ var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var app_component_1 = require("./app.component");
 var evento_manager_component_1 = require("./evento-manager.component");
+var evento_manager_service_1 = require("./evento-manager.service");
+var http_1 = require("@angular/http");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -20,12 +22,14 @@ AppModule = __decorate([
     core_1.NgModule({
         imports: [
             platform_browser_1.BrowserModule,
-            forms_1.FormsModule
+            forms_1.FormsModule,
+            http_1.HttpModule
         ],
         declarations: [
             app_component_1.AppComponent,
             evento_manager_component_1.EventoManagerComponent
         ],
+        providers: [evento_manager_service_1.EventoManagerService],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

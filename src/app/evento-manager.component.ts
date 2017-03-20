@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Evento } from './Evento';
+import {Http} from '@angular/http';
+import { EventoManagerService } from './evento-manager.service';
 
 @Component({
-    selector: 'evento-manager',
-    templateUrl: './evento-manager.component.html',
-    styleUrls: ['./evento-manager.component.css']
+  selector: 'evento-manager',
+  templateUrl: './evento-manager.component.html',
+  styleUrls: ['./evento-manager.component.css'],
+  providers: [Http]
 })
-export class EventoManagerComponent {
+export class EventoManagerComponent implements OnInit{
   eventoSelecionado: Evento = null;
   enviado: boolean = false;
   editando: boolean = false;
@@ -14,45 +17,62 @@ export class EventoManagerComponent {
   deletado: boolean = false;
   eventos: Evento[] = []; // Todos os eventos existentes
   eventosHome: Evento[] = []; // Eventos que serão apresentados na tela inicial
+  teste: any;
   contIds: number = this.eventos.length;
   evento: Evento = new Evento(this.contIds + 1, '', '');
   tela: string = "home";
   telaAnterior: string;
 
-  constructor() {
-    if(localStorage.getItem('eventos')){
-      var retorno: any;
-      retorno = JSON.parse(localStorage.getItem('eventos'));
-      this.preencheEventosFromLocalStorage(retorno);
-      this.atualizaContadorIds();
-      if(this.eventos.length >= 3){
-        for(let i in this.eventos){
-          if(parseInt(i) <= 2){
-            this.eventosHome.push(this.eventos[i]);
-          }else{
-            break; //quebra o laço de repetição após preencher o array eventosHome
-          }
-        }
-      }
-      if(this.eventos.length > 0 && this.eventosHome.length == 0){
-        this.eventosHome = [];
-        for(let i in this.eventos){
-          this.eventosHome.push(this.eventos[i]);
-        }
-      }
-
-    }else{
-      var eventos: Evento[] = [
-        new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
-        new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-        new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC'),
-        new Evento(4, 'XXII Evento Para Testes', 'TESTE')
-      ];
-      localStorage.setItem('eventos', JSON.stringify(eventos));
-      this.atualizaContadorIds();
-    }
-
+  constructor(private eventoManagerService: EventoManagerService) {
   }
+
+
+  ngOnInit(){
+    this.eventoManagerService.getEventosFromFile()
+      .subscribe(
+        resposta => {
+          this.eventos = resposta;
+          this.atualizaEventosHome();
+        },
+        error => console.error('Error: ' + error),
+        () => console.log('Completed!')
+      );
+  }
+
+
+
+  // constructor() {
+  //
+  //
+  //   // var eventos: Evento[] = [
+  //   //   new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
+  //   //   new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
+  //   //   new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC'),
+  //   //   new Evento(4, 'XXII Evento Para Testes', 'TESTE')
+  //   // ];
+  //   // this.eventos = eventos;
+  //
+  //   this.atualizaContadorIds();
+  //   if(this.eventos.length >= 3){
+  //     for(let i in this.eventos){
+  //       if(parseInt(i) <= 2){
+  //         this.eventosHome.push(this.eventos[i]);
+  //       }else{
+  //         break; //quebra o laço de repetição após preencher o array eventosHome
+  //       }
+  //     }
+  //   }
+  //
+  //   if(this.eventos.length > 0 && this.eventosHome.length == 0){
+  //     this.eventosHome = [];
+  //     for(let i in this.eventos){
+  //       this.eventosHome.push(this.eventos[i]);
+  //     }
+  //   }
+  // }//fim construtor
+
+
+
 
   atualizaContadorIds(): void{
     this.contIds = this.eventos.length;
@@ -74,6 +94,10 @@ export class EventoManagerComponent {
         this.eventosHome.push(this.eventos[i]);
       }
     }
+  }
+
+  leituraArquivo():void{
+
   }
 
   preencheEventosFromLocalStorage(retorno: any[]): void{
@@ -142,7 +166,6 @@ export class EventoManagerComponent {
     var posicao: number;
     posicao = this.eventos.indexOf(evento);
     this.eventos.splice(posicao, 1);
-    localStorage.setItem('eventos', JSON.stringify(this.eventos));
     this.deletado = true;
     if(this.eventos.length < 3){
       this.atualizaEventosHome();
@@ -157,20 +180,17 @@ export class EventoManagerComponent {
   onSubmit() : void {
     console.log(this.evento);
     if(!this.editando){
-      console.log("teste");
       this.eventos.push(this.evento);
-      localStorage.setItem('eventos', JSON.stringify(this.eventos));
       this.enviado = true;
     }
     else{
       var pos: number;
       pos = this.eventos.indexOf(this.evento);
       this.eventos[pos] = this.evento;
-      localStorage.setItem('eventos', JSON.stringify(this.eventos));
       this.editando = false;
       this.editado = true;
     }
-    if(this.eventos.length < 3){
+    if(this.eventos.length <= 3){
       this.atualizaEventosHome();
     }
   }
