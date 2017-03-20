@@ -6,20 +6,84 @@ import { Evento } from './Evento';
     templateUrl: './evento-manager.component.html'
 })
 export class EventoManagerComponent {
-  eventos: Evento[];
   eventoSelecionado: Evento = null;
   evento: Evento = new Evento(0, '', '');
-  edicaoEvento: Evento;
   enviado: boolean = false;
   editando: boolean = false;
   editado: boolean = false;
+  eventos: Evento[] = [];
 
   constructor() {
-    this.eventos = [
-      new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
-      new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-      new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC')
-    ];
+    if(localStorage.getItem('eventos')){
+      var retorno: any;
+      retorno = JSON.parse(localStorage.getItem('eventos'));
+      this.preencheEventosFromLocalStorage(retorno);
+
+    }else{
+      var eventos: Evento[] = [
+        new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
+        new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
+        new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC')
+      ];
+      localStorage.setItem('eventos', JSON.stringify(eventos));
+    }
+
+  }
+
+  preencheEventosFromLocalStorage(retorno: any[]): void{
+    var array: string[];
+    for(let o of retorno){
+      //percorro todos os objetos do localStorage
+      array = Object.keys(o);
+      var objEvento: Evento = new Evento(0, "", "");
+      for(let key of array){
+        // percorro todas as chaves do objeto (todos os atributos)
+        // console.log(o[key]);
+        switch(key){
+          case "id":{
+            objEvento.id = o[key];
+            break;
+          }
+          case "nome":{
+            objEvento.nome = o[key];
+            break;
+          }
+          case "sigla":{
+            objEvento.sigla = o[key];
+            break;
+          }
+          case "inicio":{
+            objEvento.inicio = o[key];
+            break;
+          }
+          case "termino":{
+            objEvento.termino = o[key];
+            break;
+          }
+          case "url":{
+            objEvento.url = o[key];
+            break;
+          }
+          case "cidade":{
+            objEvento.cidade = o[key];
+            break;
+          }
+          case "estado":{
+            objEvento.estado = o[key];
+            break;
+          }
+          case "local":{
+            objEvento.local = o[key];
+            break;
+          }
+        }//fim switch
+      }
+      console.log(objEvento);
+      this.eventos.push(objEvento);
+      console.log(this.eventos);
+
+      // this.eventos.push(objEvento);
+    }
   }
 
   preencherNovoEvento(): void {
@@ -34,11 +98,11 @@ export class EventoManagerComponent {
     var posicao: number;
     posicao = this.eventos.indexOf(evento);
     this.eventos.splice(posicao, 1);
+    localStorage.setItem('eventos', JSON.stringify(this.eventos));
   }
 
   editar(evento: Evento): void{
-    this.edicaoEvento = new Evento(evento.id, evento.nome, evento.sigla, evento.inicio, evento.termino, evento.url, evento.cidade, evento.estado, evento.local);
-    this.evento = this.edicaoEvento;
+    this.evento = evento;
     this.editando = true;
   }
 
@@ -47,12 +111,14 @@ export class EventoManagerComponent {
     if(!this.editando){
       console.log("teste");
       this.eventos.push(this.evento);
+      localStorage.setItem('eventos', JSON.stringify(this.eventos));
       this.enviado = true;
     }
     else{
       var pos: number;
-      pos = this.eventos.indexOf(this.edicaoEvento);
+      pos = this.eventos.indexOf(this.evento);
       this.eventos[pos] = this.evento;
+      localStorage.setItem('eventos', JSON.stringify(this.eventos));
       this.editando = false;
       this.editado = true;
     }

@@ -9,11 +9,6 @@ export class Evento {
   public estado : string;
   public local : string;
 
-  // constructor(id: number, nome: string, sigla: string) {
-  //   this.id = id;
-  //   this.nome = nome;
-  //   this.sigla = sigla;
-  // }
   constructor(id: number, nome: string, sigla: string, inicio?: string, termino?: string, url?: string, cidade?: string, estado?: string, local?: string){
     this.id = id;
     this.nome = nome;
