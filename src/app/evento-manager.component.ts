@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
+import { EventosService } from './eventos.service';
+import { EstadosService } from './estados.service';
+import { CidadesService } from './cidades.service';
 import { Evento } from './Evento';
 
 @Component({
     selector: 'evento-manager',
-    templateUrl: './evento-manager.component.html'
+    templateUrl: './evento-manager.component.html',
+    providers: [ EventosService, EstadosService, CidadesService ]
 })
 export class EventoManagerComponent {
   eventos: Evento[];
@@ -13,40 +17,18 @@ export class EventoManagerComponent {
   estados: any[];
   cidades: any[];
 
-  constructor() {
-    this.eventos = [
-      new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
-      new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-      new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC')
-    ];
-    this.estados = [
-      {uf: 'TO', nome: 'Tocantins'},
-      {uf: 'GO', nome: 'Goiás'},
-      {uf: 'MG', nome: 'Minas Gerais'},
-      {uf: 'SP', nome: 'São Paulo'},
-      {uf: 'RJ', nome: 'Rio de Janeiro'}
-    ];
-    this.cidades = [
-      {nome: 'Palmas', uf: 'TO'},
-      {nome: 'Paraíso do Tocantins', uf: 'TO'},
-      {nome: 'Gurupi', uf: 'TO'},
-      {nome: 'Araguaína', uf: 'TO'},
-      {nome: 'Porto Nacional', uf: 'TO'},
-      {nome: 'Belo Horizonte', uf: 'MG'},
-      {nome: 'Goiânia', uf: 'GO'},
-      {nome: 'São Paulo', uf: 'SP'},
-      {nome: 'Rio de Janeiro', uf: 'RJ'}
-    ];
+  constructor(private eventosService : EventosService, 
+    private estadosService : EstadosService,
+    private cidadesService : CidadesService ) {
+
+    this.eventos = this.eventosService.all();
+    this.estados = this.estadosService.all();
+    this.cidades = this.cidadesService.all();
+
   }
 
   getCidades(uf: string) {
-    let lista: any[] = [];
-    for(let i = 0; i < this.cidades.length; i++) {
-      if (this.cidades[i].uf == uf) {
-        lista.push(this.cidades[i]);
-      }
-    }
-    return lista;
+    return this.cidadesService.allByUf(uf);
   }
 
   preencherNovoEvento(): void {
@@ -57,10 +39,10 @@ export class EventoManagerComponent {
     this.eventoSelecionado = evento;
   }
 
-  onSubmit() : void {
-    console.log(this.evento);
-    this.eventos.push(this.evento);
+  onSubmit(form: any) : void {
+    this.eventosService.save(this.evento);
     this.enviado = true;
+    form.reset();
   }
 
   novoEvento() : void {
