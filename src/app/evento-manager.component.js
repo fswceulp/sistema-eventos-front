@@ -14,25 +14,69 @@ var Evento_1 = require("./Evento");
 var EventoManagerComponent = (function () {
     function EventoManagerComponent() {
         this.eventoSelecionado = null;
-        this.evento = new Evento_1.Evento(0, '', '');
         this.enviado = false;
         this.editando = false;
         this.editado = false;
+        this.deletado = false;
         this.eventos = [];
+        this.eventosHome = [];
+        this.contIds = this.eventos.length;
+        this.evento = new Evento_1.Evento(this.contIds + 1, '', '');
+        this.tela = "home";
         if (localStorage.getItem('eventos')) {
             var retorno;
             retorno = JSON.parse(localStorage.getItem('eventos'));
             this.preencheEventosFromLocalStorage(retorno);
+            this.atualizaContadorIds();
+            if (this.eventos.length >= 3) {
+                for (var i in this.eventos) {
+                    if (parseInt(i) <= 2) {
+                        this.eventosHome.push(this.eventos[i]);
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+            if (this.eventos.length > 0 && this.eventosHome.length == 0) {
+                this.eventosHome = [];
+                for (var i in this.eventos) {
+                    this.eventosHome.push(this.eventos[i]);
+                }
+            }
         }
         else {
             var eventos = [
                 new Evento_1.Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
                 new Evento_1.Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-                new Evento_1.Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC')
+                new Evento_1.Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC'),
+                new Evento_1.Evento(4, 'XXII Evento Para Testes', 'TESTE')
             ];
             localStorage.setItem('eventos', JSON.stringify(eventos));
+            this.atualizaContadorIds();
         }
     }
+    EventoManagerComponent.prototype.atualizaContadorIds = function () {
+        this.contIds = this.eventos.length;
+    };
+    EventoManagerComponent.prototype.atualizaEventosHome = function () {
+        this.eventosHome = [];
+        if (this.eventos.length >= 3) {
+            for (var i in this.eventos) {
+                if (parseInt(i) <= 2) {
+                    this.eventosHome.push(this.eventos[i]);
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        else if (this.eventos.length > 0) {
+            for (var i in this.eventos) {
+                this.eventosHome.push(this.eventos[i]);
+            }
+        }
+    };
     EventoManagerComponent.prototype.preencheEventosFromLocalStorage = function (retorno) {
         var array;
         for (var _i = 0, retorno_1 = retorno; _i < retorno_1.length; _i++) {
@@ -80,9 +124,7 @@ var EventoManagerComponent = (function () {
                     }
                 }
             }
-            console.log(objEvento);
             this.eventos.push(objEvento);
-            console.log(this.eventos);
         }
     };
     EventoManagerComponent.prototype.preencherNovoEvento = function () {
@@ -96,6 +138,10 @@ var EventoManagerComponent = (function () {
         posicao = this.eventos.indexOf(evento);
         this.eventos.splice(posicao, 1);
         localStorage.setItem('eventos', JSON.stringify(this.eventos));
+        this.deletado = true;
+        if (this.eventos.length < 3) {
+            this.atualizaEventosHome();
+        }
     };
     EventoManagerComponent.prototype.editar = function (evento) {
         this.evento = evento;
@@ -117,6 +163,9 @@ var EventoManagerComponent = (function () {
             this.editando = false;
             this.editado = true;
         }
+        if (this.eventos.length < 3) {
+            this.atualizaEventosHome();
+        }
     };
     EventoManagerComponent.prototype.novoEvento = function () {
         this.preencherNovoEvento();
@@ -126,7 +175,8 @@ var EventoManagerComponent = (function () {
 EventoManagerComponent = __decorate([
     core_1.Component({
         selector: 'evento-manager',
-        templateUrl: './evento-manager.component.html'
+        templateUrl: './evento-manager.component.html',
+        styleUrls: ['./evento-manager.component.css']
     }),
     __metadata("design:paramtypes", [])
 ], EventoManagerComponent);
