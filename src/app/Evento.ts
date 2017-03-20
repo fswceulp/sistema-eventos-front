@@ -8,10 +8,18 @@ export class Evento {
     public cidade : string;
     public estado : string;
     public local : string;
+    public imagem : string;
 
-    constructor(id: number, nome: string, sigla: string) {
+    constructor(id: number, nome: string, sigla: string, inicio: string, termino: string, url: string, cidade: string, estado: string, local: string, imagem: string) {
         this.id = id;
         this.nome = nome;
         this.sigla = sigla;
+        this.inicio = inicio;
+        this.termino = termino;
+        this.url = url;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.local = local;
+        this.imagem = imagem;
     }
 }
