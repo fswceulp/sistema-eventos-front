@@ -1,34 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Http }       from '@angular/http';
+import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CidadesService {
-    cidades : any[];
-
-    constructor() {
-        this.cidades = [
-            {nome: 'Palmas', uf: 'TO'},
-            {nome: 'Paraíso do Tocantins', uf: 'TO'},
-            {nome: 'Gurupi', uf: 'TO'},
-            {nome: 'Araguaína', uf: 'TO'},
-            {nome: 'Porto Nacional', uf: 'TO'},
-            {nome: 'Belo Horizonte', uf: 'MG'},
-            {nome: 'Goiânia', uf: 'GO'},
-            {nome: 'São Paulo', uf: 'SP'},
-            {nome: 'Rio de Janeiro', uf: 'RJ'}
-        ];
+    constructor(private http : Http ) {
     }
 
-    all() {
-        return this.cidades;
+    all() : Observable<any[]> {
+        return this.http.get('../../public/dados/cidades.json')
+            .map(response => response.json());
     }
 
-    allByUf(uf: string) {
-        let lista: any[] = [];
-        for(let i = 0; i < this.cidades.length; i++) {
-        if (this.cidades[i].uf == uf) {
-            lista.push(this.cidades[i]);
-        }
-        }
-        return lista;
-    }
 }

@@ -1,23 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Evento } from './Evento';
+import { Http }       from '@angular/http';
+import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class EventosService {
-    eventos : Evento[];
-
-    constructor() {
-        this.eventos = [
-            new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
-            new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-            new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC')
-        ];
+    constructor(private http : Http) {
     }
 
-    all() {
-        return this.eventos;
+    all() : Observable<Evento[]>{
+        return this.http.get('../../public/dados/eventos.json')
+            .map(response => response.json() as Evento[]);
     }
 
-    save(evento: Evento) {
-        this.eventos.push(evento);        
-    }
 }

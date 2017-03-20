@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Http }       from '@angular/http';
+import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class EstadosService {
-    estados : any[];
-
-    constructor() {
-        this.estados = [
-            {uf: 'TO', nome: 'Tocantins'},
-            {uf: 'GO', nome: 'Goiás'},
-            {uf: 'MG', nome: 'Minas Gerais'},
-            {uf: 'SP', nome: 'São Paulo'},
-            {uf: 'RJ', nome: 'Rio de Janeiro'}
-        ];
+    constructor(private http : Http) {
     }
 
-    all() {
-        return this.estados;
+    all() : Observable<any[]> {
+        return this.http.get('../../public/dados/estados.json')
+            .map(response => response.json());
     }
 }
