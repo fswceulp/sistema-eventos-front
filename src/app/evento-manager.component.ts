@@ -78,9 +78,7 @@ export class EventoManagerComponent {
           }
         }//fim switch
       }
-      console.log(objEvento);
       this.eventos.push(objEvento);
-      console.log(this.eventos);
 
       // this.eventos.push(objEvento);
     }

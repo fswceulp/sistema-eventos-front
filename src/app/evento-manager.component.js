@@ -80,9 +80,7 @@ var EventoManagerComponent = (function () {
                     }
                 }
             }
-            console.log(objEvento);
             this.eventos.push(objEvento);
-            console.log(this.eventos);
         }
     };
     EventoManagerComponent.prototype.preencherNovoEvento = function () {
