@@ -66,7 +66,7 @@ export class EventoManagerComponent implements OnInit{
   }
 
   preencherNovoEvento(): void {
-    this.evento = new Evento(0, "", "");
+    this.evento = new Evento(this.contIds + 1, "", "");
   }
 
   mostrarDetalhes(evento: Evento) : void {

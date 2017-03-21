@@ -58,7 +58,7 @@ var EventoManagerComponent = (function () {
         }
     };
     EventoManagerComponent.prototype.preencherNovoEvento = function () {
-        this.evento = new Evento_1.Evento(0, "", "");
+        this.evento = new Evento_1.Evento(this.contIds + 1, "", "");
     };
     EventoManagerComponent.prototype.mostrarDetalhes = function (evento) {
         this.eventoSelecionado = evento;
