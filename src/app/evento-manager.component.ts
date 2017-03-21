@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
 import { Evento } from './Evento';
+import {Component, OnInit} from '@angular/core';
+import {EventosService} from './eventos.service';
+import './rxjs-operators';
 
 @Component({
   selector: 'evento-manager',
-  templateUrl: './evento-manager.component.html'
+  templateUrl: './evento-manager.component.html',
+  providers: [EventosService]
 })
-export class EventoManagerComponent {
-  eventos: Evento[];
+export class EventoManagerComponent implements OnInit{
+  eventos:any[];
+  errorMessage:string;
+
   eventoSelecionado: Evento = null;
   evento: Evento = new Evento(0, '', '', '', '', '', '', '', '', '');
+  
   enviado: boolean = false;
   atualizado: boolean = false;
   editar: boolean = true;
@@ -17,31 +23,25 @@ export class EventoManagerComponent {
   eventosexistentes: boolean = false;
   detalhes: boolean = true;
 
-  constructor() {
-    this.eventos = [
-      new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO', '21/03/2017', '23/03/2017', 'http://www.eventos.com.br', 'Palmas', 'TO', 'Auditório da Ulbra', 'https://image.freepik.com/free-vector/abstract-logo-with-colorful-leaves_1025-695.jpg'),
-      new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI', '25/03/2017', '28/03/2017', 'http://www.eventos.com.br', 'Palmas', 'TO', 'Auditório da Católica', 'https://image.freepik.com/free-vector/abstract-logo-made-with-colorful-rings_1025-678.jpg'),
-      new Evento(3, 'XXXVII Congresso da Sociedade de Computação', 'CSBC', '10/04/2017', '12/04/2017', 'http://www.eventos.com.br', 'Gurupi', 'TO', 'Auditório da UFT', 'https://image.freepik.com/free-vector/colorful-circular-logo_1025-395.jpg'),
-      new Evento(4, 'XIX Encontro de Informática', 'ECOINFO', '10/08/2017', '15/08/2017', 'http://www.econinfo.com.br', 'Palmas', 'TO', 'Auditório da CEULP/ULBRA', 'https://image.freepik.com/vector-gratis/logo-abstracto-hecho-con-hojas_1025-263.jpg')
-    ];
-  }
+  constructor(private eventosService:EventosService) {}
 
-  preencherNovoEvento(): void {
-    this.evento = new Evento(0, '', '', '', '', '', '', '', '', '');
+  ngOnInit() {
+      this.eventosService.eventos().subscribe(eventos => this.eventos = eventos);
+      console.log("Eventos", this.eventos);
   }
 
   onSubmit() : void {
     console.log(this.evento);
-    this.eventos.push(this.evento);
+    this.eventosService.criar(this.evento.id, this.evento.nome, this.evento.sigla, this.evento.inicio, this.evento.termino, this.evento.url, this.evento.cidade, this.evento.estado, this.evento.local, this.evento.imagem)
+       .subscribe(
+          evento  => this.eventos.push(evento),
+          error =>  this.errorMessage = <any>error
+       );
     this.enviado = true;
   }
 
-  novoEvento() : void {
-    this.preencherNovoEvento();
-  }
-
   onEditar() : void{
-    var ind = 0;
+    var ind = 1;
     for (let e of this.eventos){
       if(e.id == this.evento.id){
         this.eventos[ind] = this.evento;
