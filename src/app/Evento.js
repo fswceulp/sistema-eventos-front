@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Evento = (function () {
     function Evento(id, nome, sigla, inicio, termino, url, cidade, estado, local) {
         this.id = id;

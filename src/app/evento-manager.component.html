@@ -1,101 +1,220 @@
-<h1>Eventos</h1>
-<h2>Cadastro de eventos</h2>
-<div [hidden]="!editado" class="alert alert-success alert-dismissible" role="alert">
-  <button type="button" class="close" (click)="esconderMensagem()" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Sucesso!</strong> Dados do evento atualizados.
-</div>
-<div [hidden]="enviado">
-    <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
-    <div class="form-group">
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome" class="form-control"
-            [(ngModel)]="evento.nome" #nome="ngModel"
-            placeholder="Nome do evento" required>
-        <div class="alert alert-danger" [hidden]="nome.valid || nome.pristine">Você deve informar o nome do evento.</div>
+<!--
+ MENU DE NAVEGAÇÃO
+-->
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Sistema de Eventos</a>
     </div>
 
-    <div class="form-group">
-        <label for="sigla">Sigla</label>
-        <input type="text" id="sigla" name="sigla" class="form-control"
-            [(ngModel)]="evento.sigla" #sigla="ngModel"
-            placeholder="Sigla do evento" required>
-        <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div>
-    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#" (click)="selecionarTela('home')">Home<span class="sr-only">(current)</span></a></li>
+        <li><a href="#" (click)="selecionarTela('lista-eventos')">Eventos</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
-    <div class="form-group">
-        <label for="data-inicio">Data de Inicio</label>
-        <input type="date" id="data-inicio" name="data-inicio" class="form-control"
-            [(ngModel)]="evento.inicio" #sigla="ngModel" placeholder="Ex.: 12/03/17">
-    </div>
+<!--
+    Tela Home
+-->
+<div id="home" [hidden]="!home">
 
-    <div class="form-group">
-        <label for="data-fim">Data de Término</label>
-        <input type="date" id="data-fim" name="data-fim" class="form-control"
-            [(ngModel)]="evento.termino" #sigla="ngModel" placeholder="Ex.: 12/03/17">
-    </div>
-
-    <div class="form-group">
-        <label for="url">URL</label>
-        <input type="text" id="url" name="url" class="form-control"
-            [(ngModel)]="evento.url" #sigla="ngModel" placeholder="Ex.: https:\\www.evento.com.br">
-    </div>
-
-    <div class="form-group">
-        <label for="cidade">Cidade</label>
-        <input type="text" id="cidade" name="cidade" class="form-control"
-            [(ngModel)]="evento.cidade" #sigla="ngModel" placeholder="Cidade do Evento">
-    </div>
-
-    <div class="form-group">
-        <label for="estado">Estado</label>
-        <input type="text" id="estado" name="estado" class="form-control"
-            [(ngModel)]="evento.estado" #sigla="ngModel" placeholder="Estado do Evento">
-    </div>
-
-    <div class="form-group">
-        <label for="local">Local</label>
-        <input type="text" id="local" name="local" class="form-control"
-            [(ngModel)]="evento.local" #sigla="ngModel" placeholder="Local do Evento" >
-    </div>
-
-    <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
-    <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
-    </form>
-</div>
-<div [hidden]="!enviado" class="alert alert-success">
-    <p>Dados cadastrados com sucesso!</p>
-    <p><button class="btn btn-default" (click)="novoEvento(); enviado = false">Cadastrar novo evento</button>
-</div>
-
-<br/>
-<div class="panel panel-default">
-  <div class="panel-heading">Eventos existentes</div>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nome do Evento</th>
-        <th>Sigla</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let evento of eventos">
-        <td>{{ evento.nome }}</td>
-        <td>{{ evento.sigla}}</td>
-        <td><button class="btn btn-success" (click)="mostrarDetalhes(evento)">Detalhes</button></td>
-        <td><button class="btn btn-warning" (click)="editarEvento(evento)"><i class='glyphicon glyphicon-pencil'></i></button></td>
-        <td><button class="btn btn-danger" (click)="excluirEvento(evento)"><i class='glyphicon glyphicon-remove'></i></button></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<div *ngIf="eventoSelecionado">
-  <div class="page-header">
-    <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+  <div class="jumbotron">
+    <h2>Home Eventos</h2>
+    <p>Total de eventos cadastrados: {{eventos?.length}} </p>
   </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">Eventos Principais</div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome do Evento</th>
+          <th>Sigla</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evento of tresPrimeiros; let i=index">
+          <td>{{ evento.nome }}</td>
+          <td>{{ evento.sigla }}</td>
+          <td><button class="btn btn-success" (click)="mostrarDetalhes(evento)">Detalhes</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="panel-body" style="text-align: center;">
+      <button class="btn btn-primary" (click)="selecionarTela('lista-eventos')">Ver Todos os Eventos</button>
+    </div>
+  </div>
+</div>
+
+<!--
+  ALERTA DE ALTERAÇÕES EFETUADAS
+-->
+<div [hidden]="!enviado" class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" (click)="enviado=false;" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <p>Dados cadastrados com sucesso!</p>
+</div>
+
+<!--
+  TELA PARA LISTAGEM EVENTOS
+-->
+<div id="lista-todos-eventos" [hidden]="!listaEventos">
+  <div>
+    <button class ="btn btn-info" (click)="selecionarTela('home')"><i class="glyphicon glyphicon-arrow-left"> Voltar</i></button>
+  </div>
+  <br/>
+
+  <h1>Eventos</h1>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>Eventos existentes</h4>
+      <button class="btn btn-info" (click)="novoEvento()">Adicionar Novo</button>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome do Evento</th>
+          <th>Sigla</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evento of eventos">
+          <td>{{ evento.nome }}</td>
+          <td>{{ evento.sigla}}</td>
+          <td><button class="btn btn-success" (click)="mostrarDetalhes(evento);">Detalhes</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!--
+  TELA PARA VISUALIZAÇÃO DE EVENTOS
+-->
+
+<div id="detalhes-evento" [hidden]="!detalhesEvento">
+  <div>
+    <button class ="btn btn-info" (click)="selecionarTela('lista-eventos')"><i class="glyphicon glyphicon-arrow-left"> Voltar</i></button>
+  </div>
+  <br/>
+
+  <div *ngIf="eventoSelecionado">
+    <div class="page-header">
+      <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}
+        <span class="pull-right">
+          <button class="btn btn-warning" (click)="editarEvento(eventoSelecionado)"><i class='glyphicon glyphicon-pencil'></i></button>
+          <button class="btn btn-danger" (click)="selecionarTela('confirmarExclusao')"><i class='glyphicon glyphicon-remove'></i></button>
+        </span>
+      </h3>
+    </div>
     <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
         em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
     no(a) {{eventoSelecionado.local}}.</p>
     <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
+  </div>
+</div>
+
+<!--
+  Cadastro/edição de eventos
+-->
+<div id="cadastro-eventos" [hidden]="!formularioCadastro && !formularioEditar">
+  <div *ngIf="formularioEditar">
+    <button class ="btn btn-info" (click)="selecionarTela('detalhes')"><i class="glyphicon glyphicon-arrow-left"> Voltar</i></button>
+  </div>
+  <div *ngIf="formularioCadastro">
+    <button class ="btn btn-info" (click)="selecionarTela('lista-eventos')"><i class="glyphicon glyphicon-arrow-left"> Voltar</i></button>
+  </div>
+  <br/>
+
+  <h2> Formulario de eventos</h2>
+  <div [hidden]="!editado" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" (click)="esconderMensagem()" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Sucesso!</strong> Dados do evento atualizados.
+  </div>
+  <div [hidden]="enviado">
+      <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
+      <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" class="form-control"
+              [(ngModel)]="evento.nome" #nome="ngModel"
+              placeholder="Nome do evento" required>
+          <div class="alert alert-danger" [hidden]="nome.valid || nome.pristine">Você deve informar o nome do evento.</div>
+      </div>
+
+      <div class="form-group">
+          <label for="sigla">Sigla</label>
+          <input type="text" id="sigla" name="sigla" class="form-control"
+              [(ngModel)]="evento.sigla" #sigla="ngModel"
+              placeholder="Sigla do evento" required>
+          <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div>
+      </div>
+
+      <div class="form-group">
+          <label for="data-inicio">Data de Inicio</label>
+          <input type="date" id="data-inicio" name="data-inicio" class="form-control"
+              [(ngModel)]="evento.inicio" #sigla="ngModel" placeholder="Ex.: 12/03/17">
+      </div>
+
+      <div class="form-group">
+          <label for="data-fim">Data de Término</label>
+          <input type="date" id="data-fim" name="data-fim" class="form-control"
+              [(ngModel)]="evento.termino" #sigla="ngModel" placeholder="Ex.: 12/03/17">
+      </div>
+
+      <div class="form-group">
+          <label for="url">URL</label>
+          <input type="text" id="url" name="url" class="form-control"
+              [(ngModel)]="evento.url" #sigla="ngModel" placeholder="Ex.: https:\\www.evento.com.br">
+      </div>
+
+      <div class="form-group">
+          <label for="cidade">Cidade</label>
+          <input type="text" id="cidade" name="cidade" class="form-control"
+              [(ngModel)]="evento.cidade" #sigla="ngModel" placeholder="Cidade do Evento">
+      </div>
+
+      <div class="form-group">
+          <label for="estado">Estado</label>
+          <input type="text" id="estado" name="estado" class="form-control"
+              [(ngModel)]="evento.estado" #sigla="ngModel" placeholder="Estado do Evento">
+      </div>
+
+      <div class="form-group">
+          <label for="local">Local</label>
+          <input type="text" id="local" name="local" class="form-control"
+              [(ngModel)]="evento.local" #sigla="ngModel" placeholder="Local do Evento" >
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
+      <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+      </form>
+      <br/>
+  </div>
+</div>
+
+<!--
+  CONFIRMAR EXCLUSÃO
+-->
+<div id="confirmar-exclusao" [hidden]="!confirmarExclusao">
+  <div>
+    <button class ="btn btn-info" (click)="selecionarTela('detalhes')"><i class="glyphicon glyphicon-arrow-left"> Voltar</i></button>
+  </div>
+  <br/>
+  <div class="container">
+    <h2> Deseja Excluir este evento?</h2>
+    <button class="btn btn-success" (click)="excluirEvento(eventoSelecionado); selecionarTela('lista-eventos')"><i class='glyphicon glyphicon-ok'></i></button>
+    <button class="btn btn-danger" (click)="selecionarTela('detalhes')"><i class='glyphicon glyphicon-remove'></i></button>
+  </div>
 </div>

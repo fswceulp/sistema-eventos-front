@@ -20,17 +20,41 @@ var EventoManagerComponent = (function () {
         this.enviado = false;
         this.editar = false;
         this.editado = false;
+        this.tresPrimeiros = [];
+        this.home = true;
+        this.listaEventos = false;
+        this.detalhesEvento = false;
+        this.formularioCadastro = false;
+        this.formularioEditar = false;
+        this.confirmarExclusao = false;
         this.eventos = [
             new Evento_1.Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
             new Evento_1.Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-            new Evento_1.Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC')
+            new Evento_1.Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC'),
+            new Evento_1.Evento(4, 'Encontro Nacional de Informática', 'EnaInfo'),
+            new Evento_1.Evento(5, 'Congresso Nacional de Computação - USP', 'CNC-USP')
         ];
+        this.pegarTresPrimeiros();
     }
+    EventoManagerComponent.prototype.pegarTresPrimeiros = function () {
+        this.tresPrimeiros = [];
+        if (this.eventos.length > 3) {
+            for (var i = 0; i < 3; i++) {
+                this.tresPrimeiros[i] = this.eventos[i];
+            }
+        }
+        else {
+            for (var i = 0; i < this.eventos.length; i++) {
+                this.tresPrimeiros[i] = this.eventos[i];
+            }
+        }
+    };
     EventoManagerComponent.prototype.preencherNovoEvento = function () {
         this.evento = new Evento_1.Evento(this.idEvento + 1, "", "", "", "", "", "", "", "");
     };
     EventoManagerComponent.prototype.mostrarDetalhes = function (evento) {
         this.eventoSelecionado = evento;
+        this.selecionarTela("detalhes");
     };
     EventoManagerComponent.prototype.onSubmit = function () {
         console.log(this.evento);
@@ -38,11 +62,12 @@ var EventoManagerComponent = (function () {
             var posicao = this.eventos.indexOf(this.eventoEditar);
             this.eventos[posicao] = this.evento;
             this.editado = true;
-            this.novoEvento();
+            this.selecionarTela("lista-eventos");
         }
         else {
             this.eventos.push(this.evento);
             this.enviado = true;
+            this.selecionarTela("lista-eventos");
         }
     };
     EventoManagerComponent.prototype.esconderMensagem = function () {
@@ -50,6 +75,7 @@ var EventoManagerComponent = (function () {
     };
     EventoManagerComponent.prototype.novoEvento = function () {
         this.preencherNovoEvento();
+        this.selecionarTela("cadastro");
     };
     EventoManagerComponent.prototype.editarEvento = function (evento) {
         this.eventoEditar = evento;
@@ -62,10 +88,51 @@ var EventoManagerComponent = (function () {
         this.evento.estado = evento.estado;
         this.evento.local = evento.local;
         this.editar = true;
+        this.selecionarTela("editar");
     };
     EventoManagerComponent.prototype.excluirEvento = function (evento) {
         var posicao = this.eventos.indexOf(evento);
         this.eventos.splice(posicao, 1);
+    };
+    EventoManagerComponent.prototype.confirmarExlusao = function () {
+    };
+    EventoManagerComponent.prototype.selecionarTela = function (tela) {
+        if (tela == 'lista-eventos') {
+            this.resetTelas();
+            this.listaEventos = true;
+        }
+        else if (tela == 'home') {
+            this.pegarTresPrimeiros();
+            this.resetTelas();
+            this.home = true;
+        }
+        else if (tela == "detalhes") {
+            this.resetTelas();
+            this.detalhesEvento = true;
+        }
+        else if (tela == "cadastro") {
+            this.resetTelas();
+            this.formularioCadastro = true;
+        }
+        else if (tela == "editar") {
+            this.resetTelas();
+            this.formularioEditar = true;
+        }
+        else if (tela == "confirmarExclusao") {
+            this.resetTelas();
+            this.confirmarExclusao = true;
+        }
+        else {
+            this.resetTelas();
+        }
+    };
+    EventoManagerComponent.prototype.resetTelas = function () {
+        this.home = false;
+        this.listaEventos = false;
+        this.detalhesEvento = false;
+        this.formularioCadastro = false;
+        this.formularioEditar = false;
+        this.confirmarExclusao = false;
     };
     return EventoManagerComponent;
 }());
