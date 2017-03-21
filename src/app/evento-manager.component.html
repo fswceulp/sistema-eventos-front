@@ -4,7 +4,8 @@
     <form (ngSubmit)="onSubmit(formCadastro)" #formCadastro="ngForm">
         <div class="form-group">
             <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="evento.nome" #nome="ngModel" placeholder="Nome do evento" required minlength="20" maxlength="60">
+            <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="evento.nome" #nome="ngModel" placeholder="Nome do evento"
+                required minlength="20" maxlength="60">
             <div class="alert alert-danger" *ngIf="nome.errors && (nome.dirty || nome.touched)">
                 <div [hidden]="!nome.errors.required">
                     Você deve informar o nome do evento.
@@ -17,7 +18,8 @@
 
         <div class="form-group">
             <label for="sigla">Sigla</label>
-            <input type="text" id="sigla" name="sigla" class="form-control" [(ngModel)]="evento.sigla" #sigla="ngModel" placeholder="Sigla do evento" required>
+            <input type="text" id="sigla" name="sigla" class="form-control" [(ngModel)]="evento.sigla" #sigla="ngModel" placeholder="Sigla do evento"
+                required>
             <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div>
         </div>
 
@@ -27,16 +29,17 @@
                 <option value="">Selecione um Estado</option>
                 <option *ngFor="let estado of estados" [value]="estado.uf">{{estado.nome}}</option>
             </select>
-            <div class="alert alert-danger" [hidden]="estado.valid || estado.pristine">Você deve informar um Estado para o endereço do evento</div>            
+            <div class="alert alert-danger" [hidden]="estado.valid || estado.pristine">Você deve informar um Estado para o endereço do evento</div>
         </div>
 
         <div class="form-group">
             <label for="cidade">Cidade</label>
-            <select id="cidade" [disabled]="!evento.estado" name="cidade" class="form-control" [(ngModel)]="evento.cidade" #cidade="ngModel" required>
+            <select id="cidade" [disabled]="!evento.estado" name="cidade" class="form-control" [(ngModel)]="evento.cidade" #cidade="ngModel"
+                required>
                 <option value="">Selecione uma cidade</option>
                 <option *ngFor="let cidade of getCidades(estado.value)" [value]="cidade.nome">{{cidade.nome}}</option>
             </select>
-            <div class="alert alert-danger" [hidden]="cidade.valid || cidade.pristine">Você deve informar uma cidade para o endereço do evento</div>            
+            <div class="alert alert-danger" [hidden]="cidade.valid || cidade.pristine">Você deve informar uma cidade para o endereço do evento</div>
         </div>
 
 

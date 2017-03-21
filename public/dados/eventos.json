@@ -1,5 +1,17 @@
 [
-    {"id": 1, "nome": "XIX Congresso de Computação e Sistemas de Informação", "sigla": "ENCOINFO"},
-    {"id": 2, "nome": "XIII Simpósio Brasileiro de Sistemas de Informação", "sigla": "SBSI"},
-    {"id": 3, "nome": "XXXVII Congresso da Sociedade Brasileira de Computação", "sigla": "CSBC"}
+    {
+        "id": 1,
+        "nome": "XIX Congresso de Computação e Sistemas de Informação",
+        "sigla": "ENCOINFO"
+    },
+    {
+        "id": 2,
+        "nome": "XIII Simpósio Brasileiro de Sistemas de Informação",
+        "sigla": "SBSI"
+    },
+    {
+        "id": 3,
+        "nome": "XXXVII Congresso da Sociedade Brasileira de Computação",
+        "sigla": "CSBC"
+    }
 ]

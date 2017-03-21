@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http }       from '@angular/http';
-import { Observable }     from 'rxjs/Observable';
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CidadesService {
-    constructor(private http : Http ) {
+    constructor(private http: Http) {
     }
 
-    all() : Observable<any[]> {
+    all(): Observable<any[]> {
         return this.http.get('../../public/dados/cidades.json')
             .map(response => response.json());
     }
