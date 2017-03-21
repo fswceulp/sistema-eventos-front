@@ -1,0 +1,79 @@
+[
+        {
+            "id":"1",
+            "nome":"XIX Congresso de Computação e Sistemas de Informação",
+            "sigla":"ENCOINFO",
+            "inicio":"15/05/2017",
+            "termino":"18/03/2017",
+            "url":"http://www.encoinfo.com.br",
+            "cidade":"Palmas",
+            "estado":"Tocantins",
+            "local":"Centro Universitário Luterano de Palmas"
+        },
+        {
+            "id":"2",
+            "nome":"XIII Simpósio Brasileiro de Sistemas de Informação",
+            "sigla":"SBSI",
+            "inicio":"05/06/2017",
+            "termino":"08//2017",
+            "url":"http://sbsi2017.dcc.ufla.br",
+            "cidade":"Lavras",
+            "estado":"Minas Gerais",
+            "local":"Universidade Federal de Lavras"
+        },
+        {
+            "id":"3",
+            "nome":"XXXVII Congresso da Sociedade Brasileira de Computação",
+            "sigla":"CSBC",
+            "inicio":"02/07/2017",
+            "termino":"06/07/2017",
+            "url":"http://csbc2017.mackenzie.br",
+            "cidade":"Higienópolis",
+            "estado":"São Paulo",
+            "local":"Universidade Presbiteriana Mackenzie"
+        },
+        {
+            "id":"4",
+            "nome":"XIII Encontro Anual de Computação",
+            "sigla":"Enacomp",
+            "inicio":"24/05/2017",
+            "termino":"26/05/2017",
+            "url":"http://www.encacomp.com.br",
+            "cidade":"Catalão",
+            "estado":"Goiás",
+            "local":"Universidade Federal de Goiás"
+        },
+        {
+            "id":"5",
+            "nome":"Encontro Regional de Matemática Aplicada e Computacional",
+            "sigla":"Ermac",
+            "inicio":"02/05/2017",
+            "termino":"05/05/2017",
+            "url":"http://www.fc.unesp.br/#!/departamentos/matematica/eventos2341/ermac",
+            "cidade":"Bauru",
+            "estado":"São Paulo",
+            "local":"Universidade Estadual Paulista"
+        },
+        {
+            "id":"6",
+            "nome":"VI Congresso online de Tecnologia da Informação",
+            "sigla":"Congresso de TI",
+            "inicio":"11/09/2017",
+            "termino":"17/09/2017",
+            "url":"http://congressoti.com.br",
+            "cidade":"Online",
+            "estado":"Online",
+            "local":"Brasil"
+        },
+        {
+            "id":"7",
+            "nome":"XI Congresso nacional do conhecimento",
+            "sigla":"Conac",
+            "inicio":"07/09/2017",
+            "termino":"10/09/2017",
+            "url":"http://www.omaiorcongressodopais.com.br",
+            "cidade":"Porto Seguro",
+            "estado":"Bahia",
+            "local":"Praia"
+        }
+]

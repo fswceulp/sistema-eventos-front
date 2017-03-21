@@ -1,24 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+import { EventoService } from './evento.service';
 import { Evento } from './Evento';
+
 
 @Component({
     selector: 'evento-manager',
-    templateUrl: './evento-manager.component.html'
+    templateUrl: './evento-manager.component.html',
+    providers: [ EventoService ]
 })
-export class EventoManagerComponent {
+
+export class EventoManagerComponent implements OnInit {
   eventos: Evento[];
+  principaisEventos: Evento[];
   eventoSelecionado: Evento = null;
   edicao: boolean = false;
   eventoEditar: Evento = null;
   evento: Evento = new Evento(0, '', '', '', '', '', '', '', '');
   enviado: boolean = false;
+  qtdEventos: number;
+  home: boolean = true;
+  visualizar = false; 
+  eventos_all = false; 
+  cadastrar_eventos = false; 
+  confirmar_excluir = false;
 
-  constructor() {
-    this.eventos = [
-      new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO', '15/05/2017', '18/03/2017', 'http://www.encoinfo.com.br', 'Palmas', 'Tocantins', 'Centro Universitário Luterano de Palmas' ),
-      new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI',  '05/06/2017', '08//2017', 'http://sbsi2017.dcc.ufla.br', 'Lavras', 'Minas Gerais', 'Universidade Federal de Lavras' ),
-      new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC',  '02/07/2017', '06/07/2017', 'http://csbc2017.mackenzie.br', 'Higienópolis', 'São Paulo', 'Universidade Presbiteriana Mackenzie' )
-    ];
+  constructor(private eventoService: EventoService) {
+  }
+
+  ngOnInit(){
+    this.eventoService.getEventos().subscribe(eventos =>{this.eventos = eventos; this.qtdEventos = this.eventos.length});
+    this.preencherPrincipaisEventos();
+  }
+
+  preencherPrincipaisEventos(): any{
+    for(let i = 0; i < 3; i++) {
+        this.principaisEventos = this.eventos;
+    }
+    return this.principaisEventos;
   }
 
   preencherNovoEvento(): void {
@@ -26,17 +47,13 @@ export class EventoManagerComponent {
   }
 
   mostrarDetalhes(evento: Evento) : void {
-    if(this.eventoSelecionado){
-      this.eventoSelecionado = null;  
-    }
-    else{
       this.eventoSelecionado = evento;
-    }
   }
 
   editarEvento(evento: Evento) : void {
     this.eventoEditar = evento;
     this.evento = this.eventoEditar;
+
     this.edicao = true;
   }
 
@@ -53,10 +70,10 @@ export class EventoManagerComponent {
     else {
       this.eventos.push(this.evento);
     }
-    this.enviado = true;
   }
 
   novoEvento() : void {
     this.preencherNovoEvento();
   }
+
 }
