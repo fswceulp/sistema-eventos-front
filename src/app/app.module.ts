@@ -14,4 +14,4 @@ import { EventoManagerComponent } from './evento-manager.component';
     ],
     bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {}

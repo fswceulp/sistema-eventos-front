@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Evento } from './Evento';
 
 @Component({
-    selector: 'evento-manager',
-    templateUrl: './evento-manager.component.html'
+  selector: 'evento-manager',
+  templateUrl: './evento-manager.component.html'
 })
 export class EventoManagerComponent {
   eventos: Evento[];
@@ -12,52 +12,70 @@ export class EventoManagerComponent {
   enviado: boolean = false;
   excluir: boolean = false;
   editado: boolean = false;
-  editaEvento : Evento = null;
-
+  editaEvento: Evento = null;
+  totalEventos: number;
+  eventosPrinc: Evento[];
+  home: boolean = true;
+  todosEventos: boolean = false;
+  excluidoSucesso: boolean = false;
+  desejaExcluir: boolean = false;
+  cadastra: boolean = false;
+  btnSalvaAlt: boolean = false;
+  btnHome: boolean = true;
+  btnVoltar: boolean = false;
+  msgAlt: boolean = false;
+  msgSalva: boolean = false;
+  detalhes: boolean = false;
+  aux: Evento = null;
   constructor() {
     this.eventos = [
       new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO', '01/01/2017', '10/01/2017', 'www.google.com.br',
-      'Palmas', 'Tocantins', 'Teatro Fernanda Montenegro'),
+        'Palmas', 'Tocantins', 'Teatro Fernanda Montenegro'),
       new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI', '01/01/2017', '10/01/2017', 'www.google.com.br',
-      'Palmas', 'Tocantins', 'Teatro Fernanda Montenegro'),
+        'Palmas', 'Tocantins', 'Teatro Fernanda Montenegro'),
       new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC', '01/01/2017', '10/01/2017', 'www.google.com.br',
-      'Palmas', 'Tocantins', 'Teatro Fernanda Montenegro'),
+        'Palmas', 'Tocantins', 'Teatro Fernanda Montenegro'),
+      new Evento(4, 'I Show de Magia', 'SM', '01/01/2017', '10/02/2017', 'www.google.com.br',
+        'Palmas', 'Tocantins', 'Praça dos Girassóis'),
     ];
+    this.totalEventos = this.eventos.length;
+    this.eventosPrinc = [
+      this.eventos[0],
+      this.eventos[1],
+      this.eventos[2],
+    ]
   }
 
   preencherNovoEvento(): void {
     this.evento = new Evento(0, "", "", "", "", "", "", "", "");
   }
 
-  mostrarDetalhes(evento: Evento) : void {
+  mostrarDetalhes(evento: Evento): void {
     this.eventoSelecionado = evento;
   }
 
-  excluirEvento(evento: Evento) : void {
-    this.excluir = confirm("Tem certeza que deseja excluir o evento?");
-    if(this.excluir){
-        this.eventos.splice(this.eventos.indexOf(evento), 1);
-      }
+  excluirEvento(evento: Evento): void {
+    this.eventos.splice(this.eventos.indexOf(evento), 1);
   }
-  editarEvento(evento: Evento) : void {
+  editarEvento(evento: Evento): void {
     this.evento = evento;
     this.editado = true;
     this.editaEvento = evento;
   }
 
-  onSubmit() : void {
+  onSubmit(): void {
     console.log(this.evento);
-    if(this.editado){
-		  this.eventos.splice(this.eventos.indexOf(this.editaEvento),1,this.editaEvento);
-		  this.editado = false;
+    if (this.editado) {
+      this.eventos.splice(this.eventos.indexOf(this.editaEvento), 1, this.editaEvento);
+      this.editado = false;
     }
-    else{
-		  this.eventos.push(this.evento);
+    else {
+      this.eventos.push(this.evento);
     }
     this.enviado = true;
   }
 
-  novoEvento() : void {
+  novoEvento(): void {
     this.editado = false;
     this.preencherNovoEvento();
   }
