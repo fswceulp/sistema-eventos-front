@@ -1,6 +1,10 @@
-<h1>Eventos</h1>
-<h2>Cadastro de eventos</h2>
-<div [hidden]="enviado">
+<br><br><input type="button" (click)="ocultarCadastro()" ng-hide="formVisibility" value="Tela de Cadastro">
+<input type="button" (click)="ocultarEventos()" ng-hide="formVisibility" value="Eventos">
+
+<div [hidden]="ocultarCadastrar">
+    <h1 >Eventos</h1>
+    <h2>Cadastro de eventos</h2>
+    <div [hidden]="enviado">
     <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
     <div class="form-group">
         <label for="nome">
@@ -72,27 +76,77 @@
     <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button> 
     <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
     </form>
-</div>
-<div [hidden]="!enviado" class="alert alert-success">
-    <p>Dados cadastrados com sucesso!</p>
-    <p><button class="btn btn-default" (click)="novoEvento(); enviado = false">Cadastrar novo evento</button>
+    </div>
+    <div [hidden]="!enviado" class="alert alert-success">
+        <p>Dados cadastrados com sucesso!</p>
+        <p><button class="btn btn-default" (click)="novoEvento(); enviado = 'false'">Cadastrar novo evento</button></p>
+    </div>
+
+
+
+    <!--<h2>Eventos existentes</h2>
+    <table border="1">
+        <tr *ngFor="let evento of eventos">
+            <td>
+            {{ evento.sigla }} </td><td><button (click)="mostrarDetalhes(evento)">Detalhes</button></td><td> <button (click)="deletar(evento.id)">Deletar</button>
+            </td>
+            <td> <button (click)="deletar(evento.id)">Editar</button>
+            </td>
+        </tr>
+    </table>
+
+    <div *ngIf="eventoSelecionado">
+        <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+        <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
+            em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
+        no(a) {{eventoSelecionado.local}}.</p>
+        <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p><br>
+    </div><br>-->
 </div>
 
-<h2>Eventos existentes</h2>
-<table border="1">
-    <tr *ngFor="let evento of eventos">
-        <td>
-        {{ evento.sigla }} </td><td><button (click)="mostrarDetalhes(evento)">Detalhes</button></td><td> <button (click)="deletar(evento.id)">Deletar</button>
-        </td>
-        <td> <button (click)="deletar(evento.id)">Editar</button>
-        </td>
-    </tr>
-</table>
-
-<div *ngIf="eventoSelecionado">
-    <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
-    <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
-        em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
-    no(a) {{eventoSelecionado.local}}.</p>
-    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p><br>
+<div [hidden]="ocultarEvento">
+    <h2>Eventos existentes</h2>
+    <div *ngFor="let evento of eventos; let i = 'index'">
+        <div *ngIf='i<3'>
+           <p>{{ evento.sigla }}</p>
+        </div>
+    </div><br>
+    <div>Existem {{eventos.length}} eventos cadastrados. Clique em ver mais e veja:</div><br>
+    <input type="button" (click)="ocultarVerTodos()" ng-hide="formVisibility" value="Ver Todos">    
 </div>
+
+<div [hidden]="verTodos">
+    <div *ngFor="let evento of eventos; let i = 'index'" >
+        <div>
+            <h3>{{evento.nome}} - {{evento.sigla}}</h3>
+            <p>De {{evento.inicio}} a {{evento.termino}},
+            em {{evento.cidade}} - {{evento.estado}},
+            no(a) {{evento.local}}.</p>
+            <p>Mais informações no site <a [href]="evento.url">{{evento.url}}</a>.</p>
+            <input type="button" (click)="mostrarDetalhes(evento)" ng-hide="formVisibility" value="Ver Evento">
+        </div>    
+    </div><br>
+</div>
+
+    <div [hidden]="eventoIndividual" *ngIf="eventoSelecionado">
+        <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+        <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
+            em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
+        no(a) {{eventoSelecionado.local}}.</p>
+        <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p><br>
+        <button (click)="confirmar(evento)">Deletar</button>
+        <button (click)="deletar(evento.id)">Editar</button>
+
+
+    </div><br>
+    <div *ngIf="confirmarr">
+        <h3>Deseja mesmo deletar o evento?</h3>
+        <button (click)="deletar(evento.id)">Sim</button>
+        <button (click)="deletar(evento.id)">Não</button>
+    </div><br>  
+
+    
+<br><br>
+
+
+   
