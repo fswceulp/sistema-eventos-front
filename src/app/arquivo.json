@@ -1,0 +1,6 @@
+﻿[
+	{"id": 1, "nome":"XIX Congresso de Computação e Sistemas de Informação", "sigla":"ENCOINFO", "inicio":"01/01/2000", "termino":"01/01/2000", "url":"http://google.com", "cidade":"teste", "estado":"teste", "local":"teste"},
+	{"id": 2, "nome":"XIII Simpósio Brasileiro de Sistemas de Informação", "sigla":"SBSI", "inicio":"01/01/2000", "termino":"01/01/2000", "url":"http://google.com", "cidade":"teste", "estado":"teste", "local":"teste"},
+	{"id": 3, "nome":"XXXVII Congresso da Sociedade Brasileira de Computação", "sigla":"CSBC", "inicio":"01/01/2000", "termino":"01/01/2000", "url":"http://google.com", "cidade":"teste", "estado":"teste", "local":"teste"},
+	{"id": 4, "nome":"XXXVII Congresso de Testes", "sigla":"TESTE", "inicio":"01/01/2000", "termino":"01/01/2000", "url":"http://google.com", "cidade":"teste", "estado":"teste", "local":"teste"}
+]

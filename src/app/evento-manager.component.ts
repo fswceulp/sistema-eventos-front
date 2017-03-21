@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Evento } from './Evento';
+// import fs = require('fs');
+// fs.readFile('src/app/arquivo,json', 'utf8');
 
 @Component({
     selector: 'evento-manager',
     templateUrl: './evento-manager.component.html'
 })
+
 export class EventoManagerComponent {
   eventos: Evento[];
   ult: Evento[];
@@ -18,60 +21,91 @@ export class EventoManagerComponent {
   eventosb: boolean = false;
   eventob: boolean = false;
   cadastrar: boolean = false;
-  editar: boolean = false;  
-
-  constructor() {
-    this.eventos = [
-      new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO', '20/03/2016', '20/03/2016', 'google.com', 'Palmas', 'Tocantins', 'CEULP'),
-      new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI', '20/03/2016', '20/03/2016', 'google.com', 'Palmas', 'Tocantins', 'CEULP'),
-      new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC', '20/03/2016', '20/03/2016', 'google.com', 'Palmas', 'Tocantins', 'CEULP'),
-	  new Evento(4, 'XXXVII Congresso de TESTE TESTE', 'TESTE', '20/03/2016', '20/03/2016', 'google.com', 'Palmas', 'Tocantins', 'CEULP')
-    ];
-  }
+  editar: boolean = false;
+  excluir: boolean = false;
+  certeza: boolean = false;
+  xhttp: any = new XMLHttpRequest();
+  // tamanho: number = 0;
   
+  constructor() {
+    this.xhttp.onreadystatechange = function(){
+        this.arq = JSON.parse(this.responseText);
+        this.tamanho = this.arq.length;
+    }
+      this.xhttp.open("GET", "src/app/arquivo.json", true);
+      this.xhttp.send();
+  }
     public inicio : string;
     public termino : string;
     public url : string;
     public cidade : string;
     public estado : string;
     public local : string;
+
   clickHome(): void{
     this.home = true;
     this.eventosb= false;
-	this.eventob= false;
-	this.cadastrar = false;
-	this.editar = false;  
+    this.eventob= false;
+    this.cadastrar = false;
+    this.editar = false;
+	this.excluir = false;
+	this.certeza = false;
   }
   clickEventos(): void{
     this.home = false;
     this.eventosb= true;
-	this.eventob= false;
-	this.cadastrar = false;
-	this.editar = false;  
+    this.eventob= false;
+    this.cadastrar = false;
+    this.editar = false;
+	this.excluir = false;
+	this.certeza = false;	
   }
   clickEvento(evento: Evento): void{
-	this.eventoSelecionado = evento;
+    this.eventoSelecionado = evento;
     this.home = false;
     this.eventosb= false;
-	this.eventob= true;
-	this.cadastrar = false;
-	this.editar = false;  
+    this.eventob= true;
+    this.cadastrar = false;
+    this.editar = false;
+	this.excluir = false;
+	this.certeza = false;
   }
   clickCadastrar(): void{
     this.home = false;
     this.eventosb= false;
-	this.eventob= false;
-	this.cadastrar = true;
-	this.editar = false;  
+    this.eventob= false;
+    this.cadastrar = true;
+    this.editar = false;
+	this.excluir = false;
+	this.certeza = false;
+  }
+  clickExcluir(): void{
+    this.home = false;
+    this.eventosb= false;
+    this.eventob= false;
+    this.cadastrar = false;
+    this.editar = false;
+	this.excluir = true;
+	this.certeza = false;
+  }
+  clickCerteza(): void{
+    this.home = false;
+    this.eventosb= false;
+    this.eventob= false;
+    this.cadastrar = false;
+    this.editar = false;
+	this.excluir = false;
+	this.certeza = true;
   }
   clickEditar(): void{
     this.home = false;
     this.eventosb= false;
-	this.eventob= false;
-	this.cadastrar = false;
-	this.editar = true;  
+    this.eventob= false;
+    this.cadastrar = false;
+    this.editar = true; 
+	this.excluir = false;
+	this.certeza = false;
   }
-  
 
   preencherNovoEvento(): void {
     this.evento = new Evento(this.idEvento+1, "", "", "","","","","","");
@@ -84,13 +118,15 @@ export class EventoManagerComponent {
   onSubmit() : void {
     console.log(this.evento);
     if(this.editado){
-      var posicao = this.eventos.indexOf(this.eventoEditar);
-      this.eventos[posicao] = this.evento;
+      var posicao = this.xhttp.arq.indexOf(this.eventoEditar);
+      this.xhttp.arq[posicao] = this.evento;
       this.enviado = true;
+      this.editado = false;
     }
     else{
-      this.eventos.push(this.evento);
+      this.xhttp.arq.push(this.evento);
       this.enviado = true;
+      this.xhttp.tamanho = this.xhttp.tamanho + 1;
     }
 	this.evento = new Evento(this.idEvento+1, "", "", "","","","","","");
   }
@@ -101,7 +137,6 @@ export class EventoManagerComponent {
 
   editarEvento(evento: Evento){
       this.eventoEditar = evento;
-
       this.evento.nome = evento.nome;
       this.evento.sigla = evento.sigla;
       this.evento.inicio = evento.inicio;
@@ -115,10 +150,8 @@ export class EventoManagerComponent {
   }
 
   excluirEvento(evento: Evento) : void{
-	  if(confirm("Confirme se deseja realmente excluir o evento")){
-		var posicao = this.eventos.indexOf(evento);
-		this.eventos.splice(posicao, 1);
-		confirm("Evento excluido com sucesso!")
-	  }
+    var posix = this.xhttp.arq.indexOf(evento);
+    this.xhttp.arq.splice(posix, 1);
+    this.xhttp.tamanho = this.xhttp.tamanho - 1;
 	}
   }

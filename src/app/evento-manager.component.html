@@ -11,10 +11,10 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li>
-					<a href="#" (click)="clickHome()">Home</a>
+					<a href="#" (click)="clickHome(); formCadastro.reset()">Home</a>
 				</li>
 				<li>
-					<a href="#" (click)="clickEventos()">Eventos</a>
+					<a href="#" (click)="clickEventos(); formCadastro.reset()">Eventos</a>
 				</li>
 			</ul>
 		</div>
@@ -30,8 +30,8 @@
 		</div>
 	</div>
 	
-	<div *ngFor="let evento of eventos;" >
-		<div class="col-lg-4 col-md-4 col-sm-4 text-center" *ngIf="evento.id < 4">
+	<div *ngFor="let evento of xhttp.arq; let i=index" >
+		<div class="col-lg-4 col-md-4 col-sm-4 text-center" *ngIf="i < 3">
 			<a (click)="clickEvento(evento)">
 				<h2>{{evento.nome}}</h2>
 				<p>{{evento.sigla}} - de {{evento.inicio}} a {{evento.termino}}</p>
@@ -44,7 +44,7 @@
 	<div class="col-md-12" style="text-align: center;">
 		<a (click)="clickEventos()">
 			<h2>Ver Todos os Eventos Cadastrados</h2>
-			<p>{{eventos.length}} Eventos Cadastrados</p>
+			<p>{{xhttp.tamanho}} Eventos Cadastrados</p>
 		</a>
 	</div>
 </section>
@@ -67,7 +67,7 @@
 		</thead>
 		<tbody>
 		
-		  <tr *ngFor="let evento of eventos">
+		  <tr *ngFor="let evento of xhttp.arq">
 			<a (click)="clickEvento(evento)"> 
 				<td>{{ evento.nome }}</td>
 			</a>
@@ -96,10 +96,16 @@
 			<p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
 			<hr/>
 			<button class="btn btn-warning" (click)="editarEvento(eventoSelecionado); clickCadastrar();"><i class='glyphicon glyphicon-pencil'></i></button>
-			<button class="btn btn-danger" (click)="excluirEvento(eventoSelecionado); clickEventos();"><i class='glyphicon glyphicon-remove'></i></button>
+			<button class="btn btn-danger" (click)="clickCerteza();"><i class='glyphicon glyphicon-remove'></i></button>
 		</div>
 		
 		
+	</div>
+</section>
+<section [hidden]="!certeza">
+	<div class="col-md-8 text-center" style="background-color: #ccc; margin-left: 20%;">
+		<h2>Você Está Prestes a Excluir o Evento.</h2>
+		<button type="button" class="btn btn-primary" (click)="clickExcluir(); excluirEvento(eventoSelecionado); clickEventos();">Excluir Evento</button>
 	</div>
 </section>
 <section [hidden]="!cadastrar">
@@ -124,14 +130,16 @@
 
 			<div class="form-group">
 				<label for="data-inicio">Data de Inicio</label>
-				<input type="date" id="data-inicio" name="data-inicio" class="form-control"
-					[(ngModel)]="evento.inicio" #sigla="ngModel" placeholder="Digite a data de inicio do evento." required>
+				<!--<input type="date" id="data-inicio" name="data-inicio" class="form-control"
+					[(ngModel)]="evento.inicio" #sigla="ngModel" placeholder="Digite a data de inicio do evento." required>-->
+				<input type="date" id="data-inicio" name="data-inicio" class="form-control" [(ngModel)]="evento.inicio" #sigla="ngModel" placeholder="" data-mask="99/99/9999" required>
 			</div>
 
 			<div class="form-group">
 				<label for="data-fim">Data de Término</label>
-				<input type="date" id="data-fim" name="data-fim" class="form-control"
-					[(ngModel)]="evento.termino" #sigla="ngModel" placeholder="Digite a data de fim do evento." required>
+				<!--<input type="date" id="data-fim" name="data-fim" class="form-control"
+					[(ngModel)]="evento.termino" #sigla="ngModel" placeholder="Digite a data de fim do evento." required>-->
+				<input type="date" id="data-fim" name="data-fim" class="form-control" [(ngModel)]="evento.termino" #sigla="ngModel" placeholder="" data-mask="99/99/9999" required>
 			</div>
 
 			<div class="form-group">
