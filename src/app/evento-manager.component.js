@@ -40,6 +40,7 @@ var EventoManagerComponent = (function () {
     };
     EventoManagerComponent.prototype.atualizaEventosHome = function () {
         this.eventosHome = [];
+        console.log(this.eventos);
         if (this.eventos.length >= 3) {
             for (var i in this.eventos) {
                 if (parseInt(i) <= 2) {
@@ -56,58 +57,6 @@ var EventoManagerComponent = (function () {
             }
         }
     };
-    EventoManagerComponent.prototype.leituraArquivo = function () {
-    };
-    EventoManagerComponent.prototype.preencheEventosFromLocalStorage = function (retorno) {
-        var array;
-        for (var _i = 0, retorno_1 = retorno; _i < retorno_1.length; _i++) {
-            var o = retorno_1[_i];
-            array = Object.keys(o);
-            var objEvento = new Evento_1.Evento(0, "", "");
-            for (var _a = 0, array_1 = array; _a < array_1.length; _a++) {
-                var key = array_1[_a];
-                switch (key) {
-                    case "id": {
-                        objEvento.id = o[key];
-                        break;
-                    }
-                    case "nome": {
-                        objEvento.nome = o[key];
-                        break;
-                    }
-                    case "sigla": {
-                        objEvento.sigla = o[key];
-                        break;
-                    }
-                    case "inicio": {
-                        objEvento.inicio = o[key];
-                        break;
-                    }
-                    case "termino": {
-                        objEvento.termino = o[key];
-                        break;
-                    }
-                    case "url": {
-                        objEvento.url = o[key];
-                        break;
-                    }
-                    case "cidade": {
-                        objEvento.cidade = o[key];
-                        break;
-                    }
-                    case "estado": {
-                        objEvento.estado = o[key];
-                        break;
-                    }
-                    case "local": {
-                        objEvento.local = o[key];
-                        break;
-                    }
-                }
-            }
-            this.eventos.push(objEvento);
-        }
-    };
     EventoManagerComponent.prototype.preencherNovoEvento = function () {
         this.evento = new Evento_1.Evento(0, "", "");
     };
@@ -115,13 +64,12 @@ var EventoManagerComponent = (function () {
         this.eventoSelecionado = evento;
     };
     EventoManagerComponent.prototype.deletar = function (evento) {
+        console.log(evento);
         var posicao;
         posicao = this.eventos.indexOf(evento);
         this.eventos.splice(posicao, 1);
         this.deletado = true;
-        if (this.eventos.length < 3) {
-            this.atualizaEventosHome();
-        }
+        this.atualizaEventosHome();
     };
     EventoManagerComponent.prototype.editar = function (evento) {
         this.evento = evento;

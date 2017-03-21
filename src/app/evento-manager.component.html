@@ -87,7 +87,8 @@
 
     <div *ngIf="tela == 'home'"> <!-- Tela Home -->
       <h3 *ngIf="eventos.length >= 0">Total de Eventos: <span class="badge">{{eventos.length}}</span></h3>
-
+      <h2 *ngIf="eventos.length == 0"> Não há eventos cadastrados</h2>
+      <a *ngIf="eventos.length == 0" id = "btnNovo" class="btn btn-primary" (click) = "tela = 'cadastro'; telaAnterior = 'eventos'"><span class="glyphicon glyphicon-plus-sign"></span> Novo</a>
       <div class="table-responsive" *ngIf="eventos.length > 0">
         <table class="table table-bordered table-condensed">
           <tbody>
@@ -115,8 +116,6 @@
       </tr>
     </tbody>
   </table>
-
-  <h2 *ngIf="eventos.length == 0"> Não há eventos cadastrados</h2>
   <a id="btnVerTodos" *ngIf="eventos.length > 0" (click) = "tela = 'eventos'; telaAnterior = 'home'"  class="btn btn-link btn-block"> Ver todos</a>
 
 </div>
@@ -265,6 +264,6 @@
         <div>
           <p>Realmente deseja excluir as informações sobre o evento "{{eventoSelecionado.sigla}}"?</p>
         </div>
-        <button  class="btn btn-primary btn-success"  (click) = "deletar(evento); tela = 'eventos'"><span class="glyphicon glyphicon-ok"></span></button>
+        <button  class="btn btn-primary btn-success"  (click) = "deletar(eventoSelecionado); tela = 'eventos'"><span class="glyphicon glyphicon-ok"></span></button>
         <button  class="btn btn-primary btn-danger"  (click)="mostrarDetalhes(eventoSelecionado); tela = 'evento'"><span class="glyphicon glyphicon-remove"></span></button>
       </div>

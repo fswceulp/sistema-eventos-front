@@ -41,38 +41,6 @@ export class EventoManagerComponent implements OnInit{
 
 
 
-  // constructor() {
-  //
-  //
-  //   // var eventos: Evento[] = [
-  //   //   new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
-  //   //   new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-  //   //   new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC'),
-  //   //   new Evento(4, 'XXII Evento Para Testes', 'TESTE')
-  //   // ];
-  //   // this.eventos = eventos;
-  //
-  //   this.atualizaContadorIds();
-  //   if(this.eventos.length >= 3){
-  //     for(let i in this.eventos){
-  //       if(parseInt(i) <= 2){
-  //         this.eventosHome.push(this.eventos[i]);
-  //       }else{
-  //         break; //quebra o laço de repetição após preencher o array eventosHome
-  //       }
-  //     }
-  //   }
-  //
-  //   if(this.eventos.length > 0 && this.eventosHome.length == 0){
-  //     this.eventosHome = [];
-  //     for(let i in this.eventos){
-  //       this.eventosHome.push(this.eventos[i]);
-  //     }
-  //   }
-  // }//fim construtor
-
-
-
 
   atualizaContadorIds(): void{
     this.contIds = this.eventos.length;
@@ -80,6 +48,7 @@ export class EventoManagerComponent implements OnInit{
 
   atualizaEventosHome():void{
     this.eventosHome = [];
+    console.log(this.eventos);
     if(this.eventos.length >= 3){
       for(let i in this.eventos){
         if(parseInt(i) <= 2){
@@ -96,64 +65,6 @@ export class EventoManagerComponent implements OnInit{
     }
   }
 
-  leituraArquivo():void{
-
-  }
-
-  preencheEventosFromLocalStorage(retorno: any[]): void{
-    var array: string[];
-    for(let o of retorno){
-      //percorro todos os objetos do localStorage
-      array = Object.keys(o);
-      var objEvento: Evento = new Evento(0, "", "");
-      for(let key of array){
-        // percorro todas as chaves do objeto (todos os atributos)
-        // console.log(o[key]);
-        switch(key){
-          case "id":{
-            objEvento.id = o[key];
-            break;
-          }
-          case "nome":{
-            objEvento.nome = o[key];
-            break;
-          }
-          case "sigla":{
-            objEvento.sigla = o[key];
-            break;
-          }
-          case "inicio":{
-            objEvento.inicio = o[key];
-            break;
-          }
-          case "termino":{
-            objEvento.termino = o[key];
-            break;
-          }
-          case "url":{
-            objEvento.url = o[key];
-            break;
-          }
-          case "cidade":{
-            objEvento.cidade = o[key];
-            break;
-          }
-          case "estado":{
-            objEvento.estado = o[key];
-            break;
-          }
-          case "local":{
-            objEvento.local = o[key];
-            break;
-          }
-        }//fim switch
-      }
-      this.eventos.push(objEvento);
-
-      // this.eventos.push(objEvento);
-    }
-  }
-
   preencherNovoEvento(): void {
     this.evento = new Evento(0, "", "");
   }
@@ -163,13 +74,12 @@ export class EventoManagerComponent implements OnInit{
   }
 
   deletar(evento: Evento): void{
+    console.log(evento);
     var posicao: number;
     posicao = this.eventos.indexOf(evento);
     this.eventos.splice(posicao, 1);
     this.deletado = true;
-    if(this.eventos.length < 3){
-      this.atualizaEventosHome();
-    }
+    this.atualizaEventosHome();
   }
 
   editar(evento: Evento): void{
