@@ -1,0 +1,79 @@
+<h1>Sistema de Alunos</h1>
+<div class="col-md-6" *ngFor="let turma of turmas">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><b>{{turma.nome}}</b></div>
+        <div class="panel-body">
+            <p>Alunos vinculados a turma</p>
+        </div>
+
+        <!-- Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Nome do Aluno
+                    </th>
+                    <th>
+                        Turma
+                    </th>
+                    <th>
+                        Nota
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let desempenho of desempenhos">
+                    <td *ngIf="turma.nome == desempenho.turma.nome">{{desempenho.aluno.nome}}</td>
+                    <td *ngIf="turma.nome == desempenho.turma.nome">{{desempenho.turma.nome}}</td>
+                    <td *ngIf="turma.nome == desempenho.turma.nome">{{desempenho.nota}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<button type="button" class="btn btn-success" (click)="cadastrar=true;">Cadastrar Novo</button>
+
+<div [hidden]="!cadastrar">
+    <form (ngSubmit)="onSubmit(formCadastro)" #formCadastro="ngForm">
+
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="aluno.nome" #nome="ngModel" placeholder="Nome do Aluno"
+                required minlength="20" maxlength="60" required>
+            <div class="alert alert-danger" *ngIf="nome.errors && (nome.dirty || nome.touched)">
+                <div [hidden]="!nome.errors.required">
+                    Você deve informar o nome do aluno.
+                </div>
+                <div [hidden]="!nome.errors.minlength">
+                    O nome do aluno deve ter, no mínimo, 15 caracteres.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" class="form-control" [(ngModel)]="aluno.cpf" #cpf="ngModel" placeholder="Cpf do Aluno"
+                required minlength="14" maxlength="14">
+            <div class="alert alert-danger" *ngIf="cpf.errors && (cpf.dirty || cpf.touched)">
+                <div [hidden]="!cpf.errors.minlength">
+                    O cpf do aluno deve ter, 14 caracteres.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <select id="turma" name="turma" class="form-control" [(ngModel)]="nomeTurma" #turma="ngModel" placeholder="Selecione a turma para vinculo">
+                <option *ngFor="let turma of turmas" value="{{turma.nome}}">{{turma.nome}}</option>
+                
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
+        <button type="button" class="btn btn-default" (click)="novoAluno(); formCadastro.reset()">Novo</button>
+        <button type="button" class="btn btn-danger" (click)="cadastrar=false; verificaNome();">Cancelar</button>
+        <br/>
+    </form>
+</div>
