@@ -15,7 +15,8 @@ export class EventoManagerComponent {
     this.eventos = [
       new Evento(1, 'XIX Congresso de Computação e Sistemas de Informação', 'ENCOINFO'),
       new Evento(2, 'XIII Simpósio Brasileiro de Sistemas de Informação', 'SBSI'),
-      new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC')
+      new Evento(3, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC'),
+      new Evento(4, 'XXXVII Congresso da Sociedade Brasileira de Computação', 'CSBC')
     ];
   }
 
