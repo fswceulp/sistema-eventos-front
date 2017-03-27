@@ -8,8 +8,8 @@ import { Evento } from './Evento';
 export class EventoManagerComponent {
   eventos: Evento[];
   eventoSelecionado: Evento = null;
-  id: number = 6;
-  evento: Evento = new Evento(this.id+1, '', '', '','','','','','');
+  idInicial: number = 6;
+  evento: Evento = new Evento(this.idInicial+1, '', '', '','','','','','');
   enviado: boolean = false;
   editar: boolean = false;
   pos: number;
@@ -34,7 +34,7 @@ export class EventoManagerComponent {
   }
 
   preencherNovoEvento(): void {
-    this.evento = new Evento(this.id + 1, '', '', '','','','','','');
+    this.evento = new Evento(this.idInicial + 1, '', '', '','','','','','');
   }
 
   mostrarDetalhes(evento: Evento) : void {
@@ -63,7 +63,7 @@ export class EventoManagerComponent {
     }
     else{
       this.eventos.push(this.evento);
-      this.id = this.evento.id;
+      this.idInicial = this.evento.idInicial;
 	  this.cadastro=true;
 	  this.lista=false;
 	  this.descricao=true;
