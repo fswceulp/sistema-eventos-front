@@ -63,7 +63,7 @@ export class EventoManagerComponent {
     }
     else{
       this.eventos.push(this.evento);
-      this.idInicial = this.evento.idInicial;
+      this.idInicial = this.evento.id;
 	  this.cadastro=true;
 	  this.lista=false;
 	  this.descricao=true;
