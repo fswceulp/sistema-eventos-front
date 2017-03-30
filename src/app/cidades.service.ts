@@ -9,7 +9,7 @@ export class CidadesService {
     }
 
     all(): Observable<any[]> {
-        return this.http.get('../../public/dados/cidades.json')
+        return this.http.get('assets/dados/cidades.json')
             .map(response => response.json());
     }
 

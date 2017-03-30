@@ -10,7 +10,7 @@ export class EventosService {
     }
 
     all(): Observable<Evento[]> {
-        return this.http.get('../../public/dados/eventos.json')
+        return this.http.get('assets/dados/eventos.json')
             .map(response => response.json() as Evento[]);
     }
 
