@@ -1,0 +1,22 @@
+<h2>Eventos</h2>
+<ul>
+    <li *ngFor="let evento of eventos">{{evento.nome}}
+        <ul>
+            <li *ngFor="let artigo of evento.artigos">{{artigo.titulo}} : {{artigo.pontuacaoFinal}} <button (click)="artigoSelecionado = artigo">Ver detalhes</button></li>
+        </ul>
+    </li>
+</ul>
+
+<div *ngIf="artigoSelecionado">
+    <hr />
+    <h2>{{artigoSelecionado.titulo}}</h2>
+    <ul>
+        <li *ngFor="let avaliacao of artigoSelecionado.avaliacoes">
+            Avaliador: {{avaliacao.avaliador}}; 
+            qualidade: {{avaliacao.qualidadeTecnica}}, 
+            inovação: {{avaliacao.inovacao}}, 
+            resultados: {{avaliacao.resultados}}, 
+            metodologia: {{avaliacao.metodologia}}, 
+            adequacao: {{avaliacao.adequacao}}</li>
+    </ul>
+</div>

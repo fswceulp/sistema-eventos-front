@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import { EventoManagerComponent } from './evento-manager.component';
+import { AdminComponent } from './admin.component';
+import { AvaliadorComponent } from './avaliador.component';
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import { EventoManagerComponent } from './evento-manager.component';
     ],
     declarations: [
         AppComponent,
-        EventoManagerComponent
+        AdminComponent,
+        AvaliadorComponent
     ],
     bootstrap: [AppComponent]
 })

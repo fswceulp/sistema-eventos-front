@@ -1,0 +1,38 @@
+<h2>Avaliação de Artigos</h2>
+
+<ul>
+    <li *ngFor="let evento of eventos">{{evento.nome}} <button (click)="carregarArtigos(evento)">Artigos</button></li>
+</ul>
+
+<div *ngIf="eventoSelecionado">
+    <hr />
+    <h3>Artigos do evento: {{eventoSelecionado.nome}}</h3>
+    <ul>
+        <li *ngFor="let artigo of eventoSelecionado.artigos">{{artigo.titulo}} : {{artigo.pontuacaoFinal}} <button (click)="artigoSelecionado = artigo">Avaliar</button></li>
+    </ul>
+</div>
+
+<div *ngIf="artigoSelecionado">
+    <hr />
+    <h3>Avaliação: {{artigoSelecionado.titulo}}</h3>
+    <ul>
+        <li *ngFor="let avaliacao of getAvaliacoes()">
+            Avaliador: {{avaliacao.avaliador}}; 
+            qualidade: <input type="number" name="qualidade" [(ngModel)]="avaliacao.qualidadeTecnica" maxlength="4" style="width:40px">, 
+            inovação: <input type="number" name="inovacao" [(ngModel)]="avaliacao.inovacao" maxlength="4" style="width:40px">, 
+            resultados: <input type="number" name="resultados" [(ngModel)]="avaliacao.resultados" maxlength="4" style="width:40px">, 
+            metodologia: <input type="number" name="metodologia" [(ngModel)]="avaliacao.metodologia" maxlength="4" style="width:40px">, 
+            adequacao: <input type="number" name="adequacao" [(ngModel)]="avaliacao.adequacao" maxlength="4" style="width:40px">
+            <button (click)="excluirAvaliacao(avaliacao)">X</button>
+            </li>
+    </ul>
+    <h4>Nova avaliação</h4>
+
+    qualidade: <input type="number" name="qualidade" [(ngModel)]="avaliacao.qualidadeTecnica" maxlength="4" style="width:40px">, 
+    inovação: <input type="number" name="inovacao" [(ngModel)]="avaliacao.inovacao" maxlength="4" style="width:40px">, 
+    resultados: <input type="number" name="resultados" [(ngModel)]="avaliacao.resultados" maxlength="4" style="width:40px">, 
+    metodologia: <input type="number" name="metodologia" [(ngModel)]="avaliacao.metodologia" maxlength="4" style="width:40px">, 
+    adequacao: <input type="number" name="adequacao" [(ngModel)]="avaliacao.adequacao" maxlength="4" style="width:40px">
+    <button (click)="salvarAvaliacao()">X</button>
+
+</div>

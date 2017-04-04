@@ -1,3 +1,13 @@
 <div class="container">
-    <evento-manager></evento-manager>
+    <div><strong>Gerenciador de eventos</strong> - 
+        <button (click)="usar('Administrador')">Administrador</button> 
+        <button (click)="usar('Avaliador 1')">Avaliador 1</button>
+        <button (click)="usar('Avaliador 2')">Avaliador 2</button>
+        <button (click)="usar('Avaliador 3')">Avaliador 3</button>
+        <button (click)="sair()">Sair</button>
+    </div>
+    <hr>
+    <admin-manager *ngIf="estahLogado() && ehAdmin()"></admin-manager>
+    <hr>
+    <avaliador *ngIf="estahLogado() && !ehAdmin()"></avaliador>
 </div>
