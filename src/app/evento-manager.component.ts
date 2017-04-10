@@ -1,15 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
+import { EventoManagerService } from './evento-manager.service';
 import { Evento } from './Evento';
+import { Artigo } from './Artigo';
+import { Autor } from './Autor';
 
 @Component({
     selector: 'evento-manager',
     templateUrl: './evento-manager.component.html'
 })
-export class EventoManagerComponent {
+export class EventoManagerComponent implements OnInit {
 	eventos: Evento[];
 	eventoSelecionado: Evento = null;
-	evento: Evento = new Evento(0, "", "", '', '', '', '', '', '');
-	deleteEvento: Evento = new Evento(0, "", "", '', '', '', '', '', '');
+	evento: Evento = new Evento(this.contIdEvento , "", "", '', '', '', '', '', '',null);
+	deleteEvento: Evento = new Evento(0 , "", "", '', '', '', '', '', '',null);
+	contIdEvento: number = 7;
 	home: boolean = true;
 	listaEventos: boolean = false;
 	telaEvento: boolean = false;
@@ -18,34 +23,120 @@ export class EventoManagerComponent {
 	editar: boolean = false;
 	excluir: boolean = false;
 	
-	constructor() {
-		this.eventos = [
-			{ "id":1, "nome": "XIX Congresso de Computação e Sistemas de Informação", "sigla": "ENCOINFO", "inicio": "2017-03-04", "termino": "2017-03-06", "url": "http://ulbra-to.br/encoinfo/site/", "cidade": "Palmas", "estado": "TO", "local": "CEULP"},
-			{ "id":2, "nome": "XIII Simpósio Brasileiro de Sistemas de Informação", "sigla": "SBSI", "inicio": "2017-04-20", "termino": "2017-04-25", "url": "http://sbsi2016.ufsc.br/", "cidade": "Florianópolis", "estado": "SC", "local": "Castelmar"},
-			{ "id":3, "nome": "XXXVII Congresso da Sociedade Brasileira de Computação", "sigla": "CSBC", "inicio": "2017-05-15", "termino": "2017-05-20", "url": "http://csbc2017.mackenzie.br/", "cidade": "São Paulo", "estado": "SP", "local": "Mackenzie"},
-			{ "id":4, "nome": "II Congresso de IA de Palmas", "sigla": "CIAP", "inicio": "2016-12-31", "termino": "2017-01-20", "url": "http://www.ciap.com.br", "cidade": "Palmas", "estado": "TO", "local": "Ceulp/Ulbra"},
-			{ "id":5, "nome": "I Congresso de Ciência da Computação de Palmas", "sigla": "CCCP", "inicio": "2017-03-31", "termino": "2017-04-05", "url": "http://www.cccp.com.br", "cidade": "Palmas", "estado": "TO", "local": "Ceulp/Ulbra"},
-			{ "id":6, "nome": "III Congresso de Empresas de Tecnologia do Tocantins", "sigla": "CET-TO", "inicio": "2017-05-28", "termino": "2017-06-03", "url": "http://www.cet-to.com.br", "cidade": "Palmas", "estado": "TO", "local": "Ceulp/Ulbra"},
-			{ "id":7, "nome": "XIII Encontro Anual de Computação", "sigla": "ENACOMP", "inicio": "2017-05-24", "termino": "2017-05-26", "url": "http://www.enacomp.com.br/#/", "cidade": "Goiânia", "estado": "GO", "local": "UFG"}
-		];
+	contIdArtigo: number = 3;
+	artigo: Artigo = new Artigo(this.contIdArtigo, "",[],"",[]);
+	artigoSelecionado: Artigo = new Artigo(this.contIdArtigo, "",[],"",[]);
+	autor: Autor = new Autor("","");
+	formularioArtigo: boolean = false;
+	formularioEditarArtigo: boolean = false;
+	excluirArtigo: boolean = false;
+	cadastroPasso: number = 0;
+	palavraChave: string;
+	
+	constructor(private eventoManagerService: EventoManagerService) {}
+	
+	ngOnInit(){
+		this.eventoManagerService.getEventos()
+		.subscribe(
+			resEventos => {
+				this.eventos = resEventos as Evento[];
+			},
+			error => console.error('Error: ' + error),
+			() => console.log('Completed!')
+		);
 	}
+
+	/*Trabalho 3*/
+	
+	cadastrarArtigo() : void{
+		this.formularioArtigo = true;
+		this.cadastroPasso = 1;
+		this.preencherNovoArtigo();
+		this.novoAutor();
+	}
+
+	preencherNovoArtigo() : void{
+		this.artigo = new Artigo(this.contIdArtigo, "", [], "", []);
+	}
+	
+	novoAutor() : void{
+		this.autor = new Autor("","");
+	}
+	
+	cadastrarAutor() : void{
+		if(this.autor.nome == "" || this.autor.email == ""){
+			this.cadastroPasso = 4; // mensagem de alerta (campo vazio)
+		}
+		else{
+			if(this.cadastroPasso == 1){
+				let a = new Autor(this.autor.nome,this.autor.email);
+				this.artigo.autores.push(a);
+			}
+			this.novoAutor();
+			console.log(this.artigo);
+		}
+	}
+	
+	cadastrarPalavra() : void{
+		if(this.palavraChave == ""){
+			this.cadastroPasso = 5; // mensagem de alerta (campo vazio)
+		}
+		else{
+			this.artigo.pChave.push(this.palavraChave);
+			this.palavraChave = "";
+			console.log(this.artigo);
+		}
+	}
+	
+	proximoPasso() : void{
+		if(this.cadastroPasso < 3){
+			this.cadastroPasso ++;
+		}
+	}	
+	
+	onSubmitArtigo() : void{
+		if(this.palavraChave == ""){
+			this.cadastroPasso = 5; // mensagem de alerta (campo vazio)
+		}
+		else{
+			this.cadastrarPalavra();
+			this.evento.artigos.push(this.artigo);
+			this.cadastroPasso = 6;
+			this.contIdArtigo ++;
+		}
+	}
+	
+	editarArtigo(artigo : Artigo) : void{
+		this.artigo = artigo;
+		this.formularioEditarArtigo = true;
+	}
+	
+	apagarArtigo() : void{
+		if(this.excluirArtigo){
+			this.evento.artigos.splice(this.evento.artigos.indexOf(this.artigoSelecionado), 1);
+			this.excluirArtigo = false;
+			this.artigoSelecionado = null;
+		}
+	}
+	
+	/*Fim-Trabalho 3*/
 	
 	visualizarEvento(evento: Evento) : void{
 		this.evento = evento;
-		this.tudoFalso();
+		this.limparTela();
 		this.telaEvento = true;
 	}
 
 	editarEvento(evento: Evento) : void{
 		this.evento = evento;
-		this.tudoFalso();
+		this.limparTela();
 		this.formulario = true;
 		this.editar = true;
 	}
 	
 	telaExcluirEvento(evento: Evento) : void{
 		this.deleteEvento = evento;
-		this.tudoFalso();
+		this.limparTela();
 		this.excluir = true;
 	}
 
@@ -55,45 +146,40 @@ export class EventoManagerComponent {
 			this.todosEventos();
 		}
 		else{
-			this.tudoFalso();
+			this.limparTela();
 			this.telaEvento = true;
 		}
 	}
 
 	onSubmit() : void {
-	console.log(this.evento);
-	if(this.editar){
-		this.eventos.splice(this.eventos.indexOf(this.evento),1,this.evento);
-		this.editar = false;
-	}
-	else{
+		console.log(this.evento);
 		this.eventos.push(this.evento);
-	}
-	this.tudoFalso();
-	this.sucesso = true;
+		this.contIdEvento ++;
+		this.limparTela();
+		this.sucesso = true;
 	}
 
 	novoEvento() : void {
-		this.tudoFalso();
+		this.limparTela();
 		this.formulario = true;
 		this.preencherNovoEvento();
 	}
 	
 	preencherNovoEvento(): void {
-		this.evento = new Evento(0, "", "", '', '', '', '', '', '');
+		this.evento = new Evento(this.contIdEvento, "", "", '', '', '', '', '', '',null);
 	}
 	
 	todosEventos(): void{
-		this.tudoFalso();
+		this.limparTela();
 		this.listaEventos = true;
 	}
 	
 	telaHome(): void{
-		this.tudoFalso();
+		this.limparTela();
 		this.home = true;
 	}
 	
-	tudoFalso() : void{ /*Esconde todas as telas, depois de chamar esse método 
+	limparTela() : void{ /*Esconde todas as telas, depois de chamar esse método 
 						  você escolhe "manualmente" qual tela deseja exibir*/
 		this.home = false;
 		this.listaEventos = false;
@@ -101,6 +187,8 @@ export class EventoManagerComponent {
 		this.formulario = false;
 		this.sucesso = false;
 		this.editar = false;
-		this.excluir = false;	
+		this.excluir = false;
+		this.artigoSelecionado = null;
+		this.eventoSelecionado = null;
 	}
 }

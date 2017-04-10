@@ -30,7 +30,7 @@
 			<th>Local</th>
 		</tr>
 		<tr *ngFor="let evento of eventos; let i = index;" (click)="visualizarEvento(evento)">
-			<td *ngIf="i<3">{{evento.id}}</td>
+			<td *ngIf="i<3">{{evento.idEvento}}</td>
 			<td *ngIf="i<3">{{evento.sigla }}</td>
 			<td *ngIf="i<3">{{evento.nome}}</td>
 			<td *ngIf="i<3">{{evento.inicio}}</td>
@@ -41,7 +41,7 @@
 			<td *ngIf="i<3">{{evento.local}}</td>
 		</tr>
 	</table>
-	<p>{{eventos.length}} eventos cadastrados.</p>
+	<!--<p>{{eventos.length}} eventos cadastrados.</p>-->
 </div>
 
 <div [hidden]="!telaEvento">
@@ -50,15 +50,183 @@
         <p>De {{evento.inicio}} a {{evento.termino}}, em {{evento.cidade}} - {{evento.estado}},
         no(a) {{evento.local}}.</p>
 		<p>Mais informações no site <a [href]="evento.url">{{evento.url}}</a>.</p>      
-		<button class="btn btn-warning" (click)="editarEvento(evento)">Editar</button>
-		<button class="btn btn-danger" (click)="telaExcluirEvento(evento)">Excluir</button>
+		<button class="btn btn-warning" (click)="editarEvento(evento)">Editar Evento</button>
+		<button class="btn btn-danger" (click)="telaExcluirEvento(evento)">Excluir Evento</button>
+		
+		<h3>Artigos</h3> <!-- TRABALHO PARTE 3 -->
+		<ul>
+			<li *ngFor="let artigo of evento.artigos">
+				{{artigo.titulo}} - 
+				<button class="btn btn-xs btn-info" (click)="artigoSelecionado = artigo">Ver Mais</button>
+			</li>
+		</ul>
+
+		<button class="btn btn-xs btn-success" (click)="cadastrarArtigo(); formArtigo.reset()">Cadastrar Novo Artigo</button>
+		
+		<div *ngIf="artigoSelecionado">
+			<hr>
+			<h4>Informações:</h4>
+			<ul>
+				<li>ID: {{artigoSelecionado.idArtigo}}</li>
+				<li>Título: {{artigoSelecionado.titulo}}</li>
+				<li>Autores:
+					<ol>
+						<li *ngFor="let autor of artigoSelecionado.autores">{{autor.nome}} - {{autor.email}}</li>
+					</ol>
+				</li>
+				<li>Resumo: {{artigoSelecionado.resumo}}</li>
+				<li>Palavras-chave:
+					<ul>
+						<li *ngFor="let palavra of artigoSelecionado.pChave">{{palavra}}</li>
+					</ul>
+				</li>
+			</ul>
+			<button class="btn btn-default" (click)="artigoSelecionado = null">Fechar</button>
+			<button class="btn btn-warning" (click)="editarArtigo(artigoSelecionado)">Editar</button>
+			<button class="btn btn-danger" (click)="excluirArtigo = true">Excluir</button>
+		</div>
+		
+	<!-- Formulário Cadastrar Artigo -->
+		<div [hidden]="!formularioArtigo">
+			<hr>
+			<form (ngSubmit)="onSubmitArtigo()" #formArtigo="ngForm">
+			<!-- Passo 1 -->
+				<div *ngIf="cadastroPasso == 1">
+					<div class="form-group">
+						<label for="nomeAutor">Nome do Autor</label>
+						<input type="text" id="nomeAutor" name="nomeAutor" class="form-control" [(ngModel)]="autor.nome" #nomeAutor="ngModel" placeholder="Nome do autor" required>
+					</div>
+					
+					<div class="form-group">
+						<label for="emailAutor">Email do Autor</label>
+						<input type="email" id="emailAutor" name="emailAutor" class="form-control" [(ngModel)]="autor.email" #emailAutor="ngModel" placeholder="Email do autor" required>
+					</div>
+					
+					<button class="btn btn-warning" (click)="formularioArtigo = false">Sair</button>
+					<button class="btn btn-default" (click)="cadastrarAutor()">Cadastrar outro autor</button>
+					<button class="btn btn-primary" (click)="cadastrarAutor(); proximoPasso()">Próximo</button>
+				</div>
+				
+				<div *ngIf="cadastroPasso == 4" class="alert alert-warning"> <!-- Mensagem de alerta(autor) -->
+					<p>Você deve informar o nome e email do autor</p>
+					<p></p>
+					<button class="btn btn-default" (click)="cadastroPasso = 1;">Voltar</button>
+				</div>
+			<!-- Fim Passo 1 -->
+			
+			<!-- Passo 2 -->
+				<div *ngIf="cadastroPasso == 2">
+					<div class="form-group">
+						<label for="titulo">Título</label>
+						<input type="text" id="titulo" name="titulo" class="form-control" [(ngModel)]="artigo.titulo" #titulo="ngModel" placeholder="Nome do título" required>
+						<div class="alert alert-danger" [hidden]="titulo.valid || titulo.pristine">Você deve informar o título do artigo.</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="resumo">Resumo</label>
+						<input type="text" id="resumo" name="resumo" class="form-control" [(ngModel)]="artigo.resumo" #resumo="ngModel" placeholder="Resumo do artigo" required>
+						<div class="alert alert-danger" [hidden]="resumo.valid || resumo.pristine">Você deve informar o resumo do artigo.</div>
+					</div>
+					
+					<button class="btn btn-warning" (click)="cadastrarAutor(); cadastroPasso = 1">Voltar</button>
+					<button class="btn btn-primary" (click)="proximoPasso()">Próximo</button>
+				</div>
+			<!-- Fim Passo 2 -->
+			
+			<!-- Passo 3 -->
+				<div *ngIf="cadastroPasso == 3">
+					<div class="form-group">
+						<label for="palavras">Palavras-chave</label>
+						<input type="text" id="palavras" name="palavras" class="form-control" [(ngModel)]="palavraChave" #palavras="ngModel" placeholder="Palavras-chave do artigo" required>
+					</div>
+					
+					<button class="btn btn-warning" (click)="cadastroPasso = 2">Voltar</button>
+					<button type="button" class="btn btn-default" (click)="cadastrarPalavra()">Cadastrar outra palavra</button>
+					<button type="submit" class="btn btn-success" [disabled]="!formArtigo.form.valid">Finalizar</button>
+				</div>
+				
+				<div *ngIf="cadastroPasso == 5" class="alert alert-warning"> <!-- Mensagem de alerta(palavras-chave) -->
+					<p>Você deve informar uma palavra-chave.</p>
+					<p></p>
+					<button class="btn btn-default" (click)="cadastroPasso = 3;">Voltar</button>
+				</div>
+				
+			<!-- Fim Passo 3 -->
+				
+			</form>
+			
+			<div *ngIf="cadastroPasso == 6" class="alert alert-success"> <!-- Mensagem de sucesso -->
+				<p>Artigo cadastrado com sucesso!</p>
+				<p></p>
+				<button class="btn btn-default" (click)="formularioArtigo = false">Fechar</button>
+				<button class="btn btn-default" (click)="cadastrarArtigo(); formArtigo.reset()">Cadastrar novo artigo</button>
+			</div>
+			
+		</div>
+	<!-- Fim Formulário Cadastrar Artigo -->
+	
+	<!-- Formulário Editar Artigo -->
+		<div [hidden]="!formularioEditarArtigo">
+			<hr>
+			<h2>Editar artigo</h2>
+			<p class="alert alert-warning"><strong>Atenção!</strong> As alterações realizadas nos campos são automaticamente refletidas</p>
+			
+			<form #formEditarArtigo="ngForm">
+				<ol>
+					<li *ngFor="let autor of artigo.autores">
+						<div class="form-group">
+							<label for="nomeAutor">Nome do Autor</label>
+							<input type="text" name="nomeAutor" class="form-control" [(ngModel)]="autor.nome"  placeholder="Nome do autor" required>
+						</div>
+						
+						<div class="form-group">
+							<label for="emailAutor">Email do Autor</label>
+							<input type="email" name="emailAutor" class="form-control" [(ngModel)]="autor.email" placeholder="Email do autor" required>
+						</div>
+					</li>
+				</ol>
+				
+				<div class="form-group">
+					<label for="titulo">Título</label>
+					<input type="text" id="titulo" name="titulo" class="form-control" [(ngModel)]="artigo.titulo" #titulo="ngModel" placeholder="Nome do título" required>
+					<div class="alert alert-danger" [hidden]="titulo.valid || titulo.pristine">Você deve informar o título do artigo.</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="resumo">Resumo</label>
+					<input type="text" id="resumo" name="resumo" class="form-control" [(ngModel)]="artigo.resumo" #resumo="ngModel" placeholder="Resumo do artigo" required>
+					<div class="alert alert-danger" [hidden]="resumo.valid || resumo.pristine">Você deve informar o resumo do artigo.</div>
+				</div>
+				
+				<ul>
+					<li *ngFor="let palavra of artigo.pChave; let i = index;">
+						<label for="palavras">Palavra-chave</label>
+						<div class="form-group">
+							<input type="text" name="palavras" class="form-control" [(ngModel)]="artigo.pChave[i]" placeholder="Palavras-chave do artigo" required>
+						</div>
+					</li>
+				</ul>
+			</form>
+			
+			<button class="btn btn-warning" (click)="formularioEditarArtigo = false">Voltar</button>
+		</div>
+	<!-- Fim Formulário Cadastrar Artigo -->
+	
+		<div *ngIf="excluirArtigo">
+			<hr>
+			<p>Deseja excluir o artigo {{artigoSelecionado.titulo}}? </p>
+			<p></p>
+			<button class="btn btn-warning" (click)="apagarArtigo()">Sim</button>
+			<button class="btn btn-success" (click)="excluirArtigo = false; apagarArtigo();">Não</button>
+		</div>
+		<!-- FIM TRABALHO PARTE 3 -->
 	</div>
 </div>
 
 <div [hidden]="!listaEventos">
 	<h2>Todos os eventos</h2>
 	<button class="btn" (click)="telaHome()">Página principal</button>
-	<button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+	<button type="button" class="btn btn-default" (click)="novoEvento(); formEvento.reset()">Novo</button>
 	<table>
 		<tr>
 			<th>ID</th>
@@ -72,7 +240,7 @@
 			<th>Local</th>
 		</tr>
 		<tr *ngFor="let evento of eventos" (click)="visualizarEvento(evento)">
-			<td>{{evento.id}}</td>
+			<td>{{evento.idEvento}}</td>
 			<td>{{evento.sigla }}</td>
 			<td>{{evento.nome}}</td>
 			<td>{{evento.inicio}}</td>
@@ -93,12 +261,7 @@
 		<h2>Editar evento</h2>
 		<p class="alert alert-warning"><strong>Atenção!</strong> As alterações realizadas nos campos são automaticamente refletidas</p>
 	</div>
-    <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
-		<div class="form-group">
-			<label for="ident">Id</label>
-			<input type="number" min="0" id="ident" name="ident" class="form-control" [(ngModel)]="evento.id" #ident="ngModel" placeholder="Id do evento" required>
-			<div class="alert alert-danger" [hidden]="ident.valid || ident.pristine">Você deve informar o id do evento.</div> 
-		</div>
+    <form (ngSubmit)="onSubmit()" #formEvento="ngForm">
 		
 		<div class="form-group">
 			<label for="nome">Nome</label>
@@ -146,7 +309,7 @@
 			<div class="alert alert-danger" [hidden]="local.valid || local.pristine">Você deve informar o local do evento.</div> 
 		</div>
 		<div [hidden]="editar">
-			<button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
+			<button type="submit" class="btn btn-success" [disabled]="!formEvento.form.valid">Salvar</button>
 		</div>
     </form>
 	<div [hidden]="!editar">
@@ -164,7 +327,7 @@
 				<th>Local</th>
 			</tr>
 			<tr>
-				<td>{{evento.id}}</td>
+				<td>{{evento.idEvento}}</td>
 				<td>{{evento.sigla }}</td>
 				<td>{{evento.nome}}</td>
 				<td>{{evento.inicio}}</td>

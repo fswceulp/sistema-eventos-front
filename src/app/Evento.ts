@@ -1,5 +1,6 @@
+import { Artigo } from './Artigo';
 export class Evento {
-    public id : number;
+    public idEvento : number;
     public nome : string;
     public sigla : string;
     public inicio : string;
@@ -8,9 +9,10 @@ export class Evento {
     public cidade : string;
     public estado : string;
     public local : string;
+	public artigos : Artigo[];
 
-    constructor(id: number, nome: string, sigla: string, inicio: string, termino: string, url: string, cidade: string, estado: string, local: string) {
-        this.id = id;
+    constructor(idEvento: number, nome: string, sigla: string, inicio: string, termino: string, url: string, cidade: string, estado: string, local: string, artigos: Artigo[]) {
+        this.idEvento = idEvento;
         this.nome = nome;
         this.sigla = sigla;
 		this.inicio = inicio;
@@ -19,5 +21,6 @@ export class Evento {
 		this.cidade = cidade;
 		this.estado = estado;
 		this.local = local;
+		this.artigos = artigos;
     }
 }
