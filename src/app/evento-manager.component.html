@@ -14,7 +14,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#" (click) = "home()">Home<span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="#" (click) = "modo = 'home'">Home<span class="sr-only">(current)</span></a></li>
         <li><a href="#" (click) = "listarEventos()">Eventos</a></li>
       </ul>
     </div>
@@ -47,7 +47,7 @@
         <tr>
             <td>
                 <button  class="btn btn-default"  (click)="cadastrar()">Cadastrar novo evento</button>
-                <button  class="btn btn-default"  (click)="home()">TELA HOME</button>
+                <button  class="btn btn-default"  (click)="modo='home'">TELA HOME</button>
             </td>
         </tr>
         </table>
@@ -55,26 +55,6 @@
     <div *ngIf = "eventos.length == 0">
         <h4>Nenhum evento cadastrado</h4>
     </div>
-</div>
-
-<div *ngIf="eventoSelecionado && modo == 'visualizar'"><!-- TELA EVENTO -->
-    <h2>TELA EVENTO</h2>
-    <div>
-        <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
-        <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
-            em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
-        no(a) {{eventoSelecionado.local}}.</p>
-        <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>        
-    </div>
-    <button  class="btn btn-default"  (click)="editar(eventoSelecionado)">Editar evento</button>
-    <button  class="btn btn-default"  (click)="excluir()">Excluir evento</button>
-    <button  class="btn btn-default"  (click)="listarEventos()">Ver todos os eventos</button>
-
-    <!--<div [hidden]="!editado" class="alert alert-success">
-        <p>Dados alterados com sucesso!</p>
-        <p><button class="btn btn-default" (click)="editado = false">Ok</button>
-    </div>-->
-
 </div>
 
 <div *ngIf="modo == 'cadastrar'"><!-- TELA CADASTRAR EVENTO -->
@@ -223,4 +203,88 @@
     </div>
     <button  class="btn btn-default"  (click)="excluirEvento(eventoSelecionado)">CONFIRMAR</button>
     <button  class="btn btn-default"  (click)="mostrarDetalhes(eventoSelecionado)">CANCELAR</button>
+</div>
+
+<div *ngIf="eventoSelecionado && modo == 'visualizar'"><!-- TELA EVENTO -->
+    <h2>TELA EVENTO</h2>
+    <div>
+        <h3>{{eventoSelecionado.nome}} - {{eventoSelecionado.sigla}}</h3>
+        <p>De {{eventoSelecionado.inicio}} a {{eventoSelecionado.termino}},
+            em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
+        no(a) {{eventoSelecionado.local}}.</p>
+        <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>        
+    </div>
+    <div *ngIf = "listaArtigos.length > 0">
+        <h4>Lista de Artigos</h4>
+        <ul *ngFor="let artigo of listaArtigos">
+          <li *ngIf = "artigo.idEvento == eventoSelecionado.id">{{artigo.titulo}}</li>
+        </ul>  
+    </div>
+    <div *ngIf ="listaArtigos.length == 0">
+        <h4>Nenhuma artigo cadastrado</h4>
+    </div>
+
+    <button  class="btn btn-default"  (click)="editar(eventoSelecionado)">Editar evento</button>
+    <button class="btn btn-default" (click)="modo = 'cadastrarArtigo'">Cadastrar Artigo</button>
+    <button  class="btn btn-default"  (click)="modo = 'excluir'">Excluir evento</button>
+    <button  class="btn btn-default"  (click)="listarEventos()">Ver todos os eventos</button>
+
+</div>
+
+<div *ngIf = "modo == 'cadastrarArtigo' || modo == 'cadastrarAutor'"><!--TELA CADASTRO ARTIGO-->
+    <h2>TELA CADASTRAR ARTIGO</h2>
+    <div>
+        <form (ngSubmit)="onSubmitArtigo()" #formCadastro="ngForm">
+        <div class="form-group">
+            <label for="titulo">Titulo</label>
+            <input type="text" id="titulo" name="titulo" class="form-control"
+                [(ngModel)]="artigo.titulo" #titulo="ngModel"
+                placeholder="Titulo do artigo" required>
+            <div class="alert alert-danger" [hidden]="titulo.valid || titulo.pristine">Você deve informar o titulo do artigo.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="palavrasChave">Palavras-Chave</label>
+            <input type="text" id="palavrasChave" name="palavrasChave" class="form-control"
+                [(ngModel)]="artigo.palavrasChave" #palavrasChave="ngModel"
+                placeholder="Palavras-Chave do artigo" required>
+            <div class="alert alert-danger" [hidden]="palavrasChave.valid || palavrasChave.pristine">Você deve informar as palavras-chave do artigo.</div> 
+        </div>
+        <div class="form-group">
+            <label for="resumo">Resumo</label>
+            <input type="text" id="resumo" name="resumo" class="form-control"
+                [(ngModel)]="artigo.resumo" #resumo="ngModel"
+                placeholder="Resumo do artigo" required>
+            <div class="alert alert-danger" [hidden]="resumo.valid || resumo.pristine">Você deve informar o resumo artigo.</div> 
+        </div>
+        <div *ngIf="modo !='cadastrarAutor'">
+            <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid || autores.length == 0">Salvar</button> 
+            <button type="button" class="btn btn-default" (click)="novoArtigo(); formCadastro.reset()">Novo</button>
+            <button  class="btn btn-default"  (click)="modo = 'cadastrarAutor'">Cadastrar Autor</button>
+        </div>
+        </form>
+    </div>
+</div>
+
+<div *ngIf = "modo == 'cadastrarAutor'"><!--TELA CADASTRO AUTOR-->
+    <h4>TELA CADASTRAR AUTOR</h4>
+    <div>
+        <form (ngSubmit)="onSubmitAutor()" #formCadastroAutor="ngForm">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="autor.nome" 
+                #nome="ngModel" placeholder="Nome do autor" required>
+                <div class="alert alert-danger" [hidden]="nome.valid || nome.pristine">Você deve informar o nome do autor.</div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" class="form-control" [(ngModel)]="autor.email" 
+                #email="ngModel" placeholder="Email do autor" required>
+                <div class="alert alert-danger" [hidden]="email.valid || email.pristine">Você deve informar o email do autor.</div>
+            </div>
+            <button type="submit" class="btn btn-success" [disabled]="!formCadastroAutor.form.valid">Cadastrar autor</button> 
+            <button type="button" class="btn btn-default" (click)="novoAutor(); formCadastroAutor.reset()">Novo</button>
+            <button type="button" class="btn btn-default" (click)="modo = visualizar">Cancelar</button>
+        </form>
+    </div>
 </div>
