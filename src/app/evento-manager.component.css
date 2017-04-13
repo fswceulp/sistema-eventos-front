@@ -1,4 +1,4 @@
-td{
+td, {
   cursor: pointer;
 }
 #tb-telaEventos{
@@ -7,7 +7,9 @@ td{
 
 div>div.buttons{
   display: inline;
-  margin-left: 395px;
+  /*margin-left: 395px;*/
+  float: right;
+  margin: -5px auto;
 }
 .noSpace{
   line-height: 4.6px;
