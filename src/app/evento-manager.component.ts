@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Evento } from './Evento';
+import { Artigo } from './Artigo';
 import { EventoManagerService } from './evento-manager.service';
 import { EstadosService } from './estados.service';
 import { CidadesService } from './cidades.service';
@@ -11,12 +12,14 @@ import { CidadesService } from './cidades.service';
 @Component({
     selector: 'evento-manager',
     templateUrl: './evento-manager.component.html',
+    styleUrls: ['./evento-manager.component.css'],
     providers: [EventoManagerService, EstadosService, CidadesService]
 })
 
 export class EventoManagerComponent implements OnInit{
   eventoSelecionado: Evento = null;
   enviado: boolean = false;
+  artigoEnviado: boolean = false;
   editando: boolean = false;
   editado: boolean = false;
   deletado: boolean = false;
@@ -27,6 +30,7 @@ export class EventoManagerComponent implements OnInit{
   evento: Evento = new Evento(this.contIds + 1, '', '');
   tela: string = "home";
   telaAnterior: string;
+  artigoEvento: Artigo;
 
   constructor(private eventoManagerService: EventoManagerService) {
   }
@@ -74,6 +78,10 @@ export class EventoManagerComponent implements OnInit{
     this.evento = new Evento(this.contIds + 1, "", "");
   }
 
+  preencherNovoArtigo(): void {
+    this.artigoEvento = new Artigo("", [], "", []);
+  }
+
   mostrarDetalhes(evento: Evento) : void {
     this.eventoSelecionado = evento;
   }
@@ -92,8 +100,7 @@ export class EventoManagerComponent implements OnInit{
     this.editando = true;
   }
 
-  onSubmit() : void {
-    console.log(this.evento);
+  onSubmitEvento() : void {
     if(!this.editando){
       this.eventos.push(this.evento);
       this.enviado = true;
@@ -110,7 +117,16 @@ export class EventoManagerComponent implements OnInit{
     }
   }
 
+  onSubmitArtigo(){
+
+  }
+
+
   novoEvento() : void {
     this.preencherNovoEvento();
+  }
+
+  novoArtigo(){
+    this.preencherNovoArtigo();
   }
 }

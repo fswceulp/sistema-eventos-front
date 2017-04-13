@@ -5,6 +5,16 @@ td{
   margin-top: 30px;
 }
 
+div>div.buttons{
+  display: inline;
+  margin-left: 395px;
+}
+.noSpace{
+  line-height: 4.6px;
+}
+
+
+
 /*.btnVoltar{
   margin-bottom: 15px;
 }*/

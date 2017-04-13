@@ -4,7 +4,7 @@
   <a class="btn btn-primary btn-success btnVoltar" (click) = "tela = telaAnterior"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a>
   <h2>Cadastro de eventos</h2>
   <div [hidden]="enviado">
-    <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
+    <form (ngSubmit)="onSubmitevento()" #formCadastro="ngForm">
       <div class="form-group">
         <label for="nome">
           Nome
@@ -85,6 +85,95 @@
       </div>
 
     </div> <!-- Fim da tela de cadastro de eventos -->
+
+<div *ngIf="tela == 'novoArtigo'"> <!-- Tela de cadastro de artigo de evento -->
+  <a class="btn btn-primary btn-success btnVoltar" (click) = "tela = telaAnterior"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a>
+  <h2>Cadastro de Artigo</h2>
+  <div [hidden]="artigoEnviado">
+    <form (ngSubmit)="onSubmitArtigo()" #formCadastroArtigo="ngForm">
+      <div class="form-group">
+        <label for="titulo">
+          Titulo
+        </label>
+        <input type="text" id="titulo" name="titulo" class="form-control"
+        [(ngModel)]="artigoEvento.titulo" #titulo="ngModel"
+        placeholder="Título do artigo" required>
+        <div class="alert alert-danger" [hidden]="titulo.valid || titulo.pristine">Você deve informar o título do artigo.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="sigla">Sigla</label>
+        <input type="text" id="sigla" name="sigla" class="form-control"
+        [(ngModel)]="evento.sigla" #sigla="ngModel"
+        placeholder="Sigla do evento" required>
+        <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="inicio">Inicio</label>
+        <input type="date" id="inicio" name="inicio" class="form-control"
+        [(ngModel)]="evento.inicio" #inicio="ngModel"
+        placeholder="Data Inicial do evento">
+      </div>
+
+      <div class="form-group">
+        <label for="termino">Término</label>
+        <input type="date" id="termino" name="termino" class="form-control"
+        [(ngModel)]="evento.termino" #termino="ngModel"
+        placeholder="Data Final do evento">
+
+      </div>
+
+      <div class="form-group">
+        <label for="url">URL</label>
+        <input type="url" id="url" name="url" class="form-control"
+        [(ngModel)]="evento.url" #url="ngModel"
+        placeholder="URL da página do evento">
+
+      </div>
+
+      <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" class="form-control"
+        [(ngModel)]="evento.cidade" #cidade="ngModel"
+        placeholder="Cidade do evento">
+
+      </div>
+
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <input type="text" id="estado" name="estado" class="form-control"
+        [(ngModel)]="evento.estado" #estado="ngModel"
+        placeholder="Estado do evento">
+
+      </div>
+
+      <div class="form-group">
+        <label for="local">Local</label>
+        <input type="text" id="local" name="local" class="form-control"
+        [(ngModel)]="evento.local" #local="ngModel"
+        placeholder="local do evento" >
+
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
+      <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+
+    </form>
+  </div>
+  <div [hidden]="!enviado" class="alert alert-success">
+    <p>Dados cadastrados com sucesso!</p>
+    <p><button class="btn btn-default" (click)="novoEvento(); enviado = false">Cadastrar novo evento</button>
+    </div>
+    <div [hidden]="!editado" class="alert alert-success">
+      <p>Dados editados com sucesso!</p>
+      <p><button class="btn btn-default" (click)="novoEvento(); editado = false">Cadastrar novo evento</button>
+      </div>
+
+    </div> <!-- Fim da tela de cadastro de artigo de evento -->
+
+
+
 
     <div *ngIf="tela == 'home'"> <!-- Tela Home -->
       <h3 *ngIf="eventos.length >= 0">Total de Eventos: <span class="badge">{{eventos.length}}</span></h3>
@@ -173,10 +262,43 @@
     em {{eventoSelecionado.cidade}} - {{eventoSelecionado.estado}},
     no(a) {{eventoSelecionado.local}}.</p>
     <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
-    <button (click)="editar(eventoSelecionado); tela = 'edicao'" type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
-    <button (click)="tela = 'exclusao'" type="button" class="btn btn-danger glyphicon glyphicon-trash"></button>
+    <button (click)="editar(eventoSelecionado); tela = 'edicao'" type="button" title="Editar informações do Evento" class="btn btn-default glyphicon glyphicon-pencil"></button>
+    <button (click)="tela = 'exclusao'" type="button" title="Excluir Evento" class="btn btn-danger glyphicon glyphicon-trash"></button>
+    <button (click)="tela = 'artigosEvento'" type="button" title="Visualizar Artigos do Evento" class="btn btn-info glyphicon glyphicon-eye-open"></button>
+
 
   </div> <!-- Fim Tela Evento Selecionado -->
+
+
+<div *ngIf="eventoSelecionado && tela == 'artigosEvento'"> <!-- Tela Artigos de Evento Selecionado -->
+  <a class="btn btn-primary btn-success btnVoltar" (click) = "tela = telaAnterior; telaAnterior = 'artigosEvento'"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a>
+    <a class="btn btn-primary" (click)="novoArtigo(); tela = 'cadastroArtigo'; telaAnterior = 'artigosEvento'"><span class="glyphicon glyphicon-plus-sign"></span>Novo</a>
+    <div class="table-responsive" *ngIf="eventoSelecionado.artigos.length > 0">
+      <table class="table table-bordered table-condensed">
+        <tbody>
+          <tr *ngFor="let artigo of eventoSelecionado.artigos">
+              <div class="panel panel-default">
+                <div class="panel-heading">{{artigo.titulo}} - {{artigo.resumo}} 
+                  <div class="buttons">
+                    <button (click)="editarArtigo(artigo); tela = 'edicaoArtigo'" type="button" title="Editar informações do Artigo" class="btn btn-default glyphicon glyphicon-pencil"></button>
+                    <button (click)="tela = 'exclusaoArtigo'" type="button" title="Excluir Artigo" class="btn btn-danger glyphicon glyphicon-trash"></button>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <b>Autores:</b> <p class="noSpace" *ngFor="let autor of artigo.autores">{{autor.nome}} -- {{autor.email}}</p>
+                  <b>Palavras-Chave:</b> <p class="noSpace" *ngFor="let palavra of artigo.palavrasChave">{{palavra}}</p>
+                </div>
+              </div>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
+    
+
+
+  </div> <!-- Fim Tela Artigos Evento Selecionado -->
 
   <div *ngIf="tela == 'edicao'"> <!-- Tela de Edicao de Eventos -->
     <a class="btn btn-primary btn-success btnVoltar" (click) = "tela = 'evento'"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a>
