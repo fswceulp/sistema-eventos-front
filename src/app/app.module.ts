@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { EventoManagerComponent } from './evento-manager.component';
-
+import { RodapeComponent } from './rodape.component';
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule,
-        HttpModule
+        FormsModule
     ],
     declarations: [
         AppComponent,
-        EventoManagerComponent
+        EventoManagerComponent,
+		RodapeComponent
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [ AppComponent ]
 })
 export class AppModule { }
