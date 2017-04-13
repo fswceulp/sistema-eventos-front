@@ -18,8 +18,13 @@ export class EventoManagerComponent {
   evento: Evento = new Evento(0, '','','','','','','','');
   
   artigo: Artigo =  new Artigo(0,"",[""],"",[],0);
-  autor: Autor = new Autor(0,"","");
   listaArtigos: Artigo[] = [];
+  artigoSelecionado: Artigo = null;
+  palavrasChaves: string = "";
+  artigoEditar: Artigo = null;
+
+  autor: Autor = new Autor(0,"","");
+  autorEditar: Autor = null;
 
   enviado: boolean = false;
   editado: boolean = false;
@@ -50,18 +55,40 @@ onSubmitAutor() : void {
     this.autores.push(this.autor);
     console.log("autores",this.autores);
     this.modo = "cadastrarArtigo";
+    if(this.artigoSelecionado != null){
+      this.modo = "editarArtigo";
+    }
     this.novoAutor();
-
 }
 
 novoAutor() : void {
     this.preencherNovoAutor();
+    
 }
 
 preencherNovoAutor(): void {
     this.autor = new Autor(0,"","");
 }
 
+excluirAutor(autor: Autor){
+    this.autores.splice(this.autores.indexOf(autor),1)
+}
+
+alterarAutor(){
+     console.log("autorAlterar",this.autor);
+     this.artigoSelecionado.autores[this.pos] = this.autor;
+     this.modo = "cadastrarArtigo";
+      if(this.artigoSelecionado != null){
+        this.mostrarArtigo(this.artigoSelecionado);
+      }
+  }
+
+  editarAutor(autor: Autor){
+    this.pos = this.artigoSelecionado.autores.indexOf(autor);
+    this.modo = "editarAutor";
+    this.autorEditar = new Autor(autor.id, autor.nome, autor.email);
+    this.autor = this.autorEditar;
+  }
 
   //ARTIGO
 
@@ -79,22 +106,67 @@ preencherNovoAutor(): void {
 
   onSubmitArtigo() : void {
     this.artigo.autores=this.autores;
+    this.artigo.palavrasChave = this.palavrasChaves.split("-");
     this.artigo.idEvento = this.eventoSelecionado.id;
     console.log(this.artigo);
     if(this.artigos.length > 0){
       this.artigo.id = this.artigos[this.artigos.length-1].id + 1;
     }
+    this.palavrasChaves = "";
     this.artigos.push(this.artigo);
     console.log("artigos",this.artigos);
     this.modo = "visualizar";
     this.novoArtigo();
+    this.listaArtigos = [];
+    this.getArtigos(this.eventoSelecionado.id);
+    this.autores = [];
   }
 
   novoArtigo() : void {
     this.preencherNovoArtigo();
+    console.log("artigo",this.artigo);
   }
 
+  mostrarArtigo(artigo: Artigo) : void {
+    console.log("detalhes",artigo);
+    console.log("detalhes",this.artigo);
+    this.artigoSelecionado = artigo;
+    this.autores = [];
+    this.autores = this.artigoSelecionado.autores;
+    this.palavrasChaves = "";
+    for (var i = 0; i < this.artigoSelecionado.palavrasChave.length; i++) {
+      if (i == 0) {
+        this.palavrasChaves = this.palavrasChaves + this.artigoSelecionado.palavrasChave[0];
+      } else {
+        this.palavrasChaves = this.palavrasChaves + "-" + this.artigoSelecionado.palavrasChave[i]; 
+      }
+    }
+    this.modo = "visualizarArtigo";
+    this.pos=this.artigos.indexOf(artigo);
+  }
 
+  excluirArtigo(artigo: Artigo){
+    this.artigos.splice(this.pos,1)
+    this.mostrarDetalhes(this.eventoSelecionado);
+  }
+
+  artigoAlterar(){
+     console.log("artigoAlterar",this.artigo);
+     this.autores = this.artigo.autores;
+     this.artigo.palavrasChave = this.palavrasChaves.split("-");
+     this.artigo.autores = this.autores;
+     this.palavrasChaves = "";
+     this.artigos[this.pos] = this.artigo;
+     this.artigoSelecionado = this.artigo;
+     this.mostrarArtigo(this.artigoSelecionado);
+  }
+
+  editarArtigo(artigo: Artigo){
+    this.modo = "editarArtigo";
+    this.artigoEditar = new Artigo(artigo.id, artigo.titulo, artigo.palavrasChave, artigo.resumo, artigo.autores, artigo.idEvento);
+    this.autores = artigo.autores;
+    this.artigo = this.artigoEditar;
+  }
 
   //EVENTO
 
@@ -120,6 +192,9 @@ preencherNovoAutor(): void {
   }
 
   mostrarDetalhes(evento: Evento) : void {
+    console.log("detalhes",this.artigo);
+    this.artigo = new Artigo(0,"",[""],"",[],0);;
+    this.autores = [];
     this.eventoSelecionado = evento;
     this.modo = "visualizar";
     this.pos=this.eventos.indexOf(evento);
@@ -156,8 +231,4 @@ preencherNovoAutor(): void {
     this.eventoEditar = new Evento(evento.id, evento.nome, evento.sigla, evento.inicio, evento.termino, evento.url, evento.cidade, evento.estado, evento.local);
     this.evento = this.eventoEditar;
   }
-
-
-
-
 }
