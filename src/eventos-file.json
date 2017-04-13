@@ -1,0 +1,47 @@
+
+[
+  {
+    "id" : 1,
+    "nome" : "XIX Congresso de Computação e Sistemas de Informação",
+    "sigla" : "ENCOINFO",
+    "inicio" : "",
+    "termino" : "",
+    "url" : "",
+    "cidade" : "",
+    "estado" : "",
+    "local" : ""
+  },
+  {
+    "id" : 2,
+    "nome" : "XIII Simpósio Brasileiro de Sistemas de Informação",
+    "sigla" : "SBSI",
+    "inicio" : "",
+    "termino" : "",
+    "url" : "",
+    "cidade" : "",
+    "estado" : "",
+    "local" : ""
+  },
+  {
+    "id" : 3,
+    "nome" : "XXXVII Congresso da Sociedade Brasileira de Computação",
+    "sigla" : "CSBC",
+    "inicio" : "",
+    "termino" : "",
+    "url" : "",
+    "cidade" : "",
+    "estado" : "",
+    "local" : ""
+  },
+  {
+    "id" : 4,
+    "nome" : "XXII Evento Para Testes",
+    "sigla" : "TESTE",
+    "inicio" : "",
+    "termino" : "",
+    "url" : "",
+    "cidade" : "",
+    "estado" : "",
+    "local" : ""
+  }
+]
