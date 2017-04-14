@@ -272,6 +272,10 @@
 
 <div *ngIf="eventoSelecionado && tela == 'artigosEvento'"> <!-- Tela Artigos de Evento Selecionado -->
   <a class="btn btn-primary btn-success btnVoltar" (click) = "tela = telaAnterior; telaAnterior = 'artigosEvento'"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a>
+  <div [hidden]="!artigoDeletado" class="alert alert-success alert-dismissable fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close" (click)="artigoDeletado = false">&times;</a>
+    <p>Artigo deletado com sucesso!</p>
+  </div>
     <a class="btn btn-primary" (click)="novoArtigo(); tela = 'cadastroArtigo'; telaAnterior = 'artigosEvento'"><span class="glyphicon glyphicon-plus-sign"></span>Novo</a>
     <div class="table-responsive" *ngIf="eventoSelecionado.artigos.length > 0">
       <table class="table table-bordered table-condensed">
@@ -281,7 +285,7 @@
                 <div class="panel-heading">{{artigo.titulo}} - {{artigo.resumo}} 
                   <div class="buttons">
                     <button (click)="editarArtigo(artigo); tela = 'edicaoArtigo'" type="button" title="Editar informações do Artigo" class="btn btn-default glyphicon glyphicon-pencil"></button>
-                    <button (click)="tela = 'exclusaoArtigo'" type="button" title="Excluir Artigo" class="btn btn-danger glyphicon glyphicon-trash"></button>
+                    <button (click)="tela = 'exclusaoArtigo'; artigoEvento = artigo" type="button" title="Excluir Artigo" class="btn btn-danger glyphicon glyphicon-trash"></button>
                   </div>
                 </div>
                 <div class="panel-body">
@@ -295,10 +299,15 @@
     </div>
 
     <p>Mais informações no site <a [href]="eventoSelecionado.url">{{eventoSelecionado.url}}</a>.</p>
-    
-
-
   </div> <!-- Fim Tela Artigos Evento Selecionado -->
+
+  <div *ngIf="tela == 'exclusaoArtigo'"><!-- TELA EXCLUIR Artigo -->
+    <div>
+      <p>Realmente deseja excluir as informações sobre o Artigo "{{artigoEvento.titulo}}"?</p>
+    </div>
+    <button  class="btn btn-primary btn-success"  (click) = "deletarArtigo(artigoEvento); tela = 'artigosEvento'"><span class="glyphicon glyphicon-ok"></span></button>
+    <button  class="btn btn-primary btn-danger"  (click)="tela = 'artigosEvento'"><span class="glyphicon glyphicon-remove"></span></button>
+  </div>
 
   <div *ngIf="tela == 'edicao'"> <!-- Tela de Edicao de Eventos -->
     <a class="btn btn-primary btn-success btnVoltar" (click) = "tela = 'evento'"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a>

@@ -23,6 +23,7 @@ export class EventoManagerComponent implements OnInit{
   editando: boolean = false;
   editado: boolean = false;
   deletado: boolean = false;
+  artigoDeletado: boolean = false;
   eventos: Evento[] = []; // Todos os eventos existentes
   eventosHome: Evento[] = []; // Eventos que serão apresentados na tela inicial
   teste: any;
@@ -93,6 +94,13 @@ export class EventoManagerComponent implements OnInit{
     this.eventos.splice(posicao, 1);
     this.deletado = true;
     this.atualizaEventosHome();
+  }
+  deletarArtigo(artigo: Artigo){
+    console.log(artigo);
+    var posicao: number;
+    posicao = this.eventoSelecionado.artigos.indexOf(artigo);
+    this.eventoSelecionado.artigos.splice(posicao, 1);
+    this.artigoDeletado = true;
   }
 
   editar(evento: Evento): void{
