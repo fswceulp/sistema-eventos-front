@@ -8,12 +8,14 @@ import { Artigo } from './Artigo';
 import { EventoManagerService } from './evento-manager.service';
 import { EstadosService } from './estados.service';
 import { CidadesService } from './cidades.service';
+import { AutoresService } from './autores.service';
+import { Autor } from './Autor';
 
 @Component({
     selector: 'evento-manager',
     templateUrl: './evento-manager.component.html',
     styleUrls: ['./evento-manager.component.css'],
-    providers: [EventoManagerService, EstadosService, CidadesService]
+    providers: [EventoManagerService, EstadosService, CidadesService, AutoresService]
 })
 
 export class EventoManagerComponent implements OnInit{
@@ -21,7 +23,9 @@ export class EventoManagerComponent implements OnInit{
   enviado: boolean = false;
   artigoEnviado: boolean = false;
   editando: boolean = false;
+  editandoArtigo: boolean = false;
   editado: boolean = false;
+  artigoEditado: boolean = false;
   deletado: boolean = false;
   artigoDeletado: boolean = false;
   eventos: Evento[] = []; // Todos os eventos existentes
@@ -32,8 +36,14 @@ export class EventoManagerComponent implements OnInit{
   tela: string = "home";
   telaAnterior: string;
   artigoEvento: Artigo;
+  artigo: Artigo;
+  autores : Autor[];
+  autorAdd: Autor;
+  autorSelecionado: Autor;
+  autor: Autor;
+  palavra: string;
 
-  constructor(private eventoManagerService: EventoManagerService) {
+  constructor(private eventoManagerService: EventoManagerService, private autoresService: AutoresService) {
   }
 
 
@@ -42,11 +52,22 @@ export class EventoManagerComponent implements OnInit{
       .subscribe(
         resposta => {
           this.eventos = resposta;
+          console.log(this.eventos);
           this.atualizaEventosHome();
         },
         error => console.error('Error: ' + error),
         () => console.log('Completed!')
       );
+      this.autoresService.all()
+        .subscribe(
+          resposta => {
+            this.autores = resposta;
+            console.log(this.autores);
+          },
+          error => console.error('Error: ' + error),
+          () => console.log('Completed!')
+      );
+      // this.autores = this.autoresService.all();
   }
 
 
@@ -58,7 +79,6 @@ export class EventoManagerComponent implements OnInit{
 
   atualizaEventosHome():void{
     this.eventosHome = [];
-    console.log(this.eventos);
     if(this.eventos.length >= 3){
       for(let i in this.eventos){
         if(parseInt(i) <= 2){
@@ -80,7 +100,7 @@ export class EventoManagerComponent implements OnInit{
   }
 
   preencherNovoArtigo(): void {
-    this.artigoEvento = new Artigo("", [], "", []);
+    this.artigo = new Artigo("", [], "", []);
   }
 
   mostrarDetalhes(evento: Evento) : void {
@@ -108,6 +128,11 @@ export class EventoManagerComponent implements OnInit{
     this.editando = true;
   }
 
+  editarArtigo(artigo: Artigo){
+    this.artigo = artigo;
+    this.editandoArtigo = true;
+  }
+
   onSubmitEvento() : void {
     if(!this.editando){
       this.eventos.push(this.evento);
@@ -126,7 +151,35 @@ export class EventoManagerComponent implements OnInit{
   }
 
   onSubmitArtigo(){
+    if(!this.editandoArtigo){
+      this.eventoSelecionado.artigos.push(this.artigo);
+      this.artigoEnviado = true;
+    } 
+    else{
+      var pos: number;
+      pos = this.eventoSelecionado.artigos.indexOf(this.artigo);
+      this.eventoSelecionado.artigos[pos] = this.artigo;
+      this.editandoArtigo = false;
+      this.artigoEditado = true;
+    }
+  }
 
+  selecionaAutor(autor: Autor){
+    if(this.autorSelecionado == autor){
+      this.autorSelecionado = null;
+    }
+    else{
+      this.autorSelecionado = autor;
+    }
+  }
+
+  addAutor(){ 
+    this.artigo.autores.push(this.autorSelecionado);
+    console.log("ok");
+  }
+
+  addPalavraChave(palavra: string){ 
+    this.artigo.palavrasChave.push(palavra);
   }
 
 

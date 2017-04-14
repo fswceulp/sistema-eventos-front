@@ -86,7 +86,7 @@
 
     </div> <!-- Fim da tela de cadastro de eventos -->
 
-<div *ngIf="tela == 'novoArtigo'"> <!-- Tela de cadastro de artigo de evento -->
+<div *ngIf="tela == 'cadastroArtigo'"> <!-- Tela de cadastro de artigo de evento -->
   <a class="btn btn-primary btn-success btnVoltar" (click) = "tela = telaAnterior"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a>
   <h2>Cadastro de Artigo</h2>
   <div [hidden]="artigoEnviado">
@@ -96,78 +96,72 @@
           Titulo
         </label>
         <input type="text" id="titulo" name="titulo" class="form-control"
-        [(ngModel)]="artigoEvento.titulo" #titulo="ngModel"
+        [(ngModel)]="artigo.titulo" #titulo="ngModel"
         placeholder="Título do artigo" required>
         <div class="alert alert-danger" [hidden]="titulo.valid || titulo.pristine">Você deve informar o título do artigo.</div>
       </div>
 
       <div class="form-group">
-        <label for="sigla">Sigla</label>
-        <input type="text" id="sigla" name="sigla" class="form-control"
-        [(ngModel)]="evento.sigla" #sigla="ngModel"
-        placeholder="Sigla do evento" required>
-        <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div>
+        <div class="existentes" >
+          Autor(es) vinculados:
+          <ul *ngFor="let autor of artigo.autores">
+            <li>
+              {{autor.nome}}
+            </li>
+          </ul>
+        </div>
+
+        <label for="autores">Autores</label>
+        <div class="table-responsive col-md-6">
+          <table class="table table-bordered table-condensed table-striped">
+              <tbody>
+                  <tr *ngFor="let autor of autores">
+                      <td class="col-md-3" [ngClass]="{'selecionado': autor==autorSelecionado}">
+                          <h6 class="nomeAutor" (click)="selecionaAutor(autor)">{{autor.nome}} <small>{{autor.email}}</small></h6>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </div>  
+        <button (click)="addAutor()">
+          Add Autor
+        </button>
       </div>
 
       <div class="form-group">
-        <label for="inicio">Inicio</label>
-        <input type="date" id="inicio" name="inicio" class="form-control"
-        [(ngModel)]="evento.inicio" #inicio="ngModel"
-        placeholder="Data Inicial do evento">
+        <label for="resumo">Resumo</label>
+        <input type="text" id="resumo" name="resumo" class="form-control"
+        [(ngModel)]="artigo.resumo" #resumo="ngModel"
+        placeholder="Resumo do Artigo" required>
       </div>
 
       <div class="form-group">
-        <label for="termino">Término</label>
-        <input type="date" id="termino" name="termino" class="form-control"
-        [(ngModel)]="evento.termino" #termino="ngModel"
-        placeholder="Data Final do evento">
-
+        <label for="palavrasChave">Palavras-Chave</label>
+        <ul *ngFor="let palavra of artigo.palavrasChave">
+          <li>
+            {{palavra}}
+          </li>
+        </ul>
+        <input type="text" id="palavrasChave" name="palavrasChave" class="form-control"
+        [(ngModel)]="palavra" #palavrasChave="ngModel"
+        placeholder="Palavras-Chave do Artigo">
+        <button (click) = "addPalavraChave(palavra)">
+          Add Palavra-Chave
+        </button>
       </div>
 
-      <div class="form-group">
-        <label for="url">URL</label>
-        <input type="url" id="url" name="url" class="form-control"
-        [(ngModel)]="evento.url" #url="ngModel"
-        placeholder="URL da página do evento">
-
-      </div>
-
-      <div class="form-group">
-        <label for="cidade">Cidade</label>
-        <input type="text" id="cidade" name="cidade" class="form-control"
-        [(ngModel)]="evento.cidade" #cidade="ngModel"
-        placeholder="Cidade do evento">
-
-      </div>
-
-      <div class="form-group">
-        <label for="estado">Estado</label>
-        <input type="text" id="estado" name="estado" class="form-control"
-        [(ngModel)]="evento.estado" #estado="ngModel"
-        placeholder="Estado do evento">
-
-      </div>
-
-      <div class="form-group">
-        <label for="local">Local</label>
-        <input type="text" id="local" name="local" class="form-control"
-        [(ngModel)]="evento.local" #local="ngModel"
-        placeholder="local do evento" >
-
-      </div>
-
-      <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
-      <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+      <button type="submit" class="btn btn-success" [disabled]="!formCadastroArtigo.form.valid" (click)="onSubmitArtigo(); tela = 'edicaoArtigo'">Salvar</button>
+      <button type="button" class="btn btn-default" (click)="novoArtigo(); formCadastroArtigo.reset()">Novo</button>
 
     </form>
   </div>
-  <div [hidden]="!enviado" class="alert alert-success">
+  <div [hidden]="!artigoEnviado" class="alert alert-success">
     <p>Dados cadastrados com sucesso!</p>
-    <p><button class="btn btn-default" (click)="novoEvento(); enviado = false">Cadastrar novo evento</button>
+    <p><button class="btn btn-default" (click)="novoArtigo(); artigoEnviado = false">Cadastrar novo Artigo</button>
     </div>
     <div [hidden]="!editado" class="alert alert-success">
       <p>Dados editados com sucesso!</p>
-      <p><button class="btn btn-default" (click)="novoEvento(); editado = false">Cadastrar novo evento</button>
+      <p><button class="btn btn-default" (click)="novoArtigo(); artigoEditado = false">Cadastrar novo Artigo</button>
       </div>
 
     </div> <!-- Fim da tela de cadastro de artigo de evento -->
@@ -308,6 +302,84 @@
     <button  class="btn btn-primary btn-success"  (click) = "deletarArtigo(artigoEvento); tela = 'artigosEvento'"><span class="glyphicon glyphicon-ok"></span></button>
     <button  class="btn btn-primary btn-danger"  (click)="tela = 'artigosEvento'"><span class="glyphicon glyphicon-remove"></span></button>
   </div>
+
+<div *ngIf="tela == 'edicaoArtigo'"> <!-- Tela de Edicao de Artigos-->
+    <a class="btn btn-primary btn-success btnVoltar" (click) = "tela = 'evento'"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a>
+
+    <h2>Editando o artigo {{evento.sigla}}</h2>
+    <div [hidden]="artigoEnviado">
+      <form (ngSubmit)="onSubmitArtigo()" #formCadastroArtigo="ngForm">
+        <div class="form-group">
+        <label for="titulo">
+          Titulo
+        </label>
+        <input type="text" id="titulo" name="titulo" class="form-control"
+        [(ngModel)]="artigo.titulo" #titulo="ngModel"
+        placeholder="Título do artigo" required>
+        <div class="alert alert-danger" [hidden]="titulo.valid || titulo.pristine">Você deve informar o título do artigo.</div>
+      </div>
+
+      <div class="form-group">
+        <div class="existentes" >
+          Autor(es) vinculados:
+          <ul *ngFor="let autor of artigo.autores">
+            <li>
+              {{autor.nome}}
+            </li>
+          </ul>
+        </div>
+
+        <label for="autores">Autores</label>
+        <div class="table-responsive col-md-6">
+          <table class="table table-bordered table-condensed table-striped">
+              <tbody>
+                  <tr *ngFor="let autor of autores">
+                      <td class="col-md-3" [ngClass]="{'selecionado': autor==autorSelecionado}">
+                          <h6 class="nomeAutor" (click)="selecionaAutor(autor)">{{autor.nome}} <small>{{autor.email}}</small></h6>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </div>  
+        <button (click)="addAutor()">
+          Add Autor
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label for="resumo">Resumo</label>
+        <input type="text" id="resumo" name="resumo" class="form-control"
+        [(ngModel)]="artigo.resumo" #resumo="ngModel"
+        placeholder="Resumo do Artigo" required>
+      </div>
+
+      <div class="form-group">
+        <label for="palavrasChave">Palavras-Chave</label>
+        <ul *ngFor="let palavra of artigo.palavrasChave">
+          <li>
+            {{palavra}}
+          </li>
+        </ul>
+        <input type="text" id="palavrasChave" name="palavrasChave" class="form-control"
+        [(ngModel)]="palavra" #palavrasChave="ngModel"
+        placeholder="Palavras-Chave do Artigo">
+        <button (click) = "addPalavraChave(palavra)">
+          Add Palavra-Chave
+        </button>
+      </div>
+        <button type="submit" class="btn btn-success" [disabled]="!formCadastroArtigo.form.valid">Salvar</button>
+      </form>
+    </div>
+    <div [hidden]="!artigoEditado" class="alert alert-success">
+      <p>Dados editados com sucesso!</p>
+    </div>
+
+
+
+  </div> <!-- Fim Tela de Edicao de artigos -->
+
+
+
 
   <div *ngIf="tela == 'edicao'"> <!-- Tela de Edicao de Eventos -->
     <a class="btn btn-primary btn-success btnVoltar" (click) = "tela = 'evento'"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a>
