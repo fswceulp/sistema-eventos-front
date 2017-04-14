@@ -1,0 +1,53 @@
+ [
+    {
+        "titulo": "Aplicação da Análise da escala de silhuetas com kinect v2",
+        "resumo": "Aplicação da Análise da escala de silhuetas com kinect v2",
+        "autores": [
+            {
+                "nome" : "Fulano",
+                "email":"fulano@gmail.com"
+            },
+            {
+                "nome" : "ciclano",
+                "email":"ciclano@gmail.com"
+            }
+        ],
+        "palavrasChave": [
+            "kinect","escala","silhuetas"
+        ]
+    },
+    {
+        "titulo": "Aplicação da Análise do IMP Digital com kinect v2",
+        "resumo": "Aplicação da Análise da IMP Digital com kinect v2",
+        "autores": [
+            {
+                "nome" : "Fulano",
+                "email":"fulano@gmail.com"
+            },
+            {
+                "nome" : "ciclano",
+                "email":"ciclano@gmail.com"
+            }
+        ],
+        "palavrasChave": [
+            "kinect","IMP","IMP Digital"
+        ]
+    },
+    {
+        "titulo": "Reconhecimento de ex",
+        "resumo": "Aplicação da Análise da IMP Digital com kinect v2",
+        "autores": [
+            {
+                "nome" : "Fulano",
+                "email":"fulano@gmail.com"
+            },
+            {
+                "nome" : "ciclano",
+                "email":"ciclano@gmail.com"
+            }
+        ],
+        "palavrasChave": [
+            "kinect","IMP","IMP Digital"
+        ]
+    }
+]

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { EventoManagerComponent } from './evento-manager.component';
-
+import { HttpModule } from '@angular/http';
+import { EventoManagerService } from './evento-manager.service';
 @NgModule({
     imports: [
         BrowserModule,
@@ -15,6 +15,7 @@ import { EventoManagerComponent } from './evento-manager.component';
         AppComponent,
         EventoManagerComponent
     ],
-    bootstrap: [AppComponent]
+    providers: [EventoManagerService],
+    bootstrap: [ AppComponent ]
 })
 export class AppModule { }
