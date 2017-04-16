@@ -3,6 +3,7 @@ import { Evento } from './Evento';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/find';
 
 @Injectable()
 export class EventosService {
@@ -14,4 +15,8 @@ export class EventosService {
             .map(response => response.json() as Evento[]);
     }
 
+    find(id: number): Observable<Evento> {
+        return this.all()
+            .map(eventos => eventos.find(evento => evento.id === id));
+    }
 }
