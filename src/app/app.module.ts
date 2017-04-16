@@ -11,18 +11,14 @@ import { HomeComponent } from './home.component';
 import { EventosListaComponent } from './eventos-lista.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { EventoDetalhesComponent } from './evento-detalhes.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        RouterModule.forRoot([
-            { path: 'eventos/:id', component: EventoDetalhesComponent },
-            { path: 'eventos', component: EventosListaComponent },
-            { path: '', component: HomeComponent },
-            { path: '**', component: PaginaNaoEncontradaComponent }
-        ])
+        AppRoutingModule
     ],
     declarations: [
         AppComponent,
