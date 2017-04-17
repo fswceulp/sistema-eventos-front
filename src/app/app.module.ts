@@ -6,31 +6,27 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { CidadesService } from './cidades.service';
 import { EstadosService } from './estados.service';
-import { EventosService } from './eventos.service';
 import { HomeComponent } from './home.component';
-import { EventosListaComponent } from './eventos-lista.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
-import { EventoDetalhesComponent } from './evento-detalhes.component';
 import { AppRoutingModule } from './app-routing.module';
+import { EventosModule } from './eventos/eventos.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
+        EventosModule,
         AppRoutingModule
     ],
     declarations: [
         AppComponent,
         HomeComponent,
-        EventoDetalhesComponent,
-        EventosListaComponent,
         PaginaNaoEncontradaComponent
     ],
     providers: [
         CidadesService,
-        EstadosService,
-        EventosService
+        EstadosService
     ],
     bootstrap: [AppComponent]
 })
