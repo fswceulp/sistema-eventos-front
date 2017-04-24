@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { EventosService } from './eventos.service';
-import { Evento } from './evento';
+import { Evento } from './Evento';
 
 @Component({
     templateUrl: 'eventos-lista.component.html'

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { CidadesService } from './cidades.service';
 import { EstadosService } from './estados.service';
 import { HomeComponent } from './home.component';
+import { SobreComponent } from './sobre.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EventosModule } from './eventos/eventos.module';
@@ -22,6 +23,7 @@ import { EventosModule } from './eventos/eventos.module';
     declarations: [
         AppComponent,
         HomeComponent,
+        SobreComponent,
         PaginaNaoEncontradaComponent
     ],
     providers: [
