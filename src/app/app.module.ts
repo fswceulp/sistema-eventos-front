@@ -10,6 +10,8 @@ import { HomeComponent } from './home.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EventosModule } from './eventos/eventos.module';
+import { TesteComponent } from './teste.component';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 @NgModule({
     imports: [
@@ -17,11 +19,15 @@ import { EventosModule } from './eventos/eventos.module';
         FormsModule,
         HttpModule,
         EventosModule,
-        AppRoutingModule
+        AppRoutingModule,
+        AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC68eCj8gIMftTKBV6tSMLnjyrx2Ej26ZE'
+    })
     ],
     declarations: [
         AppComponent,
         HomeComponent,
+        TesteComponent,
         PaginaNaoEncontradaComponent
     ],
     providers: [
