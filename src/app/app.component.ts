@@ -5,7 +5,8 @@ import '../assets/css/style.css';
 @Component({
     selector: 'my-app',
     templateUrl: './app.component.html',
-    styleUrls: ['../assets/css/style.css'],
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
 }
