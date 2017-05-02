@@ -26,5 +26,4 @@ const rotas: Routes = [
         RouterModule
     ]
 })
-
 export class AppRoutingModule { }
