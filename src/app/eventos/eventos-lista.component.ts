@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { EventosService } from './eventos.service';
-import { Evento } from './Evento';
+import { Evento } from './evento';
 
 @Component({
     templateUrl: 'eventos-lista.component.html'
 })
+
 export class EventosListaComponent implements OnInit {
     eventos: Evento[];
 
