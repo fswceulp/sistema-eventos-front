@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { EventosHomeComponent } from './eventos-home.component';
 import { EventosListaComponent } from './eventos-lista.component';
 import { EventoDetalhesComponent } from './evento-detalhes.component';
+import { EventoCadastroComponent } from './evento-cadastro.component';
 import { EventosRoutingModule } from './eventos-routing.module';
 import { EventosService } from './eventos.service';
 
@@ -20,6 +21,7 @@ import { EventosService } from './eventos.service';
         EventosHomeComponent,
         EventoDetalhesComponent,
         EventosListaComponent,
+		EventoCadastroComponent
     ],
     providers: [
         EventosService

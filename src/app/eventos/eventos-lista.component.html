@@ -10,13 +10,11 @@
     </thead>
     <tbody>
         <tr *ngFor="let evento of eventos">
-            <td>{{evento.sigla}}</td>
-            <td>{{evento.nome}}</td>
-            <td>{{evento.inicio}} a {{evento.termino}}</td>
-            <td>
-                <button class="btn btn-primary"
-                (click)="mostrarDetalhes(evento)">Detalhes</button>
-            </td>
+			<td>{{evento.sigla}}</td>
+			<td>{{evento.nome}}</td>
+			<td>{{evento.inicio}} a {{evento.termino}}</td>
+            <td><button class="btn btn-primary" (click)="mostrarDetalhes(evento)">Detalhes</button></td>
         </tr>
     </tbody>
+	<button class="btn btn-primary" >Novo Evento</button>
 </table>
