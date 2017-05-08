@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home.component';
+import { AppComponent } from './app.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
-import { SobreComponent } from './sobre.component';
 
 const rotas: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'sobre', component: SobreComponent },
+    { path: '', redirectTo: '/public', pathMatch: 'full' },
     { path: '**', component: PaginaNaoEncontradaComponent }
 ];
 
