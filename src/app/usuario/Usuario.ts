@@ -1,16 +1,16 @@
 export class Usuario{
     public id: number = null;
-    public nomeCompleto:string;
+    public nome:string;
     public email:string;
     public senha:string;
     public endereco:string;
     public telefone:string;
 
-    constructor(email:string, senha:string, nomeCompleto?:string, endereco?:string, telefone?:string, id?:number){
+    constructor(email:string, senha:string, nome?:string, endereco?:string, telefone?:string, id?:number){
         this.email = email;
         this.senha = senha;
-        if(nomeCompleto){
-            this.nomeCompleto = nomeCompleto;
+        if(nome){
+            this.nome = nome;
         }
         
         if(endereco){

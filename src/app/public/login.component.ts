@@ -27,17 +27,20 @@ export class LoginComponent implements OnInit {
         this.loginService.validaCredenciais(this.model.login, this.model.senha.trim())
             .subscribe(
                 data => {
-                    if(data instanceof Array){
-                        if(data.length > 0){
-                            this.router.navigate([this.url]);
+                    if(data.length > 0){
+                        if(data[0].nome == "admin"){
+                            this.router.navigate(['/admin']);    
                         }
                         else{
-                            alert("Credenciais não cadastradas no banco de dados");
-                            this.model = {};
-                            this.router.navigate([this.router.url]);
+                            this.router.navigate([this.url]);
                         }
+                        console.log(data[0]);
                     }
-                    console.log(data);
+                    else{
+                        alert("Credenciais não cadastradas no banco de dados");
+                        this.model = {};
+                        this.router.navigate(['/']);
+                    }
                 },
                 error => {
                     alert(error.message());

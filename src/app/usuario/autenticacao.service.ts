@@ -11,10 +11,10 @@ export class LoginService {
     constructor(private http: Http) {
     }
 
-    validaCredenciais(login: string, senha: string): Observable<Usuario>{
+    validaCredenciais(login: string, senha: string): Observable<Usuario[]>{
         try{
             return this.http.get(this.root + '?nome='+ login +'&&senha=' + senha)
-            .map(response => response.json() as Usuario);
+            .map(response => response.json() as Usuario[]);
         }
         catch(ex){
             this.handleError(ex);
