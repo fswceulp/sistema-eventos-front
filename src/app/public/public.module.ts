@@ -8,7 +8,7 @@ import { HomeComponent } from './home.component';
 import { SobreComponent } from './sobre.component';
 import { LoginComponent } from './login.component';
 import { PublicRoutingModule } from './public-routing.module';
-import { LoginService } from './login.service';
+import { LoginService } from '../usuario/autenticacao.service';
 
 @NgModule({
     imports: [

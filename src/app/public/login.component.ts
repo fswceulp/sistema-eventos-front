@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './login.service';
+import { LoginService } from '../usuario/autenticacao.service';
+import { Usuario } from '../usuario/Usuario';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: 'login.component.html',
@@ -9,24 +11,38 @@ import { LoginService } from './login.service';
 export class LoginComponent implements OnInit {
     loading: boolean = false;
     model: any = {};
-    usuario: any;
     pathLogo: string = '../src/assets/images/logo.png';
+    url: string;
 
-    constructor(private loginService: LoginService) { }
 
-    ngOnInit() { }
+    constructor(private loginService: LoginService 
+            ,private router: Router) { }
+
+    ngOnInit() {
+        this.url = '/eventos';
+    }
 
     onSubmit(){
-        console.log("em onSubmit()");
         this.loading = true;
-        this.usuario = this.validaCredenciais(this.model.login, this.model.senha);
-        console.log(this.usuario);
-        
-        this.loading = false;
-    }
-    validaCredenciais(login: string, senha: string){
-        return this.loginService.validaCredenciais(login, senha)
-            .subscribe(usuario => this.usuario);
-
+        this.loginService.validaCredenciais(this.model.login, this.model.senha.trim())
+            .subscribe(
+                data => {
+                    if(data instanceof Array){
+                        if(data.length > 0){
+                            this.router.navigate([this.url]);
+                        }
+                        else{
+                            alert("Credenciais não cadastradas no banco de dados");
+                            this.model = {};
+                            this.router.navigate([this.router.url]);
+                        }
+                    }
+                    console.log(data);
+                },
+                error => {
+                    alert(error.message());
+                }
+            );        
+        this.loading = false;    
     }
 }
