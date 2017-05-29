@@ -13,10 +13,11 @@ export class LoginComponent implements OnInit {
     model: any = {};
     pathLogo: string = '../src/assets/images/logo.png';
     url: string;
+    msgErro: string;
 
 
     constructor(private loginService: LoginService 
-            ,private router: Router) { }
+            ,private router: Router) {}
 
     ngOnInit() {
         this.url = '/eventos';
@@ -24,7 +25,9 @@ export class LoginComponent implements OnInit {
 
     onSubmit(){
         this.loading = true;
-        this.loginService.validaCredenciais(this.model.login, this.model.senha.trim())
+        if(this.model.login && this.model.senha){
+            
+            this.loginService.validaCredenciais(this.model.login, this.model.senha.trim())
             .subscribe(
                 data => {
                     if(data.length > 0){
@@ -36,15 +39,27 @@ export class LoginComponent implements OnInit {
                         }
                     }
                     else{
-                        alert("Credenciais não cadastradas no banco de dados");
+                        this.msgErro = "Credenciais não cadastradas no banco de dados";
                         this.model = {};
-                        this.router.navigate(['/']);
+                        this.router.navigate(['/login']);
                     }
                 },
                 error => {
-                    alert(error.message());
+                    this.msgErro = error.statusText;
+                    console.log(error.statusText); //mensagem de erro
+                    console.log(error.status); //status do erro
+
                 }
-            );        
+            ); 
+        }else{
+            if(this.model.senha === "" || !this.model.senha){
+                this.msgErro = "Senha deve ser informada!";
+            }
+            if(this.model.login === "" || !this.model.login){
+                this.msgErro = "Login deve ser informado!";
+            }
+            
+        }
         this.loading = false;    
     }
 }

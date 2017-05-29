@@ -8,22 +8,14 @@
 #form-login{
     margin: 0 auto;
 }
-
-/*.loader {
-    z-index: 12;
-    margin-left: -77px;
-    margin-right: 60px;
-    display: inline-block;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #3498db;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    -webkit-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
+#loginForm .has-error .control-label,
+#loginForm .has-error .help-block,
+#loginForm .has-error .form-control-feedback {
+    color: #f39c12;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}*/
+#loginForm .has-success .control-label,
+#loginForm .has-success .help-block,
+#loginForm .has-success .form-control-feedback {
+    color: #18bc9c;
+}
