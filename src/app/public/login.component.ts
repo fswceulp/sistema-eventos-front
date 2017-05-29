@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
                         else{
                             this.router.navigate([this.url]);
                         }
-                        console.log(data[0]);
                     }
                     else{
                         alert("Credenciais não cadastradas no banco de dados");
