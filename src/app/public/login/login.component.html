@@ -1,3 +1,4 @@
+
 <div *ngIf="msgErro" role="alert" class="alert alert-danger">
     <button (click)="msgErro=''" class="close" type="button">x</button>
     <h1>Erro ao tentar fazer login:</h1>
@@ -22,8 +23,7 @@
         </div>
         <div class="form-group">
             <button [disabled]="loading" class="btn btn-primary" (click)="submit">Login</button>
-            <!--<div *ngIf="loading" class="loader"></div>-->
-            <a [routerLink]="" class="btn btn-link">Cadastrar-se</a>
+            <a routerLink="/cadastro" class="btn btn-link">Cadastrar-se</a>
         </div>
     </form>
 </div>
