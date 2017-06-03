@@ -1,0 +1,35 @@
+<h1>Eventos</h1>
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <td colspan="4">
+                <div class="col-lg-12">
+                <div class="input-group">
+                    Buscar: 
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            </td>
+        </tr>
+        <tr>
+            <th>Sigla</th>
+            <th>Nome</th>
+            <th>Data</th>
+            <th>Detalhes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let evento of eventos">
+            <td>{{evento.sigla}}</td>
+            <td>{{evento.nome}}</td>
+            <td>{{evento.inicio}} a {{evento.termino}}</td>
+            <td>
+                <button class="btn btn-primary"
+                (click)="mostrarDetalhes(evento)">Detalhes</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

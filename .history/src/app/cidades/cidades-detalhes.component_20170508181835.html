@@ -1,0 +1,9 @@
+<div *ngIf="cidade">
+    <h1>{{cidade.nome}} - {{cidade.uf}}</h1>
+</div>
+<div *ngIf="<!cidade></!cidade>">
+    <h1>Cidade não encontrada!</h1>
+    <p>A cidade que você procura não pode ser encontrada. Veja a 
+        <a routerLink="/cidades">lista das cidades</a>.
+    </p>
+</div>

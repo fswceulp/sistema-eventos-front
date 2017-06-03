@@ -1,0 +1,19 @@
+<h1>Cidades</h1>
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Uf</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cidade of cidades">
+            <td>{{cidade.nome}}</td>
+            <td>{{Cidade.uf}}</td>
+            <td>
+                <button class="btn btn-primary"
+                (click)="mostrarDetalhes(estado)">Detalhes</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -5,10 +5,14 @@ import { HomeComponent } from './home.component';
 import { AjudaComponent } from './ajuda.component';
 import { EstadosListaComponent } from './estados/estados-lista.component';
 import { EstadoCadastroComponent } from './estados/cadastro.component';
+import { PalestranteListaComponent } from './eventos/palestrantes/palestrante-lista.component';
+import { PalestranteCadastroComponent } from './eventos/palestrantes/cadastro.component';
 
 const rotas: Routes = [
     {
         path: 'admin', component: AdminComponent, children: [
+            { path: 'eventos/:id/palestrantes/cadastro', component: PalestranteCadastroComponent },
+            { path: 'eventos/:id/palestrantes', component: PalestranteListaComponent },
             { path: 'estados/cadastro', component: EstadoCadastroComponent },
             { path: 'estados', component: EstadosListaComponent },
             { path: 'ajuda', component: AjudaComponent },

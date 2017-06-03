@@ -1,0 +1,22 @@
+<h1>Palestrantes</h1>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Filiação</th>
+            <th>Mini Biografia</th>
+            <th>Link Lattes</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cidade of cidades">
+            <td>{{cidade.id}}</td>
+            <td>{{cidade.nome}}</td>
+            <td>{{cidade.estado.nome}}</td>
+            <td><button class="btn btn-danger" (click)="excluirCidade(cidade)"><i class='glyphicon glyphicon-remove'></i></button></td>
+        </tr>
+    </tbody>
+</table>

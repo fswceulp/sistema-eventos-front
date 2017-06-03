@@ -1,0 +1,27 @@
+<h1>Palestrantes</h1>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Filiação</th>
+            <th>Mini Biografia</th>
+            <th>Link Lattes</th>
+            <th>Email</th>
+            <th>Evento</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let palestrante of palestrantes">
+            <td>{{palestrante.id}}</td>
+            <td>{{palestrante.nome}}</td>
+            <td>{{palestrante.filiacao}}</td>
+            <td>{{palestrante.miniBiografia}}</td>
+            <td>{{palestrante.linkLattes}}</td>
+            <td>{{palestrante.email}}</td>
+            <td>{{palestrante.evento.}}</td>
+            <td><button class="btn btn-danger" (click)="excluirCidade(cidade)"><i class='glyphicon glyphicon-remove'></i></button></td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,5 @@
+epclass name {
+    constructor(parameters) {
+        
+    }
+}

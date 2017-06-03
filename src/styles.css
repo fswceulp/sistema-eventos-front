@@ -3,3 +3,25 @@
     margin-top: 30px;
     margin-bottom: 30px;
 }
+#button-login{
+    margin-left: 45vw !important;
+}
+#button-login li{
+    margin-right: 5px;
+}
+
+td[id="opcoes"]{
+    display: inline-flex;
+}
+
+#opcoes>button{
+    padding: 2px 6px;
+    margin-right: 5px;
+}
+
+td.miniBiografia{
+    max-width: 448px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

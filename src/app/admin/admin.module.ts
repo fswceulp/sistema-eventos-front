@@ -10,6 +10,9 @@ import { AjudaComponent } from './ajuda.component';
 import { EstadosListaComponent } from './estados/estados-lista.component';
 import { EstadosService } from './estados/estados.service';
 import { EstadoCadastroComponent } from './estados/cadastro.component';
+import { PalestrantesService } from './eventos/palestrantes/palestrante.service';
+import { PalestranteListaComponent } from './eventos/palestrantes/palestrante-lista.component';
+import { PalestranteCadastroComponent } from './eventos/palestrantes/cadastro.component';
 
 @NgModule({
     imports: [
@@ -23,10 +26,13 @@ import { EstadoCadastroComponent } from './estados/cadastro.component';
         HomeComponent,
         AjudaComponent,
         EstadosListaComponent,
-        EstadoCadastroComponent
+        EstadoCadastroComponent,
+        PalestranteListaComponent,
+        PalestranteCadastroComponent
     ],
     providers: [
-        EstadosService
+        EstadosService,
+        PalestrantesService
     ],
 })
 export class AdminModule { }

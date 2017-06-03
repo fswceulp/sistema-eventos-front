@@ -1,0 +1,16 @@
+<div *ngIf="evento">
+    <h2>{{evento.sigla}} - {{evento.nome}}</h2>
+    <p>De {{evento.inicio}} a {{evento.termino}}</p><hr/>
+    <p id="resumo">Lorem ipsum dollor sit akismet...</p>
+    <h6>Artigos relacionados: 5</h6>
+    <p>{{evento.local}}, em {{evento.cidade}} - {{evento.estado}}</p>
+    <p>Para saber mais, visite <a [href]="evento.url" target="_blank">
+    {{evento.url}}</a></p>
+    
+</div>
+<div *ngIf="!evento">
+    <h1>Evento não encontrado!</h1>
+    <p>O evento que você procura não pode ser encontrado. Veja a 
+        <a routerLink="/eventos">lista dos eventos</a>.
+    </p>
+</div>
