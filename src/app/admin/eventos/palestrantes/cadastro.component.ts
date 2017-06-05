@@ -12,9 +12,11 @@ export class PalestranteCadastroComponent implements OnInit {
     palestra: Palestra = new Palestra('','');
     palestrante: Palestrante = new Palestrante('', '', '', '', '', '', new Palestra('',''), 0);
     idEvento: any;
-    status: any;
+    status: boolean;
+    msgErro: any = '';
 
-    constructor(private palestrantesService: PalestrantesService, private activatedRoute: ActivatedRoute) { }
+    constructor(private palestrantesService: PalestrantesService, private activatedRoute: ActivatedRoute
+    , private router: Router) { }
 
     ngOnInit() {
          // subscribe to router event
@@ -27,7 +29,11 @@ export class PalestranteCadastroComponent implements OnInit {
         this.palestrante.idEvento = this.idEvento;
         this.palestrantesService.save(this.palestrante).subscribe(
                 palestrante => this.status = true,
-                erro => this.status = erro);
+                erro => this.msgErro = erro );
+    }
+
+    voltar(){
+        this.router.navigate(['admin/eventos/'+this.idEvento+'/palestrantes']);
     }
 
 }

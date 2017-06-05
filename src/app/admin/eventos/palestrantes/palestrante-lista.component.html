@@ -1,15 +1,25 @@
-<h1>Palestrantes</h1>
+<h2>Palestrantes</h2>
+<button class="btn btn-primary opcoes" style="margin-bottom: 8px;" (click)="cadastrarPalestrante();"><i class="fa fa-plus" aria-hidden="true"></i><b> Novo</b></button>
 
-<table class="table table-stripped">
+
+<div class="alert alert-success alert-dismissible fade show" *ngIf="status" role="alert">
+  <button type="button" class="close" data-dismiss="alert" (click)="status=false" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Sucesso!</strong> O palestrante removido.
+</div><br/>
+
+<table *ngIf="!(palestrantes == '')" class="table table-stripped">
     <thead>
         <tr>
             <th>Id</th>
             <th>Nome</th>
+            <th>Email</th>
             <th>Filiação</th>
             <th>Mini Biografia</th>
             <th>Link Lattes</th>
-            <th>Email</th>
-            <th>Palestras</th>
+            <th>Site</th>
+            <th>Palestra</th>
             <th>Opções</th>
         </tr>
     </thead>
@@ -17,15 +27,42 @@
         <tr *ngFor="let palestrante of palestrantes">
             <td>{{palestrante.id}}</td>
             <td>{{palestrante.nome}}</td>
-            <td>{{palestrante.filiacao}}</td>
-            <td class="miniBiografia">{{palestrante.miniBiografia}}</td>  
-            <td>{{palestrante.linkLattes}}</td>
             <td>{{palestrante.email}}</td>
-            <td><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></button></td>
+            <td>{{palestrante.filiacao}}</td>
+            <td>{{palestrante.linkLattes}}</td>
+            <td>{{palestrante.site}}</td>
+            <td class="miniBiografia">{{palestrante.miniBiografia}}</td>  
+            <td>{{palestrante.palestra.nome}}</td>
             <td id="opcoes">
-                <button class="btn btn-danger" (click)="editarPalestrante(cidade);"><i class="fa fa-times" aria-hidden="true"></i></button>
-                <button class="btn btn-warning" (click)="excluirPalestrante(cidade);"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                <button class="btn btn-warning opcoes" (click)="editarPalestrante(palestrante);"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                <button class="btn btn-danger opcoes" (click)="palestranteSelecionado = palestrante" data-toggle="modal" data-target="#confirmarExclusao"><i class="fa fa-times" aria-hidden="true"></i></button>
             </td>
         </tr>
     </tbody>
 </table>
+
+<div *ngIf="(palestrantes == '')">
+    <br/>
+    <h4>Não há palestrantes cadastrados para este evento</h4>
+</div>
+
+<!-- Confirmar Exclusão -->
+<div class="modal fade" id="confirmarExclusao" tabindex="-1" role="dialog" aria-labelledby="confirmarExclusaoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmarExclusaoLabel">Confirmar Exclusão</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja realmente excluir o palestrante <strong>{{palestranteSelecionado.nome}}</strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+        <button type="button" class="btn btn-primary" (click)="excluirPalestrante(palestranteSelecionado);"  data-dismiss="modal">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

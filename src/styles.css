@@ -14,7 +14,7 @@ td[id="opcoes"]{
     display: inline-flex;
 }
 
-#opcoes>button{
+button.opcoes{
     padding: 2px 6px;
     margin-right: 5px;
 }

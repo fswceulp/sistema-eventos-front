@@ -17,14 +17,16 @@ export class PalestrantesService {
     }
 
     all(idEvento: number): Observable<any[]> {
-        return this.http.get('http://localhost:3000/palestrantes?conferenciaId='+ idEvento)
-            .map(response => response.json());
+        return this.http.get('http://localhost:3000/palestrantes?eventoId='+ idEvento)
+            .map(response => response.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
+            
     }
 
-    // all(idEvento: number): Observable<any[]> {
-    //     return this.http.get('http://localhost:3000/palestras?_expand=palestrante')
-    //         .map(response => response.json());
-    // }
+    getPalestranteById(idPalestrante: number): Observable<any[]> {
+         return this.http.get('http://localhost:3000/palestrantes?id='+idPalestrante)
+             .map(response => response.json());
+    }
 
     save(dadosPalestrante: Palestrante) {
         const palestrante = { 
@@ -35,9 +37,8 @@ export class PalestrantesService {
             site: dadosPalestrante.site, 
             email: dadosPalestrante.email,
             palestra: dadosPalestrante.palestra,
-            idEvento: dadosPalestrante.idEvento
+            eventoId: dadosPalestrante.idEvento
         };
-        // console.log(JSON.stringify(palestrante));
         return this.http.post('http://localhost:3000/palestrantes', JSON.stringify(palestrante), this.options)
             .map(response => response.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
@@ -50,8 +51,8 @@ export class PalestrantesService {
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }
 
-    delete(id: number) {
-        return this.http.delete('http://localhost:3000/estados/' + id, this.options)
+    delete(idPalestrante: number) {
+        return this.http.delete('http://localhost:3000/palestrantes/' + idPalestrante)
             .map(response => response.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }    

@@ -1,69 +1,85 @@
-<h2>Cadastro de Palestrante</h2><br/>
+<h2>Cadastro de Palestrante</h2>
+<button class="btn btn-info opcoes" style="margin-bottom: 8px;" (click)="voltar();"><i class="fa fa-arrow-left" aria-hidden="true"></i><b> Voltar</b></button>
+<br/>
+
+<!-- Mensagem de sucesso -->
+<div class="alert alert-success alert-dismissible fade show" *ngIf="status" role="alert">
+  <button type="button" class="close" data-dismiss="alert" (click)="status=false" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Sucesso!</strong> O cadastro do palestrante no <b>Evento {{idEvento}}</b> foi efetuado.
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" *ngIf="msgErro!=''" role="alert">
+  <button type="button" class="close" data-dismiss="alert" (click)="msgErro=''" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Erro!</strong> {{msgErro}}.
+</div>
 
 <form (ngSubmit)="save()" #formCadastro="ngForm">
 
-        <!-- Nome do Palestrante -->
-        <div class="form-group">
-            <label for="nome">Nome Completo</label>
-            <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="palestrante.nome" #nome="ngModel" placeholder="Nome do palestrante">
-            <div class="alert alert-danger" [hidden]="nome.valid || nome.pristine">Você deve informar o nome do palestrante.</div>
-        </div>  
+    <!-- Nome do Palestrante -->
+    <div class="form-group">
+        <label for="nome">Nome Completo</label>
+        <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="palestrante.nome" #nome="ngModel" placeholder="Nome do palestrante" required>
+        <div class="alert alert-danger" [hidden]="nome.valid || !nome.touched">Você deve informar o nome do palestrante.</div>
+    </div>  
 
-        <!--Email do Palestrante-->
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email" class="form-control" [(ngModel)]="palestrante.email" #email="ngModel" placeholder="Email do palestrante" required>
-            <div class="alert alert-danger" [hidden]="email.valid || email.pristine">Você deve informar o email do palestrante.</div>
-        </div>
+    <!--Email do Palestrante-->
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control" [(ngModel)]="palestrante.email" #email="ngModel" placeholder="Email do palestrante" required>
+        <div class="alert alert-danger" [hidden]="email.valid || !email.touched">Você deve informar o email do palestrante.</div>
+    </div>
 
-        <!--Filiacao do Palestrante-->
-        <div class="form-group">
-            <label for="filiacao">Filiacao</label>
-            <input type="text" id="filiacao" name="filiacao" class="form-control" [(ngModel)]="palestrante.filiacao" #filiacao="ngModel" placeholder="Filiação do palestrante" required>
-            <div class="alert alert-danger" [hidden]="filiacao.valid || filiacao.pristine">Você deve informar a filiação do palestrante.</div>
-        </div>
+    <!--Filiacao do Palestrante-->
+    <div class="form-group">
+        <label for="filiacao">Filiacao</label>
+        <input type="text" id="filiacao" name="filiacao" class="form-control" [(ngModel)]="palestrante.filiacao" #filiacao="ngModel" placeholder="Filiação do palestrante" required>
+        <div class="alert alert-danger" [hidden]="filiacao.valid || !filiacao.touched">Você deve informar a filiação do palestrante.</div>
+    </div>
 
-        <!--Link para o Lattes-->
-        <div class="form-group">
-            <label for="linkLattes">Link para o curriculum Lattes</label>
-            <input type="text" id="linkLattes" name="linkLattes" class="form-control" [(ngModel)]="palestrante.linkLattes" #linkLattes="ngModel" placeholder="Link do Lattes" required>
-           <div class="alert alert-danger" [hidden]="linkLattes.valid || linkLattes.pristine">Você deve informar o link para o curriculum Lattes do palestrante.</div>
-        </div>
+    <!--Link para o Lattes-->
+    <div class="form-group">
+        <label for="linkLattes">Link para o curriculum Lattes</label>
+        <input type="url" id="linkLattes" name="linkLattes" class="form-control" [(ngModel)]="palestrante.linkLattes" #linkLattes="ngModel" placeholder="Link do Lattes" required>
+        <div class="alert alert-danger" [hidden]="linkLattes.valid || !linkLattes.touched">Você deve informar o link para o curriculum Lattes do palestrante.</div>
+    </div>
 
-        <!--Link para o site do Palestrante-->
-        <div class="form-group">
-            <label for="site">Link para o site do Palestrante</label>
-            <input type="text" id="site" name="site" class="form-control" [(ngModel)]="palestrante.site" #site="ngModel" placeholder="Site do Palestrante">
-        </div>
+    <!--Link para o site do Palestrante-->
+    <div class="form-group">
+        <label for="site">Link para o site do Palestrante</label>
+        <input type="url" id="site" name="site" class="form-control" [(ngModel)]="palestrante.site" #site="ngModel" placeholder="Site do Palestrante">
+    </div>
 
-        <!--Mini Biografia do Palestrante-->
-        <div class="form-group">
-            <label for="miniBiografia">Mini-biografia do palestrante</label>
-            <textarea type="text" id="miniBiografia" name="miniBiografia" class="form-control" [(ngModel)]="palestrante.miniBiografia" #miniBiografia="ngModel" placeholder="Mini Biografia"></textarea>
-        </div>
-        
-        
-        <!-- Palestra -->
-        <h4>Palestra</h4>
-        <hr>
-
-        <!--Nome-->
-        <div class="form-group">
-            <label for="nomePalestra">Nome</label>
-            <input type="text" id="nomePalestra" name="nomePalestra" class="form-control" [(ngModel)]="palestrante.palestra.nome" #nomePalestra="ngModel" placeholder="Título da Palestra" required>
-            <div class="alert alert-danger" [hidden]="nomePalestra.valid || nomePalestra.pristine">Você deve informar o nome da Palestra.</div>
-        </div>
-
-        <!--Resumo-->
-        <div class="form-group">
-            <label for="resumo">Resumo</label>
-            <textarea type="text" id="resumo" name="resumo" class="form-control" [(ngModel)]="palestrante.palestra.resumo" #resumo="ngModel" placeholder="Resumo da Palestra" height="100"></textarea>
-            <div class="alert alert-danger" [hidden]="resumo.valid || resumo.pristine">Você deve informar o nome da Palestra.</div>
-        </div>
-
-
-
-        <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
-        <button type="button" class="btn btn-default" (click)="formCadastro.reset()">Novo</button>
-    </form>
+    <!--Mini Biografia do Palestrante-->
+    <div class="form-group">
+        <label for="miniBiografia">Mini-biografia do palestrante</label>
+        <textarea type="text" id="miniBiografia" name="miniBiografia" class="form-control" [(ngModel)]="palestrante.miniBiografia" #miniBiografia="ngModel" placeholder="Mini Biografia"></textarea>
+    </div>
     
+    
+    <!-- Palestra -->
+    <h4>Palestra</h4>
+    <hr>
+
+    <!--Nome-->
+    <div class="form-group">
+        <label for="nomePalestra">Nome</label>
+        <input type="text" id="nomePalestra" name="nomePalestra" class="form-control" [(ngModel)]="palestrante.palestra.nome" #nomePalestra="ngModel" placeholder="Título da Palestra" required>
+        <div class="alert alert-danger" [hidden]="nomePalestra.valid || nomePalestra.pristine">Você deve informar o nome da Palestra.</div>
+    </div>
+
+    <!--Resumo-->
+    <div class="form-group">
+        <label for="resumo">Resumo</label>
+        <textarea type="text" id="resumo" name="resumo" class="form-control" [(ngModel)]="palestrante.palestra.resumo" #resumo="ngModel" placeholder="Resumo da Palestra" height="100"></textarea>
+        <div class="alert alert-danger" [hidden]="resumo.valid || resumo.pristine">Você deve informar o nome da Palestra.</div>
+    </div>
+
+
+
+    <button class="btn btn-success" [disabled]="!formCadastro.form.valid" (click)="save();formCadastro.reset(); ">Salvar</button>
+    <button type="button" class="btn btn-default" (click)="formCadastro.reset()">Novo</button>
+</form>
