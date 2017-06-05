@@ -1,19 +1,32 @@
+<div *ngIf="msgErro" role="alert" class="alert alert-danger">
+    <button (click)="msgErro=''" class="close" type="button">x</button>
+    <h1>Erro ao tentar cadastrar-se:</h1>
+    <p>{{msgErro}}</p>
+</div>
+<div *ngIf="msgSucesso" role="alert" class="alert alert-success">
+    <button (click)="msgErro=''" class="close" type="button">x</button>
+    <h1>Sucesso</h1>
+    <p>{{msgSucesso}}</p>
+    <a [routerLink]="['/login']" class="btn btn-link">Fazer Login</a>
+</div>
+
 <div class="col-md-6 col-md-offset-3 centralizado jumbotron">
     <h2>Cadastre-se em Eventos++</h2>
-    <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+    <form name="form" (ngSubmit)="form.form.valid && onSubmit()" #form="ngForm" novalidate>
         
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required />
-            <div *ngIf="f.submitted && !email.valid" class="help-block">Username is required</div>
+        <div class="form-group" [ngClass]="{'has-error': !form.submitted && !login.valid }">
+            <label for="login">Login</label>
+            <input type="text" class="form-control" name="login" [(ngModel)]="model.login" #login="ngModel" required />
+            <div *ngIf="(!login.valid && !login.pristine)" class="alert alert-danger">Login é de preenchimento obrigatório</div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-            <label for="password">Senha</label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
-            <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+        <div class="form-group" [ngClass]="{'has-error': !form.submitted && !senha.valid }">
+            <label for="senha">Senha</label>
+            <input type="password" class="form-control" name="senha" [(ngModel)]="model.senha" #senha="ngModel" required minlength="4"
+       maxlength="8" size="8"/>
+            <div *ngIf="(!senha.valid && !senha.pristine)" class="alert alert-danger">Senha é de preenchimento obrigatório e deve conter entre 4 e 8 dígitos</div>
         </div>
         <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary">Cadastrar</button>
+            <button [disabled]="loading || !form.form.valid" class="btn btn-primary" (click)="onSubmit">Cadastrar</button>
             <a [routerLink]="['/login']" class="btn btn-link">Cancelar</a>
         </div>
     </form>

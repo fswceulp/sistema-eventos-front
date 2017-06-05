@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../usuario/autenticacao.service';
-import { Usuario } from '../../usuario/Usuario';
 import { Router } from '@angular/router';
+import { Usuario } from '../../usuario/Usuario';
 
 @Component({
     templateUrl: 'login.component.html',
@@ -12,54 +12,46 @@ export class LoginComponent implements OnInit {
     loading: boolean = false;
     model: any = {};
     pathLogo: string = '../src/assets/images/logo.png';
-   
+
     msgErro: string;
 
 
-    constructor(private loginService: LoginService 
-            ,private router: Router) {}
+    constructor(private loginService: LoginService
+        , private router: Router) { }
 
     ngOnInit() {
-        
+
     }
 
-    onSubmit(){
+    onSubmit() {
         this.loading = true;
-        if(this.model.login && this.model.senha){
-            
-            this.loginService.validaCredenciais(this.model.login, this.model.senha.trim())
+        this.loginService.validaCredenciais(this.model.login, this.model.senha.trim())
             .subscribe(
-                data => {
-                    if(data.length > 0){
-                        if(data[0].nome == "admin"){
-                            this.router.navigate(['/admin']);    
-                        }
-                        else{
-                            this.router.navigate(['/eventos']);
-                        }
+            data => {
+                if (data.length > 0) {
+                    if (data[0].nome == "admin") {
+                        this.router.navigate(['/admin']);
                     }
-                    else{
-                        this.msgErro = "Credenciais não cadastradas no banco de dados";
-                        this.model = {};
-                        this.router.navigate(['/login']);
+                    else {
+                        this.router.navigate(['/eventos']);
                     }
-                },
-                error => {
-                    this.msgErro = error.statusText;
-                    console.log(error.statusText); //mensagem de erro
-                    console.log(error.status); //status do erro
-
+                    let usuario = JSON.stringify(data[0]);
+                    console.log(usuario);
+                    sessionStorage.setItem('usuario', usuario);
                 }
-            ); 
-        }else{
-            if(this.model.senha === "" || !this.model.senha){
-                this.msgErro = "Senha deve ser informada!";
+                else {
+                    this.msgErro = "Credenciais não cadastradas no banco de dados";
+                    this.model = {};
+                    this.router.navigate(['/login']);
+                }
+            },
+            error => {
+                this.msgErro = error.statusText;
+                console.log(error.statusText); //mensagem de erro
+                console.log(error.status); //status do erro
+
             }
-            if(this.model.login === "" || !this.model.login){
-                this.msgErro = "Login deve ser informado!";
-            }
-            
-        }
-        this.loading = false;    
+            );
+        this.loading = false;
     }
 }

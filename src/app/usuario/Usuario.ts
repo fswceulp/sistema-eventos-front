@@ -6,9 +6,13 @@ export class Usuario{
     public endereco:string;
     public telefone:string;
 
-    constructor(email:string, senha:string, nome?:string, endereco?:string, telefone?:string, id?:number){
-        this.email = email;
-        this.senha = senha;
+    constructor(email?:string, senha?:string, nome?:string, endereco?:string, telefone?:string, id?:number){
+        if(email){
+            this.email = email;
+        }
+        if(senha){
+            this.senha = senha;
+        }
         if(nome){
             this.nome = nome;
         }
