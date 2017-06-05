@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
     loading: boolean = false;
     model: any = {};
     pathLogo: string = '../src/assets/images/logo.png';
-    url: string;
+   
     msgErro: string;
 
 
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
             ,private router: Router) {}
 
     ngOnInit() {
-        this.url = '/eventos';
+        
     }
 
     onSubmit(){
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
                             this.router.navigate(['/admin']);    
                         }
                         else{
-                            this.router.navigate([this.url]);
+                            this.router.navigate(['/eventos']);
                         }
                     }
                     else{

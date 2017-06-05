@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class CadastroComponent implements OnInit {
+    model: any = {};
+
     constructor() { }
 
     ngOnInit() { }

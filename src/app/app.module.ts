@@ -12,6 +12,7 @@ import { AdminModule } from './admin/admin.module';
 import { EventosModule } from './eventos/eventos.module';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
+
 @NgModule({
     imports: [
         BrowserModule,
