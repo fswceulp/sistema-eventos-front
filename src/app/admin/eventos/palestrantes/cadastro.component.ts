@@ -12,6 +12,7 @@ export class PalestranteCadastroComponent implements OnInit {
     palestra: Palestra = new Palestra('','');
     palestrante: Palestrante = new Palestrante('', '', '', '', '', '', new Palestra('',''), 0);
     idEvento: any;
+    status: any;
 
     constructor(private palestrantesService: PalestrantesService, private activatedRoute: ActivatedRoute) { }
 
@@ -21,4 +22,12 @@ export class PalestranteCadastroComponent implements OnInit {
             this.idEvento = params['id'];
         });
     }
+
+    save(){
+        this.palestrante.idEvento = this.idEvento;
+        this.palestrantesService.save(this.palestrante).subscribe(
+                palestrante => this.status = true,
+                erro => this.status = erro);
+    }
+
 }

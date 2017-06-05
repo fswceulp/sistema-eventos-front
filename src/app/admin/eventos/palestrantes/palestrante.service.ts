@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Palestra } from '../palestras/Palestra';
+import { Palestrante } from './Palestrante';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
@@ -24,9 +26,19 @@ export class PalestrantesService {
     //         .map(response => response.json());
     // }
 
-    save(nome: string, uf: string) {
-        const estado = { nome: nome, uf: uf };  
-        return this.http.post('http://localhost:3000/estados', JSON.stringify(estado), this.options)
+    save(dadosPalestrante: Palestrante) {
+        const palestrante = { 
+            nome: dadosPalestrante.nome, 
+            filiacao: dadosPalestrante.filiacao, 
+            miniBiografia: dadosPalestrante.miniBiografia, 
+            linkLattes: dadosPalestrante.linkLattes, 
+            site: dadosPalestrante.site, 
+            email: dadosPalestrante.email,
+            palestra: dadosPalestrante.palestra,
+            idEvento: dadosPalestrante.idEvento
+        };
+        // console.log(JSON.stringify(palestrante));
+        return this.http.post('http://localhost:3000/palestrantes', JSON.stringify(palestrante), this.options)
             .map(response => response.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }

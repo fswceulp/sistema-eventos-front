@@ -1,6 +1,6 @@
 <h2>Cadastro de Palestrante</h2><br/>
 
-<form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
+<form (ngSubmit)="save()" #formCadastro="ngForm">
 
         <!-- Nome do Palestrante -->
         <div class="form-group">
@@ -33,13 +33,13 @@
         <!--Link para o site do Palestrante-->
         <div class="form-group">
             <label for="site">Link para o site do Palestrante</label>
-            <input type="text" id="site" name="site" class="form-control" [(ngModel)]="palestrante.site" #site="ngModel" placeholder="Site do Palestrante" required>
+            <input type="text" id="site" name="site" class="form-control" [(ngModel)]="palestrante.site" #site="ngModel" placeholder="Site do Palestrante">
         </div>
 
         <!--Mini Biografia do Palestrante-->
         <div class="form-group">
             <label for="miniBiografia">Mini-biografia do palestrante</label>
-            <textarea type="text" id="miniBiografia" name="miniBiografia" class="form-control" [(ngModel)]="palestrante.miniBiografia" #miniBiografia="ngModel" placeholder="Mini Biografia" required></textarea>
+            <textarea type="text" id="miniBiografia" name="miniBiografia" class="form-control" [(ngModel)]="palestrante.miniBiografia" #miniBiografia="ngModel" placeholder="Mini Biografia"></textarea>
         </div>
         
         
@@ -57,12 +57,13 @@
         <!--Resumo-->
         <div class="form-group">
             <label for="resumo">Resumo</label>
-            <textarea type="text" id="resumo" name="resumo" class="form-control" [(ngModel)]="palestrante.palestra.resumo" #resumo="ngModel" placeholder="Resumo da Palestra" height="100" required></textarea>
+            <textarea type="text" id="resumo" name="resumo" class="form-control" [(ngModel)]="palestrante.palestra.resumo" #resumo="ngModel" placeholder="Resumo da Palestra" height="100"></textarea>
             <div class="alert alert-danger" [hidden]="resumo.valid || resumo.pristine">Você deve informar o nome da Palestra.</div>
         </div>
 
 
 
         <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
-        <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+        <button type="button" class="btn btn-default" (click)="formCadastro.reset()">Novo</button>
     </form>
+    
