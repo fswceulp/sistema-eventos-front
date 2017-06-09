@@ -11,6 +11,7 @@ import { PalestranteCadastroComponent } from './eventos/palestrantes/cadastro.co
 const rotas: Routes = [
     {
         path: 'admin', component: AdminComponent, children: [
+            { path: 'eventos/:id/palestrantes/:idPalestrante/editar', component: PalestranteCadastroComponent },
             { path: 'eventos/:id/palestrantes/cadastro', component: PalestranteCadastroComponent },
             { path: 'eventos/:id/palestrantes', component: PalestranteListaComponent },
             { path: 'estados/cadastro', component: EstadoCadastroComponent },

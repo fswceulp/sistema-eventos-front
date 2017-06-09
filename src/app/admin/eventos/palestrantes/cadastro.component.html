@@ -1,15 +1,31 @@
-<h2>Cadastro de Palestrante</h2>
+<div *ngIf="!idPalestrante">
+    <h2>Cadastro de Palestrante</h2>
+</div>
+
+<div *ngIf="idPalestrante">
+    <h2>Edição de Palestrante</h2>
+</div>
+
+<!-- Botão de Retorno -->
 <button class="btn btn-info opcoes" style="margin-bottom: 8px;" (click)="voltar();"><i class="fa fa-arrow-left" aria-hidden="true"></i><b> Voltar</b></button>
 <br/>
+<br/>
 
-<!-- Mensagem de sucesso -->
+<!-- Mensagem de Sucesso -->
 <div class="alert alert-success alert-dismissible fade show" *ngIf="status" role="alert">
   <button type="button" class="close" data-dismiss="alert" (click)="status=false" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
-  <strong>Sucesso!</strong> O cadastro do palestrante no <b>Evento {{idEvento}}</b> foi efetuado.
+  <span *ngIf="!idPalestrante">
+    <strong>Sucesso!</strong> O cadastro do palestrante no <b>Evento {{idEvento}}</b> foi efetuado.
+  </span>
+  <span *ngIf="idPalestrante">
+    <strong>Sucesso!</strong> A atualização do palestrante foi efetuada.
+  </span>
+  
 </div>
 
+<!-- Mensagem de Erro -->
 <div class="alert alert-danger alert-dismissible fade show" *ngIf="msgErro!=''" role="alert">
   <button type="button" class="close" data-dismiss="alert" (click)="msgErro=''" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -17,6 +33,9 @@
   <strong>Erro!</strong> {{msgErro}}.
 </div>
 
+<!--
+    Formulário de cadastro/edição
+-->
 <form (ngSubmit)="save()" #formCadastro="ngForm">
 
     <!-- Nome do Palestrante -->
@@ -78,8 +97,6 @@
         <div class="alert alert-danger" [hidden]="resumo.valid || resumo.pristine">Você deve informar o nome da Palestra.</div>
     </div>
 
-
-
     <button class="btn btn-success" [disabled]="!formCadastro.form.valid" (click)="save();formCadastro.reset(); ">Salvar</button>
-    <button type="button" class="btn btn-default" (click)="formCadastro.reset()">Novo</button>
+    <button type="button" *ngIf="!idPalestrante" class="btn btn-default" (click)="formCadastro.reset()">Novo</button>
 </form>

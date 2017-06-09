@@ -9,17 +9,41 @@
   <strong>Sucesso!</strong> O palestrante removido.
 </div><br/>
 
+<div class="alert alert-danger alert-dismissible fade show" *ngIf="msgErro!=''" role="alert">
+  <button type="button" class="close" data-dismiss="alert" (click)="msgErro=''" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Erro!</strong> {{msgErro}}.
+</div><br/>
+
+
+<div class="input-group">
+  <div class="input-group-btn">
+    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Filtro
+    </button>
+    <div class="dropdown-menu">
+      <button class="dropdown-item">Nome</button>
+      <button class="dropdown-item">E-mail</button>
+      <button class="dropdown-item">Titulo da Palestra</button>
+      <div role="separator" class="dropdown-divider"></div>
+      <button class="dropdown-item">Nenhum</button>
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with dropdown button">
+</div>
+
 <table *ngIf="!(palestrantes == '')" class="table table-stripped">
     <thead>
         <tr>
             <th>Id</th>
-            <th>Nome</th>
-            <th>Email</th>
+            <th>Nome <i class="fa fa-caret-down fa-1" (click)="getAllOrderByName()" aria-hidden="true"></i></th>
+            <th>Email <i class="fa fa-caret-down fa-1" (click)="getAllOrderByEmail()" aria-hidden="true"></i></th>
             <th>Filiação</th>
-            <th>Mini Biografia</th>
             <th>Link Lattes</th>
             <th>Site</th>
-            <th>Palestra</th>
+            <th>Mini Biografia</th>
+            <th>Título da Palestra <i class="fa fa-caret-down fa-1" (click)="getAllOrderByTituloPalestra()" aria-hidden="true"></i></th>
             <th>Opções</th>
         </tr>
     </thead>
@@ -35,7 +59,7 @@
             <td>{{palestrante.palestra.nome}}</td>
             <td id="opcoes">
                 <button class="btn btn-warning opcoes" (click)="editarPalestrante(palestrante);"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                <button class="btn btn-danger opcoes" (click)="palestranteSelecionado = palestrante" data-toggle="modal" data-target="#confirmarExclusao"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button class="btn btn-danger opcoes" (click)="palestranteSelecionado = palestrante" data-toggle="modal" data-target="#confirmarExclusao"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
             </td>
         </tr>
     </tbody>

@@ -23,9 +23,31 @@ export class PalestrantesService {
             
     }
 
-    getPalestranteById(idPalestrante: number): Observable<any[]> {
-         return this.http.get('http://localhost:3000/palestrantes?id='+idPalestrante)
-             .map(response => response.json());
+    getAllOrderByNome(idEvento: number): Observable<any[]> {
+        return this.http.get('http://localhost:3000/palestrantes?_sort=nome&eventoId='+ idEvento)
+            .map(response => response.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
+            
+    }
+
+    getAllOrderByEmail(idEvento: number): Observable<any[]> {
+        return this.http.get('http://localhost:3000/palestrantes?_sort=email&eventoId='+ idEvento)
+            .map(response => response.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
+            
+    }
+
+    getAllOrderByTituloPalestra(idEvento: number): Observable<any[]> {
+        return this.http.get('http://localhost:3000/palestrantes?_sort=palestra.nome&eventoId='+ idEvento)
+            .map(response => response.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
+            
+    }
+
+    getPalestranteById(idPalestrante: number): Observable<any> {
+         return this.http.get('http://localhost:3000/palestrantes/'+idPalestrante)
+             .map(response => response.json())
+             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }
 
     save(dadosPalestrante: Palestrante) {
@@ -44,9 +66,18 @@ export class PalestrantesService {
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }
 
-    update(id: number, nome: string, uf: string) {
-        const estado = { id: id, nome: nome, uf: uf };
-        return this.http.put('http://localhost:3000/estados/' + id, JSON.stringify(estado), this.options)
+    update(dadosPalestrante: Palestrante) {
+        const palestrante = { 
+            nome: dadosPalestrante.nome, 
+            filiacao: dadosPalestrante.filiacao, 
+            miniBiografia: dadosPalestrante.miniBiografia, 
+            linkLattes: dadosPalestrante.linkLattes, 
+            site: dadosPalestrante.site, 
+            email: dadosPalestrante.email,
+            palestra: dadosPalestrante.palestra,
+            eventoId: dadosPalestrante.idEvento
+        };
+        return this.http.put('http://localhost:3000/palestrantes/' + dadosPalestrante.id, JSON.stringify(palestrante), this.options)
             .map(response => response.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }

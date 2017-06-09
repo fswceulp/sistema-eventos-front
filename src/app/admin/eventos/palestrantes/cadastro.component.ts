@@ -11,7 +11,9 @@ import { Palestra } from '../palestras/Palestra';
 export class PalestranteCadastroComponent implements OnInit {
     palestra: Palestra = new Palestra('','');
     palestrante: Palestrante = new Palestrante('', '', '', '', '', '', new Palestra('',''), 0);
+    palestranteSelecionado: any;
     idEvento: any;
+    idPalestrante: number = null;
     status: boolean;
     msgErro: any = '';
 
@@ -22,14 +24,26 @@ export class PalestranteCadastroComponent implements OnInit {
          // subscribe to router event
         this.activatedRoute.params.subscribe((params: Params) => {
             this.idEvento = params['id'];
+                this.activatedRoute.params.subscribe((params: Params) => {
+                    this.idPalestrante = params['idPalestrante'];
+                    this.palestrantesService.getPalestranteById(this.idPalestrante).subscribe(
+                        palestrante => this.palestrante = palestrante);
+                });
         });
     }
 
     save(){
         this.palestrante.idEvento = this.idEvento;
-        this.palestrantesService.save(this.palestrante).subscribe(
-                palestrante => this.status = true,
-                erro => this.msgErro = erro );
+        if(this.idPalestrante!=null){
+            this.palestrantesService.update(this.palestrante).subscribe(
+                    palestrante => this.status = true,
+                    erro => this.msgErro = erro );
+        }
+        else{
+            this.palestrantesService.save(this.palestrante).subscribe(
+                    palestrante => this.status = true,
+                    erro => this.msgErro = erro );
+        }
     }
 
     voltar(){
