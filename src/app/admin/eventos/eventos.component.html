@@ -1,0 +1,60 @@
+<div class="rows">
+    <div class="col-md-12">
+        <div *ngIf="deletado" [ngClass] = "'alert alert-success'"> Evento, Excluído com Sucesso. </div>
+        <div *ngIf="error" [ngClass] = "'alert alert-danger'">  Ops, houve um erro ao tentar Realizar Operação Evento!</div> 
+        <div class="col-md-7 p-0">
+            <h1 class="p-0">{{title}}</h1>
+        </div>
+        <div class="col-md-12 p-0">
+            <div class="bar-search">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" [routerLink]="['add']">+</button>
+                        </span>
+                        <input  class="form-control" placeholder="Procurando for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">OK</button>
+                        </span>
+                    </div><!-- /input-group -->
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th width="30%">Nome</th>
+                <th>Sigla</th>
+                <th>Inicio</th>
+                <th>Término</th>
+                <th>Realizador</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let evento of eventos">
+                <td>{{evento.id}}</td>
+                <td>{{evento.nome}}</td>
+                <td>{{evento.sigla}}</td>
+                <td>{{evento.inicio}}</td>
+                <td>{{evento.termino}}</td>
+                <td>{{evento.usuario.nome}}</td>
+                <td>{{evento.cidade.nome}}</td>
+                <td>{{evento.estado.uf}}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" [routerLink]="['edit', evento.id]"> Editar</button>
+                    <button class="btn btn-danger btn-sm" data-toggle="modal" (click)="eventoSelecionado =  evento" (click)="showDialog = !showDialog"  data-target="#confirmarExclusao">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-dialog [(visible)]="showDialog">
+  <h1>Excluir</h1>
+  <p>Deseja realmente excluir o evento: <strong>{{eventoSelecionado.nome}}</strong> ?</p>
+  <button (click)="showDialog = !showDialog" class="btn">Cancelar</button>
+  <button (click)="showDialog = !showDialog" (click)="deletar(eventoSelecionado)" class="btn btn-danger">Confirmar</button>
+</app-dialog>

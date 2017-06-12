@@ -2,19 +2,31 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventoManagerComponent } from './evento-manager.component';
+import { EventosGestaoComponent } from './admin/eventos/eventos.gestao.component';
+import { EventosComponent } from './admin/eventos/eventos.component';
+import { DialogComponent } from './dialog.component';
 
 @NgModule({
     imports: [
-        BrowserModule,
+        BrowserModule, 
+        BrowserAnimationsModule,
         FormsModule,
-        HttpModule
+        HttpModule,
+        AppRoutingModule,
+        NgbModule.forRoot()
     ],
-    declarations: [
+    declarations:[
         AppComponent,
-        EventoManagerComponent
+        EventosComponent,
+        EventosGestaoComponent,
+        DialogComponent
     ],
-    bootstrap: [AppComponent]
+    providers: [],
+    bootstrap:[AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
