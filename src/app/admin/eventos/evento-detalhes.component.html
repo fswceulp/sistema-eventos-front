@@ -1,0 +1,61 @@
+
+<div *ngIf="evento">
+    <h1>{{evento.sigla}} - {{evento.nome}}</h1>
+    <p>{{evento.inicio}} a {{evento.termino}}</p>
+    <p>{{evento.local}}, em {{evento.cidade}} - {{evento.estado}}</p>
+    <p>Para saber mais, visite <a [href]="evento.url" target="_blank">
+    {{evento.url}}</a></p>
+    <p>Lista de inscritos no evento:</p>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Pesquisar inscrito:</span>
+        <input type="text" class="form-control" placeholder="Informe nome ou email" aria-describedby="basic-addon1">
+   
+        <button type="button" class="btn btn-primary" routerLink="/admin/eventos/:id/inscrito/cadastrar" (click)="cadastrar(evento)" >Novo</button>
+    </div>
+    <br>
+    <table class="table table-hover">
+        <tr>
+            <th>#</th><th>Nome Completo</th><th>E-mail</th><th>Ações</th>
+        </tr>
+        <tr *ngFor = "let inscrito of inscritos">
+            <td>{{inscrito.id}}</td>
+            <td>{{inscrito.usuario.nome}} </td>
+            <td>{{inscrito.usuario.email}} </td>
+            <td>
+                <button type="button" class="btn btn-warning" aria-label="Left Align"
+                 routerLink="/admin/eventos/:id/inscrito/editar" (click)="editar(evento,inscrito)">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </td>
+            <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Confirmar Exclusão</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        Deseja realmente excluir a inscrição do <strong>{{inscrito.usuario.nome}}</strong> no evento?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="excluir(inscrito)">Salvar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button> 
+                    </div>
+                    </div>
+                </div>
+                </div>
+        </tr>
+    </table>
+</div>
+<div *ngIf="!evento">
+    <h1>Evento não encontrado!</h1>
+    <p>O evento que você procura não pode ser encontrado. Veja a 
+        <a routerLink="/admin/eventos">lista dos eventos</a>.
+    </p>
+</div>
+
+
