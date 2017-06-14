@@ -23,6 +23,13 @@ export class PalestrantesService {
             
     }
 
+    getAllByPage(numeroPagina: number, idEvento: number): Observable<any[]> {
+        return this.http.get('http://localhost:3000/palestrantes?_page='+numeroPagina+'&_limit=5&eventoId='+idEvento)
+            .map(response => response.json())
+            .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
+            
+    }
+
     getAllOrderByNome(idEvento: number): Observable<any[]> {
         return this.http.get('http://localhost:3000/palestrantes?_sort=nome&eventoId='+ idEvento)
             .map(response => response.json())

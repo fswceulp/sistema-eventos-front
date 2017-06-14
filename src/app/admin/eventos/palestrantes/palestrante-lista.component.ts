@@ -15,6 +15,8 @@ export class PalestranteListaComponent implements OnInit {
     resumo: any;
     status: any;
     msgErro: string = '';
+    totalPaginas: any = [];
+    numPaginas: any;
 
     constructor(private palestrantesService: PalestrantesService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
@@ -24,12 +26,33 @@ export class PalestranteListaComponent implements OnInit {
             this.idEvento = params['id'];
         });
 
-        this.palestrantesService.all(this.idEvento)
-            .subscribe(
+        this.palestrantesService.getAllByPage(1,this.idEvento).subscribe(
             palestrantes => this.palestrantes = palestrantes,
-            erro => this.msgErro = erro
-            );
-        
+            erro => this.msgErro = erro,
+        );
+
+        this.paginar();
+    }
+
+    
+    paginar(){
+        this.palestrantesService.all(this.idEvento).subscribe(
+            palestrantes => {
+                this.numPaginas = palestrantes.length;
+                this.numPaginas = Math.ceil(this.numPaginas/5);
+                for(var i=0; i<this.numPaginas; i++)
+                    this.totalPaginas.push(i);
+            },
+            erro => this.msgErro = erro,
+        );
+    }
+    
+    escolherPagina(numeroPagina: number){
+        console.log(this.numPaginas);
+        this.palestrantesService.getAllByPage(numeroPagina+1, this.idEvento).subscribe(
+            palestrantes => this.palestrantes = palestrantes,
+            erro => this.msgErro = erro,
+        );
     }
     
     getAllOrderByName(){
@@ -55,6 +78,7 @@ export class PalestranteListaComponent implements OnInit {
             erro => this.msgErro = erro
             );
     }
+
 
     editarPalestrante(palestrante: Palestrante){
         this.router.navigate(['admin/eventos/'+this.idEvento+'/palestrantes/'+palestrante.id+'/editar']);
