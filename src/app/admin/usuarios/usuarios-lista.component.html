@@ -1,0 +1,51 @@
+<h1>Usuarios</h1>
+<h3>Todos os usuários</h3>
+<div class="col-lg-6">
+    <button class="btn btn-success fa fa-plus" (click)="cadastrarUsuario()"></button>
+    <input type="text" class="form-control" placeholder="Buscar">
+    <span class="input-group-btn">
+<button class="btn btn-primary" type="button">Buscar</button>
+</span>
+</div>
+<br><br>
+<table class="table table-condensed">
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>E-Mail</th>
+        <th>Endereço</th>
+        <th>Telefone</th>
+        <th>Opções</th>
+    </tr>
+    <tr *ngFor="let usuario of usuarios">
+        <td>{{usuario.id}}</td>
+        <td>{{usuario.nome}}</td>
+        <td>{{usuario.email}}</td>
+        <td>{{usuario.endereco}}</td>
+        <td>{{usuario.telefone}}</td>
+        <td>
+            <button class="btn btn-warning fa fa-pencil" aria-hidden="true"></button>
+            <button (click)="usuarioSelecionado=usuario" type="button" class="btn btn-danger fa fa-trash-o" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></button>
+        </td>
+    </tr>
+</table>
+
+<div *ngIf="usuarioSelecionado" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            Deseja realmente excluir o usuário <strong>{{usuarioSelecionado.nome}}</strong> ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" (click)="excluirUsuario(usuarioSelecionado)">Confirmar Exclusão</button>
+      </div>
+    </div>
+  </div>
+</div>

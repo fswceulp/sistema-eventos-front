@@ -5,11 +5,15 @@ import { HomeComponent } from './home.component';
 import { AjudaComponent } from './ajuda.component';
 import { EstadosListaComponent } from './estados/estados-lista.component';
 import { EstadoCadastroComponent } from './estados/cadastro.component';
+import { UsuarioCadastroComponent } from './usuarios/usuario.component';
+import { UsuariosListaComponent } from './usuarios/usuarios-lista.component';
 
 const rotas: Routes = [
     {
         path: 'admin', component: AdminComponent, children: [
+            { path: 'usuarios/cadastro', component: UsuarioCadastroComponent },
             { path: 'estados/cadastro', component: EstadoCadastroComponent },
+            { path: 'usuarios', component: UsuariosListaComponent },
             { path: 'estados', component: EstadosListaComponent },
             { path: 'ajuda', component: AjudaComponent },
             { path: '', component: HomeComponent }

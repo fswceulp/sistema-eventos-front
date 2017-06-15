@@ -1,0 +1,36 @@
+<h1>Cadastro de usuários</h1>
+<h3>Formulário</h3>
+<form class="form-horizontal" (ngSubmit)="onSubmit()" #formCadastro="ngForm">
+  <div class="col-lg-6 form-group">
+    <label for="nome" class="col-sm-2 control-label">Nome</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="usuario.nome" #nome="ngModel" placeholder="Nome" required>
+    </div>
+  </div>
+  <div class="col-lg-6 form-group">
+    <label for="email" class="col-sm-2 control-label">E-Mail</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="email" name="email" [(ngModel)]="usuario.email" #email="ngModel" placeholder="E-Mail" required>
+    </div>
+  </div>
+  <div class="col-lg-6 form-group">
+    <label for="senha" class="col-sm-2 control-label">Senha</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="senha" name="senha" [(ngModel)]="usuario.senha" #senha="ngModel" placeholder="Senha" required>
+    </div>
+  </div>
+  <div class="col-lg-6 form-group">
+    <label for="endereco" class="col-sm-2 control-label">Endereço</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="usuario.endereco" #endereco="ngModel" placeholder="Endereço" required>
+    </div>
+  </div>
+  <div class="col-lg-6 form-group">
+    <label for="telefone" class="col-sm-2 control-label">Telefone</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="usuario.telefone" #telefone="ngModel" placeholder="Telefone" required>
+    </div>
+  </div>
+</form><br><br>
+
+<button type="submit" [disabled]="!formCadastro.form.valid" class="btn btn-primary" (click)="onSubmit()">Salvar</button><br><br>

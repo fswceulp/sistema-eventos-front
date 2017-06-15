@@ -10,6 +10,9 @@ import { AjudaComponent } from './ajuda.component';
 import { EstadosListaComponent } from './estados/estados-lista.component';
 import { EstadosService } from './estados/estados.service';
 import { EstadoCadastroComponent } from './estados/cadastro.component';
+import { UsuariosService } from './usuarios/usuarios.service';
+import { UsuarioCadastroComponent } from './usuarios/usuario.component';
+import { UsuariosListaComponent } from './usuarios/usuarios-lista.component';
 
 @NgModule({
     imports: [
@@ -23,10 +26,14 @@ import { EstadoCadastroComponent } from './estados/cadastro.component';
         HomeComponent,
         AjudaComponent,
         EstadosListaComponent,
-        EstadoCadastroComponent
+        EstadoCadastroComponent,
+        UsuarioCadastroComponent,
+        UsuariosListaComponent
     ],
     providers: [
-        EstadosService
+        EstadosService,
+        UsuariosService,
+        UsuariosListaComponent
     ],
 })
 export class AdminModule { }
