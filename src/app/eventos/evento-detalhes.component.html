@@ -1,10 +1,43 @@
 <div *ngIf="evento">
-    <h1>{{evento.sigla}} - {{evento.nome}}</h1>
-    <p>{{evento.inicio}} a {{evento.termino}}</p>
-    <p>{{evento.local}}, em {{evento.cidade}} - {{evento.estado}}</p>
-    <p>Para saber mais, visite <a [href]="evento.url" target="_blank">
-    {{evento.url}}</a></p>
+	<h1>{{evento.sigla}} - {{evento.nome}}</h1>
+	<hr>
+	<div class="jumbotron">
+		<h2>Sobre</h2>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus ipsum vel lectus tincidunt vehicula. 
+		Sed mollis nisi ut tellus feugiat, nec scelerisque magna vulputate.
+		Phasellus tortor ipsum, blandit rutrum pretium non, imperdiet sed lectus.</p>
+		<p>De {{evento.inicio}} a {{evento.termino}}</p>
+		<p>{{evento.local}}, em {{evento.cidade}} - {{evento.estado}}</p>
+		<div class="row">
+			<h2>Programação - </h2>
+			<button class="btn btn-info botoes" (click)="detalhesProgramacao(evento)">Ver mais</button>
+		</div>
+		<p>Para saber mais, visite <a [href]="evento.url" target="_blank">
+		{{evento.url}}</a></p>
+		
+		<h2>Artigos</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Título</th>
+					<th>Autor</th>
+					<th>Detalhes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let artigo of artigos">
+					<td>{{artigo.titulo}}</td>
+					<td>{{artigo.autor}}</td>
+					<td>
+						<button class="btn btn-info botoes"
+						(click)="detalhesArtigo(artigo)">Detalhes</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
+
 <div *ngIf="!evento">
     <h1>Evento não encontrado!</h1>
     <p>O evento que você procura não pode ser encontrado. Veja a 
