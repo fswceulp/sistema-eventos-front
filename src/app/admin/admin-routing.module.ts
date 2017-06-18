@@ -11,6 +11,7 @@ import { UsuariosListaComponent } from './usuarios/usuarios-lista.component';
 const rotas: Routes = [
     {
         path: 'admin', component: AdminComponent, children: [
+            { path: 'usuarios/:idUsuario/editar', component: UsuarioCadastroComponent },
             { path: 'usuarios/cadastro', component: UsuarioCadastroComponent },
             { path: 'estados/cadastro', component: EstadoCadastroComponent },
             { path: 'usuarios', component: UsuariosListaComponent },

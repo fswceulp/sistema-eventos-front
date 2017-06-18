@@ -32,8 +32,7 @@ import { UsuariosListaComponent } from './usuarios/usuarios-lista.component';
     ],
     providers: [
         EstadosService,
-        UsuariosService,
-        UsuariosListaComponent
+        UsuariosService
     ],
 })
 export class AdminModule { }
