@@ -9,4 +9,5 @@ export class Evento{
     cidadeId: number;
     estadoId: number;
     usuarioId: number;
+    local: string;
 }

@@ -38,32 +38,47 @@ export class EventosGestaoComponent implements OnInit{
     title = "Adicionar Evento";
     nomeEvento: string;
     param: string;
+    private userLogado:number = JSON.parse(localStorage.getItem('currentUser'))[0].id;
+
     constructor(
         private eventoService: EventoService,
         private estadoService: EstadoService,
         private router: Router,
         private route: ActivatedRoute,
     ){}
+    showModal = false;
 
     //Inicializa métodos
     ngOnInit(){
         this.getEstados();
-            //verifica se tem o id no parametro, se tiver adicionar o metódo getEvento(), reconhecendo que é um update
+            //verifica se tem o id no parametro, se tiver adicionar o metódo getEvento(), reconhecendo que é uma edição
             this.route.params.subscribe(
                 params => {
                     if(params['id']){
                         this.getEvento();
+                        this.title = "Editar Evento";
                     }
                 }
             );
+        this.evento.usuarioId = this.userLogado; //Seta o Usuário que está cadastrando ou Editando o evento
     }
 
     //Pega Evento de acordo com o ID passado na rota
-    getEvento():void{
+    getEvento(){
         this.route.params
             .switchMap((params: Params ) => this.eventoService.getEvento(+params['id']))
             .subscribe(
-                evento => this.evento = evento,
+                evento => {
+                    this.evento = evento
+                    this.getCidades(this.evento.estadoId);
+                    if(!this.eventoService.isAutorizado(this.evento)){
+                        console.log("Não Autorizado.");
+                        this.showModal = true;
+                        setTimeout(() => {
+                            return this.gotoEventos();
+                        },3000);
+                    }
+                }
             );
     }
 
@@ -76,7 +91,7 @@ export class EventosGestaoComponent implements OnInit{
     }
 
     //Pega Cidades Filtradas a partir do ID do Estado 
-    getCidades(estadoId: number){
+    getCidades(estadoId: number):void{
         this.estadoService.getCidades(estadoId)
         .subscribe(
             cidades => this.cidades = cidades,
@@ -133,7 +148,8 @@ export class EventosGestaoComponent implements OnInit{
         this.evento.palavras_chave = null;
     }
 
-    gotoDetail(): void {
-        this.router.navigate(['/eventos', this.evento.id]);
+    //Diretciona para a página de eventos
+    gotoEventos(): void {
+        this.router.navigate(['admin/eventos']);
     }
 }

@@ -7,5 +7,5 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class AppComponent{
-    title = 'Tuor of Heros';
+    title = 'Eventos';
 }

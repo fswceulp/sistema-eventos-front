@@ -1,23 +1,23 @@
-<div class="col-md-12">
+<div class="col-md-12 col-sm-12 col-lg-12">
     <div *ngIf="salvo" [ngClass]="'alert alert-success'"> Evento <strong>{{nomeEvento}}</strong>, Salvo com Sucesso. </div>
     <div *ngIf="error" [ngClass]="'alert alert-danger'"> Ops, houve um erro ao tentar Salvar Evento!</div>
-    <div class="col-md-7">
-        <h1 class="p-0">{{title}}</h1>
-    </div>
+    <h1 class="p-0">{{title}}</h1>
     <hr>
 </div>
 
 <div class="col-md-12 col-sm-12 col-lg-12">
-    <form>
+    <form #formCadastro="ngForm">
         <div class="row">
             <div class="col-md-9">
                 <label for="exampleInputEmail1">Título do Evento</label>
-                <input type="text" class="form-control" placeholder="Título do Evento" id="nome" name="nome" #nome="ngModel" [(ngModel)]="evento.nome"
-                    required minlength="20" maxlength="60">
+                <input type="text" class="form-control" placeholder="Título do Evento" id="nome" name="nome" #nome="ngModel" [(ngModel)]="evento.nome" #nome="ngModel"
+                    required minlength="5" maxlength="60" required>
+                    <div class="help-block-error" [hidden]="nome.valid || nome.pristine">x Você deve informar o nome do evento.</div>
             </div>
             <div class="col-md-3">
                 <label for="exampleInputEmail1">Sigla</label>
-                <input type="text" class="form-control" placeholder="Sigla do Evento" id="sigla" name="sigla" [(ngModel)]="evento.sigla">
+                <input type="text" class="form-control" placeholder="Sigla do Evento" id="sigla" name="sigla" [(ngModel)]="evento.sigla" #sigla="ngModel" required>
+                <div class="help-block-error" [hidden]="sigla.valid || sigla.pristine">x Você deve informar uma sigla para o evento.</div>
             </div>
         </div>
         <div class="row">
@@ -27,31 +27,40 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+             <div class="col-md-4">
+                <label for="exampleInputEmail1">Local</label>
+                <input type="text" class="form-control" id="local" name="local" [(ngModel)]="evento.local"  #local="ngModel" required>
+                <div class="help-block-error" [hidden]="local.valid || local.pristine">x Você deve Informar o Local.</div>
+            </div>
+            <div class="col-md-4">
                 <label for="exampleInputEmail1">Estado</label>
-                <select class="form-control" id="estadoId" name="estadoId" [(ngModel)]="evento.estadoId" (change)="getCidades($event.target.value)">
+                <select class="form-control" id="estadoId" name="estadoId" [(ngModel)]="evento.estadoId" (change)="getCidades($event.target.value)" #estadoId="ngModel" required>
                     <option> Selecione o Estado</option>
                     <option *ngFor="let estado of estados" value="{{estado.id}}" (click)="getCidades(estado.id)"> {{estado.nome}}</option>
                 </select>
+                <div class="help-block-error" [hidden]="estadoId.valid || estadoId.pristine">x Você deve Selecione o Estado.</div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="exampleInputEmail1">Cidade</label>
-                <select class="form-control" id="cidadeId" name="cidadeId" [(ngModel)]="evento.cidadeId" [disabled]="!evento.estadoId">
+                <select class="form-control" id="cidadeId" name="cidadeId" [(ngModel)]="evento.cidadeId" #cidadeId="ngModel" required>
                     <option> Selecione a Cidade</option>
                     <option *ngFor="let cidade of cidades" [ngValue]="cidade.id"> {{cidade.nome}}</option>
                 </select>
+                <div class="help-block-error" [hidden]="cidadeId.valid || cidadeId.pristine">x Você deve Selecione a Cidade.</div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
                 <label for="exampleInputEmail1">Data Início</label>
-                <input type="text" class="form-control" placeholder="Data Início" id="inicio" name="inicio" [(ngModel)]="evento.inicio">
+                <input type="text" class="form-control" placeholder="Data Início" id="inicio" name="inicio" [(ngModel)]="evento.inicio" #inicio="ngModel" required>
+                <div class="help-block-error" [hidden]="inicio.valid || inicio.pristine">x Você deve informar a data de inicio.</div>
             </div>
 
             <div class="col-md-3">
                 <label for="exampleInputEmail1">Data Término</label>
-                <input type="text" class="form-control" placeholder="Data Término" id="termino" name="termino" [(ngModel)]="evento.termino">
+                <input type="text" class="form-control" placeholder="Data Término" id="termino" name="termino" [(ngModel)]="evento.termino" #termino="ngModel" required>
+                <div class="help-block-error" [hidden]="termino.valid || termino.pristine">x Você deve informar a data de término.</div>
             </div>
 
             <div class="col-md-6">
@@ -61,23 +70,25 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <label for="exampleInputEmail1">Idealizador do Evento</label>
-                <select class="form-control" id="usuarioId" name="usuarioId" [(ngModel)]="evento.usuarioId">
-                    <option value=""> Selecione o Usuário</option>
-                    <option value="1"> Fulano</option>
-                    <option value="2"> Ciclano</option>
-                    <option value="3"> Beltrano</option>
-                </select>
+                <input type="hidden" class="form-control" id="usuarioId" name="usuarioId" [(ngModel)]="evento.usuarioId">
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-md-12">
-                <button *ngIf="evento.id" type="submit" class="btn btn-success" (click)="atualizar()">Atualizar</button>
-                <button *ngIf="!evento.id" type="submit" class="btn btn-success" (click)="salvar()">Adicionar</button>
-                <button *ngIf="!evento.id" type="button" class="btn btn-default" [routerLink]="['../']">Cancelar</button>
-                <button *ngIf="evento.id" type="button" class="btn btn-default" [routerLink]="['../../']">Cancelar</button>
+                <button *ngIf="evento.id" type="submit" class="btn btn-success" (click)="atualizar()" [disabled]="!formCadastro.form.valid">Atualizar</button>
+                <button *ngIf="!evento.id" type="submit" class="btn btn-success" (click)="salvar()" [disabled]="!formCadastro.form.valid">Adicionar</button>
+                <button *ngIf="!evento.id" type="button" class="btn btn-default" [routerLink]="['../']">Fechar</button>
+                <button *ngIf="evento.id" type="button" class="btn btn-default" [routerLink]="['../../']">Fechar</button>
             </div>
         </div>
     </form>
 </div>
+
+<app-dialog [(visible)]="showModal">
+    <h1>Acesso Negado</h1>
+    <p>Você não tem Permissão para acessar esse Evento. </p>
+    <button (click)="gotoEventos()" class="btn">OK</button>
+</app-dialog>
+
+<my-usuarios></my-usuarios>

@@ -9,7 +9,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventosGestaoComponent } from './admin/eventos/eventos.gestao.component';
 import { EventosComponent } from './admin/eventos/eventos.component';
-import { DialogComponent } from './dialog.component';
+import { ModalComponent } from './notificacoes/modal.component';
+import { UsuariosComponent } from './usuario/usuarios.component';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './restrito/auth.guard';
 
 @NgModule({
     imports: [
@@ -24,9 +28,12 @@ import { DialogComponent } from './dialog.component';
         AppComponent,
         EventosComponent,
         EventosGestaoComponent,
-        DialogComponent
+        ModalComponent,
+        UsuariosComponent,
+        LoginComponent,
+        PaginaNaoEncontradaComponent
     ],
-    providers: [],
+    providers: [AuthGuard],
     bootstrap:[AppComponent],
 })
 export class AppModule {}

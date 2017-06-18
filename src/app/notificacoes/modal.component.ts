@@ -3,8 +3,8 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 
 @Component({
   selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css'],
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.css'],
   animations: [
     trigger('dialog', [
       transition('void => *', [
@@ -17,7 +17,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ])
   ]
 })
-export class DialogComponent implements OnInit {
+export class ModalComponent implements OnInit {
   @Input() closable = true;
   @Input() visible: boolean;
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();

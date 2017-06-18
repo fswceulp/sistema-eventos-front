@@ -1,60 +1,89 @@
-<div class="rows">
-    <div class="col-md-12">
-        <div *ngIf="deletado" [ngClass] = "'alert alert-success'"> Evento, Excluído com Sucesso. </div>
-        <div *ngIf="error" [ngClass] = "'alert alert-danger'">  Ops, houve um erro ao tentar Realizar Operação Evento!</div> 
-        <div class="col-md-7 p-0">
+<div class="col-md-12">
+    <div *ngIf="deletado" [ngClass]="'alert alert-success'"> Evento, Excluído com Sucesso. </div>
+    <div *ngIf="error" [ngClass]="'alert alert-danger'"> Ops, houve um erro ao tentar Realizar Operação Evento!</div>
+    <div class="row">
+        <div class="col-md-7">
             <h1 class="p-0">{{title}}</h1>
         </div>
-        <div class="col-md-12 p-0">
+        <div class="col-md-5">
             <div class="bar-search">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" type="button" [routerLink]="['add']">+</button>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" [routerLink]="['add']">+ Add</button>
                         </span>
-                        <input  class="form-control" placeholder="Procurando for...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit">OK</button>
-                        </span>
-                    </div><!-- /input-group -->
+                    <input class="form-control" placeholder="Procurando for..." name="termo" [(ngModel)]="termo" (keyup)="getTermo($event)">
+                </div>
+                <!-- /input-group -->
             </div>
         </div>
-        <table class="table table-striped">
-            <thead>
+    </div>
+    <table class="table table-striped">
+        <thead>
             <tr>
                 <th>id</th>
                 <th width="30%">Nome</th>
                 <th>Sigla</th>
-                <th>Inicio</th>
-                <th>Término</th>
+                <th>Data</th>
                 <th>Realizador</th>
+                <th>Local</th>
                 <th>Cidade</th>
                 <th>Estado</th>
                 <th></th>
             </tr>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
             <tr *ngFor="let evento of eventos">
                 <td>{{evento.id}}</td>
                 <td>{{evento.nome}}</td>
                 <td>{{evento.sigla}}</td>
                 <td>{{evento.inicio}}</td>
-                <td>{{evento.termino}}</td>
                 <td>{{evento.usuario.nome}}</td>
+                <td>{{evento.local}}</td>
                 <td>{{evento.cidade.nome}}</td>
                 <td>{{evento.estado.uf}}</td>
-                <td>
-                    <button class="btn btn-info btn-sm" [routerLink]="['edit', evento.id]"> Editar</button>
-                    <button class="btn btn-danger btn-sm" data-toggle="modal" (click)="eventoSelecionado =  evento" (click)="showDialog = !showDialog"  data-target="#confirmarExclusao">Delete</button>
+                <td width="15%">
+                    <button class="btn btn-info btn-sm" [routerLink]="['edit', evento.id]"> <i class="fa fa-pencil-square"></i> Editar</button>
+                    <button class="btn btn-danger btn-sm" data-toggle="modal" (click)="eventoSelecionado =  evento" (click)="showDialog = !showDialog"
+                        data-target="#confirmarExclusao"><i class="fa fa-trash-o"></i> Delete</button>
                 </td>
             </tr>
-            </tbody>
-        </table>
+        </tbody>
+    </table>
+    <hr>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4">
+            <span class="d-inline resumoregistros">mostrando <strong>{{paginaAtual}}</strong> de <strong>{{paginaNumero}}</strong> páginas - total de <strong>{{totalRegistros}}</strong> registros</span>
+        </div>
+        <div class="col-md-8">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination d-flex justify-content-end">
+                    <li class="page-item"><a class="page-link" (click)="paginacaoPrimeira()">Primeira</a></li>
+                    <li class="page-item" [class.disabled]="paginaAtual == 1 ? true : null">
+                        <a class="page-link" aria-label="Previous" (click)="paginacaoAnterior()">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    </li>
+                    <li class="page-item" *ngFor="let item of paginaTotal">
+                        <a class="page-link" (click)="paginacaoNavegacao(item+1)">{{item+1}}</a>
+                    </li>
+                    <li class="page-item" [class.disabled]="paginaAtual >= paginaNumero ? true : null">
+                        <a class="page-link" aria-label="Next" (click)="paginacaoProxima()">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" (click)="paginacaoUltima()">Ultima</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
-
-<app-dialog [(visible)]="showDialog">
-  <h1>Excluir</h1>
-  <p>Deseja realmente excluir o evento: <strong>{{eventoSelecionado.nome}}</strong> ?</p>
-  <button (click)="showDialog = !showDialog" class="btn">Cancelar</button>
-  <button (click)="showDialog = !showDialog" (click)="deletar(eventoSelecionado)" class="btn btn-danger">Confirmar</button>
-</app-dialog>
+        <app-dialog [(visible)]="showDialog">
+            <h1>Excluir</h1>
+            <p>Deseja realmente excluir o evento: <strong>id #:{{eventoSelecionado.id}} - {{eventoSelecionado.nome}}</strong>?</p>
+            <button (click)="showDialog = !showDialog" class="btn">Cancelar</button>
+            <button (click)="showDialog = !showDialog" (click)="deletar(eventoSelecionado)" class="btn btn-danger">Confirmar</button>
+        </app-dialog>

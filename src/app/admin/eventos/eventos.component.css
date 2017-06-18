@@ -1,8 +1,20 @@
 .bar-search{
-    padding: 20px 0 0 0;
+    padding: 5px 0 0 0;
     float: right;
+    width: 100%;
 }
 
 .p-0{
     padding: 0 !important;
+}
+
+.btn, a{
+    cursor: pointer;
+}
+
+.resumoregistros{
+    color: grey;
+    font-style: italic;
+    font-size:14px;
+    padding: 5px 0; 
 }

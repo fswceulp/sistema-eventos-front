@@ -9,17 +9,34 @@ import { Evento } from './evento';
 
 @Injectable()
     export class EventoService{
+        private userLogado = JSON.parse(localStorage.getItem('currentUser'))[0];
         private eventos: Evento[] = [];
         private eventosUrl = 'http://localhost:3000/eventos';
 
         constructor(private http: Http){}
 
         getEventos(): Observable<Evento[]>{
-            const urlEventos = `${this.eventosUrl}?_expand=usuario&_expand=cidade&_expand=estado`;
+            if(this.userLogado.role === "administrador"){
+                var urlEventos = `${this.eventosUrl}?_expand=usuario&_expand=cidade&_expand=estado`;
+            }else if(this.userLogado.role === "realizador"){
+                var urlEventos = `${this.eventosUrl}?&_expand=usuario&_expand=cidade&_expand=estado&usuarioId=${this.userLogado.id}`;
+            }
             return this.http.get(urlEventos)
                 .map(this.extractData)
                 .catch(this.handleError);
         }
+
+        getEventosFiltro(q: string = null, paginaNumero: number=null): Observable<Evento[]>{
+            if(this.userLogado.role === "administrador"){
+                var urlEventos = `${this.eventosUrl}?q=${q}&_expand=usuario&_expand=cidade&_expand=estado&_page=${paginaNumero}&_limit=6`;
+            }else if(this.userLogado.role === "realizador"){
+                var urlEventos = `${this.eventosUrl}?q=${q}&_expand=usuario&_expand=cidade&_expand=estado&usuarioId=${this.userLogado.id}&_page=${paginaNumero}&_limit=6`;
+            }
+            return this.http.get(urlEventos)
+                .map(this.extractData)
+                .catch(this.handleError);
+        }
+
 
         getEvento(id: number): Observable<Evento>{
             const url = `${this.eventosUrl}/${id}`;
@@ -71,6 +88,15 @@ import { Evento } from './evento';
                 error.status ? `${error.status} - ${error.statusText}` : 'Server error';
             console.error(errMsg);
             return Observable.throw(errMsg);
+        }
+
+        isAutorizado(evento: Evento){
+            if(this.userLogado.role == "administrador"){
+                return true;
+            }else if(evento.usuarioId == this.userLogado.id){
+                return true;
+            }
+            return false;
         }
 
     }

@@ -2,51 +2,42 @@
   "eventos": [
     {
       "id": 1,
-      "nome": "XIX Congresso de Computação e Sistemas de Informação",
+      "nome": "XIX Congresso de Computação",
       "descricao": "XIX Congresso de Computação e Sistemas de Informação",
       "sigla": "ENCOINFO",
-      "inicio": "2017-05-15",
-      "termino": "2017-05-18",
+      "inicio": "15/05/2017",
+      "termino": "18/05/2017",
       "palavras_chave": "Centro Universitário Luterano de Palmas",
-      "cidadeId": 7,
-      "estadoId": "2",
-      "usuarioId": 1
+      "cidadeId": 8,
+      "estadoId": "4",
+      "usuarioId": 1,
+      "local": "Auditório Central"
     },
     {
       "id": 2,
-      "nome": "XIII Simpósio Brasileiro de Sistemas de Informação",
+      "nome": "XIII Simpósio de Sistemas de Informação",
       "descricao": "XIII Simpósio Brasileiro de Sistemas de Informação",
       "sigla": "SBSI",
-      "inicio": "2017-06-05",
-      "termino": "2017-06-08",
+      "inicio": "05/06/2017",
+      "termino": "07/06/2017",
       "palavras_chave": "Universidade Federal de Lavras",
-      "cidadeId": 9,
-      "estadoId": 5,
-      "usuarioId": 2
+      "cidadeId": 6,
+      "estadoId": "3",
+      "usuarioId": 2,
+      "local": "Auditório Central"
     },
     {
       "id": 3,
-      "nome": "XXXVII Congresso da Sociedade Brasileira de Computação",
+      "nome": "Congresso da Soci. Brasileira de Computação",
       "descricao": "XXXVII Congresso da Sociedade Brasileira de Computação",
       "sigla": "CSBC",
-      "inicio": "2017-07-02",
-      "termino": "2017-07-06",
+      "inicio": "02/07/2017",
+      "termino": "04/07/2017",
       "palavras_chave": "Universidade Presbiteriana Mackenzie",
       "cidadeId": 8,
       "estadoId": 4,
-      "usuarioId": 3
-    },
-    {
-      "nome": "Evento Teste Agora",
-      "sigla": "ETA",
-      "descricao": "Descrição do Evento Teste Agora",
-      "estadoId": 1,
-      "cidadeId": 1,
-      "inicio": "02/06/2017",
-      "termino": "06/06/2017",
-      "palavras_chave": "palavra 1, palavra 2, palavra 3, palavra 4",
-      "usuarioId": 2,
-      "id": 4
+      "usuarioId": 3,
+      "local": "Auditório"
     },
     {
       "nome": "Encoinfo 2017",
@@ -57,8 +48,74 @@
       "inicio": "06/06/2017",
       "termino": "08/06/2017",
       "palavras_chave": "teste1, teste2, teste3",
-      "usuarioId": "2",
-      "id": 5
+      "usuarioId": 2,
+      "id": 5,
+      "local": "Auditório"
+    },
+    {
+      "usuarioId": 1,
+      "nome": "Evento Teste Agora 2",
+      "sigla": "ETA",
+      "descricao": "Maecenas at arcu in sapien semper lobortis. Etiam ornare porta turpis, id commodo leo faucibus non. Donec volutpat velit vel pellentesque ultrices. Lorem ipsum dolor sit amet",
+      "estadoId": "1",
+      "cidadeId": 4,
+      "inicio": "20/07/2017",
+      "termino": "22/07/2017",
+      "palavras_chave": null,
+      "id": 8,
+      "local": "Auditório Central"
+    },
+    {
+      "usuarioId": 1,
+      "nome": "Evento Teste Hoje 2",
+      "sigla": "ETH2",
+      "descricao": "Descrição do Evento Teste Hoje 2",
+      "estadoId": "5",
+      "cidadeId": 9,
+      "inicio": "20/07/2017",
+      "termino": "22/07/2017",
+      "palavras_chave": "palavra teste 1",
+      "id": 10,
+      "local": "Hotel Palace"
+    },
+    {
+      "usuarioId": 1,
+      "nome": "Evento Teste Agora 3",
+      "sigla": "ETA",
+      "descricao": "Descrição do Evento Teste Agora 3",
+      "estadoId": "1",
+      "cidadeId": 4,
+      "inicio": "04/07/2017",
+      "termino": "06/07/2017",
+      "palavras_chave": "palavra1, palavra2 ....",
+      "id": 11,
+      "local": "Hotel Palace"
+    },
+    {
+      "usuarioId": 2,
+      "nome": "Evento Teste Agora 4",
+      "sigla": "ETA4",
+      "descricao": "Descrição do Evento Teste Agora 4",
+      "estadoId": "2",
+      "cidadeId": 7,
+      "inicio": "01/07/2017",
+      "termino": "05/07/2017",
+      "palavras_chave": "teste, teste1, teste 2 ",
+      "id": 12,
+      "local": "Clube"
+    },
+    {
+      "usuarioId": 1,
+      "nome": "Evento Teste agora com local",
+      "sigla": "ETAL",
+      "descricao": "Descrição do Evento Teste agora com local",
+      "local": "Labin I - Ulbra",
+      "estadoId": "1",
+      "cidadeId": 1,
+      "inicio": "07/07/2017",
+      "termino": "17/07/2017",
+      "palavras_chave": "teste 1, teste 2",
+      "id": 13
     }
   ],
   "estados": [
@@ -147,15 +204,24 @@
   "usuarios": [
     {
       "id": 1,
-      "nome": "Funlano de Tal"
+      "nome": "Adminstrador",
+      "role": "administrador",
+      "username": "administrador",
+      "password": "123456"
     },
     {
       "id": 2,
-      "nome": "Cliclano de Tal"
+      "nome": "Cliclano de Tal",
+      "role": "realizador",
+      "username": "usuario1",
+      "password": "123456"
     },
     {
       "id": 3,
-      "nome": "Beltrano de Tal"
+      "nome": "Beltrano de Tal",
+      "role": "realizador",
+      "username": "usuario2",
+      "password": "123456"
     }
   ]
 }
