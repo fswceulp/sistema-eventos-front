@@ -5,10 +5,12 @@ import { HomeComponent } from './home.component';
 import { AjudaComponent } from './ajuda.component';
 import { EstadosListaComponent } from './estados/estados-lista.component';
 import { EstadoCadastroComponent } from './estados/cadastro.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 const rotas: Routes = [
     {
         path: 'admin', component: AdminComponent, children: [
+            { path: 'perfil', component: PerfilComponent },
             { path: 'estados/cadastro', component: EstadoCadastroComponent },
             { path: 'estados', component: EstadosListaComponent },
             { path: 'ajuda', component: AjudaComponent },

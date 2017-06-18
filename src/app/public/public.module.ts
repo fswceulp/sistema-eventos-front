@@ -11,10 +11,6 @@ import { CadastroComponent } from './cadastro/cadastro.component';
 import { PublicRoutingModule } from './public-routing.module';
 import { LoginService } from '../usuario/autenticacao.service';
 import { UsuarioService } from '../usuario/usuario.service';
-import { PerfilComponent } from '../usuario/perfil/perfil.component';
-
-//Biblioteca que permite criar elementos editáveis
-import {InlineEditorModule} from '@qontu/ngx-inline-editor';
 
 @NgModule({
     imports: [
@@ -22,15 +18,13 @@ import {InlineEditorModule} from '@qontu/ngx-inline-editor';
         FormsModule,
         HttpModule,
         PublicRoutingModule,
-        InlineEditorModule
     ],
     declarations: [
         PublicComponent,
         HomeComponent,
         SobreComponent,
         CadastroComponent,
-        LoginComponent,
-        PerfilComponent
+        LoginComponent
     ],
     providers: [
         LoginService,

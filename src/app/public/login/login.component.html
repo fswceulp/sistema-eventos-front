@@ -7,7 +7,7 @@
 </div>
 
 <div class="col-md-6 jumbotron" id="form-login">
-    <div id="div-img">
+    <div id="div-img" *ngIf="usuario">
         <img [src]="pathLogo" id="img"/>
     </div>
     <form name="form" (ngSubmit)="onSubmit()" #form="ngForm" novalidate>

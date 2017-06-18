@@ -9,7 +9,7 @@ export class UsuarioService {
     headers = null;
     options = null;
 
-    private root: string = 'http://localhost:3000/usuarios';
+    private root: string = 'http://localhost:3000/pessoas';
 
     constructor(private http: Http) {
         this.headers = new Headers({ 'content-type': 'application/json' });
@@ -18,8 +18,7 @@ export class UsuarioService {
 
     save(email: string, senha: string) {
         try {
-
-            const usuario = { nome: email, senha: senha };
+            const usuario = { email: email, senha: senha };
             console.log(usuario);
             return this.http.post(this.root, JSON.stringify(usuario), this.options)
                 .map(response => response.json());

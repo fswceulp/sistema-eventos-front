@@ -10,20 +10,28 @@ import { AjudaComponent } from './ajuda.component';
 import { EstadosListaComponent } from './estados/estados-lista.component';
 import { EstadosService } from './estados/estados.service';
 import { EstadoCadastroComponent } from './estados/cadastro.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { CheckLogin } from '../usuario/checkLogin/checkLogin.component';
+
+//Biblioteca que permite criar elementos editáveis
+import {InlineEditorModule} from '@qontu/ngx-inline-editor';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        AdminRoutingModule
+        AdminRoutingModule,
+        InlineEditorModule
     ],
     declarations: [
         AdminComponent,
         HomeComponent,
         AjudaComponent,
         EstadosListaComponent,
-        EstadoCadastroComponent
+        EstadoCadastroComponent,
+        PerfilComponent, 
+        CheckLogin
     ],
     providers: [
         EstadosService

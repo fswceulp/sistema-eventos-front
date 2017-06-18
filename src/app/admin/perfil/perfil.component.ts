@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from '../Usuario';
+import { Usuario } from '../../usuario/Usuario';
+import { CheckLogin } from '../../usuario/checkLogin/checkLogin.component';
 
 @Component({
     templateUrl: 'perfil.component.html',
@@ -12,12 +13,12 @@ export class PerfilComponent implements OnInit {
     constructor(private router: Router) { }
 
     ngOnInit() { 
-        this.checkLogin();
+        this.fillUser();
     }
-    checkLogin(){
-        this.usuario = JSON.parse(sessionStorage.getItem('usuario'));
-        if(!this.usuario){
-            this.router.navigate(['/login']);
-        }
+    fillUser(){
+        let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+        this.usuario = usuario;
+        console.log(usuario);
+        console.log(usuario.email);
     }
 }

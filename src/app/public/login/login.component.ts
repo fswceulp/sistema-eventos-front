@@ -29,13 +29,11 @@ export class LoginComponent implements OnInit {
             .subscribe(
             data => {
                 if (data.length > 0) {
-                    if (data[0].nome == "admin") {
-                        this.router.navigate(['/admin']);
-                    }
-                    else {
-                        this.router.navigate(['/eventos']);
-                    }
+                    this.router.navigate(['/admin']);
                     let usuario = JSON.stringify(data[0]);
+                    console.log(usuario.slice(-1));
+                    usuario = usuario.slice(0, -1);
+                    usuario += `, "imgPerfil": "angular.png", "nome":"", "endereco": "", "telefone":""}`;
                     console.log(usuario);
                     sessionStorage.setItem('usuario', usuario);
                 }

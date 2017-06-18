@@ -5,8 +5,9 @@ export class Usuario{
     public senha:string;
     public endereco:string;
     public telefone:string;
+    public imgPerfil: string;
 
-    constructor(email?:string, senha?:string, nome?:string, endereco?:string, telefone?:string, id?:number){
+    constructor(email?:string, senha?:string, nome?:string, endereco?:string, telefone?:string, imgPerfil?: string, id?:number){
         if(email){
             this.email = email;
         }
@@ -22,6 +23,9 @@ export class Usuario{
         }
         if(telefone){
             this.telefone = telefone;
+        }
+        if(imgPerfil){
+            this.imgPerfil = imgPerfil;
         }
         if(id){
             this.id = id;

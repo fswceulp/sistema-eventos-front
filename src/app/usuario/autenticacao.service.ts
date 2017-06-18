@@ -9,7 +9,7 @@ export class LoginService {
     headers = null;
     options = null;
 
-    private root: string = 'http://localhost:3000/usuarios';
+    private root: string = 'http://localhost:3000/pessoas';
 
     constructor(private http: Http) {
         this.headers = new Headers({'content-type': 'application/json'});
@@ -18,7 +18,7 @@ export class LoginService {
 
     validaCredenciais(login: string, senha: string): Observable<Usuario[]>{
         try{
-            return this.http.get(this.root + '?nome='+ login +'&&senha=' + senha)
+            return this.http.get(this.root + '?email='+ login +'&&senha=' + senha)
             .map(response => response.json() as Usuario[]);
         }
         catch(ex){
