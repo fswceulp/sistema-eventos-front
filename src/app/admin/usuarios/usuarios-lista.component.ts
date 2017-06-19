@@ -12,6 +12,7 @@ export class UsuariosListaComponent implements OnInit {
     status: any;
     msgErro: any;
     idUsuario: number;
+    excluido: boolean=false;
     constructor(private usuariosService: UsuariosService, private router: Router) { }
 
     ngOnInit() {
