@@ -5,12 +5,12 @@ export class Artigo {
     public resumo: string;
     public palavraChave: string;
     public urlArtigo: string;
-	public idEvento: number;
+	public eventoId: number;
 	
-    constructor(id: number, titulo: string, autor: string, idEvento: number) {
+    constructor(id: number, titulo: string, autor: string, eventoId: number) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
-		this.idEvento = idEvento;
+		this.eventoId = eventoId;
     }
 }
