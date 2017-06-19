@@ -14,6 +14,10 @@ export class UsuarioCadastroComponent implements OnInit {
     status: any;
     msgErro: any;
     editaUsuario: any;
+    alertSave: boolean=false;
+    alertEdit: boolean=false;
+    edit: boolean=false;
+    novo: boolean=false;
     constructor(private UsuariosService: UsuariosService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
@@ -38,5 +42,9 @@ export class UsuarioCadastroComponent implements OnInit {
         this.UsuariosService.save(this.usuario).subscribe(
             usuario => this.status = true,
             erro => this.msgErro = erro);
+    }
+
+    voltar() {
+        this.router.navigate(['admin/usuarios']);
     }
 }

@@ -1,5 +1,17 @@
-<h1>Cadastro de usuários</h1>
+<h1 *ngIf="!idUsuario">Cadastrar novo usuário</h1>
+<h1 *ngIf="idUsuario">Alterar dados de usuário</h1>
+
+
 <h3>Formulário</h3>
+<button type="submit" class="btn btn-info opcoes fa fa-arrow-left btn-sm" (click)="voltar()"> Voltar</button><br><br>
+<div [hidden]="!alertSave" class="alert alert-success" role="alert">
+  <strong>Feito!</strong> Usuário salvo com sucesso.
+</div>
+
+<div [hidden]="!alertEdit" class="alert alert-success" role="alert">
+  <strong>Feito!</strong> Usuário alterado com sucesso.
+</div>
+
 <form class="form-horizontal" (ngSubmit)="onSubmit()" #formCadastro="ngForm">
   <div class="col-lg-6 form-group">
     <label for="nome" class="col-sm-2 control-label">Nome</label>
@@ -36,7 +48,7 @@
         placeholder="Telefone" required>
     </div>
   </div>
-</form><br><br>
+</form><br>
 
-<button type="submit" [disabled]="!formCadastro.form.valid" class="btn btn-primary" (click)="onSubmit()">Salvar</button><br><br>
-<button type="submit" [disabled]="!formCadastro.form.valid" class="btn btn-primary" (click)="edita()">Salvar Alterações</button><br><br>
+<button *ngIf="!idUsuario" type="submit" [disabled]="!formCadastro.form.valid" class="btn btn-primary" (click)="onSubmit(); alertSave=true; alertEdit=false; formCadastro.reset()">Salvar</button>
+<button *ngIf="idUsuario" type="submit" [disabled]="!formCadastro.form.valid" class="btn btn-primary" (click)="edita(); alertSave=false; alertEdit=true;">Salvar Alterações</button><br><br>
