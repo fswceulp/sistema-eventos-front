@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
                 if (data.length > 0) {
                     this.router.navigate(['/admin']);
                     let usuario = JSON.stringify(data[0]);
-                    console.log(usuario.slice(-1));
                     usuario = usuario.slice(0, -1);
                     usuario += `, "imgPerfil": "angular.png", "nome":"", "endereco": "", "telefone":""}`;
                     console.log(usuario);
