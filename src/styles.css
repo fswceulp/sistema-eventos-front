@@ -20,8 +20,16 @@ button.opcoes{
 }
 
 td.miniBiografia{
-    max-width: 448px;
+    max-width: 12em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+button.page-link:focus{
+    background-color: lightgrey;
+}
+
+table{
+    max-width: 100%;
 }

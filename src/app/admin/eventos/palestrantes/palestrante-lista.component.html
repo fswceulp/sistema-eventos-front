@@ -19,30 +19,30 @@
 
 <div class="input-group">
   <div class="input-group-btn">
-    <button type="button" class="btn btn-secondary" aria-haspopup="true" (click)="teste()" aria-expanded="false">
+    <button type="button" class="btn btn-secondary" aria-haspopup="true" aria-expanded="false">
       Filtro
     </button>
   </div>
-  <input type="text" class="form-control" aria-label="Text input with button">
+  <input type="text" id="filtro" class="form-control" aria-label="Text input with button" [(ngModel)]="filtro">
 </div>
 
-<table *ngIf="!(palestrantes == '')" class="table table-stripped">
+<table *ngIf="!(palestrantes == '')" class="table table-stripped table-hover table-responsive">
     <thead>
         <tr>
             <th>#</th>
-            <th>Nome <!-- <i class="fa fa-caret-down fa-1" (click)="getAllOrderByName()" aria-hidden="true"></i> --></th>
-            <th>Email <!-- <i class="fa fa-caret-down fa-1" (click)="getAllOrderByEmail()" aria-hidden="true"></i>--></th>
+            <th>Nome</th>
+            <th>Email</th>
             <th>Filiação</th>
             <th>Link Lattes</th>
             <th>Site</th>
             <th>Mini Biografia</th>
-            <th>Título da Palestra <!-- <i class="fa fa-caret-down fa-1" (click)="getAllOrderByTituloPalestra()" aria-hidden="true"></i>--></th>
+            <th>Título da Palestra</th>
             <th>Opções</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let palestrante of palestrantes">
-            <td>{{palestrante.id}}</td>
+        <tr *ngFor="let palestrante of filtrar()">
+            <td scope="row">{{palestrante.id}}</td>
             <td>{{palestrante.nome}}</td>
             <td>{{palestrante.email}}</td>
             <td>{{palestrante.filiacao}}</td>
@@ -58,7 +58,7 @@
     </tbody>
 </table>
 
-<nav aria-label="Paginacao" id="paginacao-palestrantes">
+<nav aria-label="Paginacao" *ngIf="!(palestrantes == '')" id="paginacao-palestrantes">
   <ul class="pagination">
     <li class="page-item">
       <button class="page-link" (click)="escolherPagina(0)" aria-label="Previous">
@@ -79,7 +79,7 @@
 
 <div *ngIf="(palestrantes == '')">
     <br/>
-    <h4>Não há palestrantes cadastrados para este evento</h4>
+    <h4>Não foram encontrados há palestrantes</h4>
 </div>
 
 <!-- Confirmar Exclusão -->

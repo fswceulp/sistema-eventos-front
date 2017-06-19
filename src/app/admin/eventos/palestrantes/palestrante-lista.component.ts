@@ -17,6 +17,8 @@ export class PalestranteListaComponent implements OnInit {
     msgErro: string = '';
     totalPaginas: any = [];
     numPaginas: any;
+    tabelaFiltrados: any;
+    filtro: string;
 
     constructor(private palestrantesService: PalestrantesService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
@@ -40,7 +42,7 @@ export class PalestranteListaComponent implements OnInit {
             palestrantes => {
                 this.numPaginas = palestrantes.length;
                 this.numPaginas = Math.ceil(this.numPaginas/5);
-                for(var i=0; i<this.numPaginas; i++)
+                for(var i=0; i < this.numPaginas; i++)
                     this.totalPaginas.push(i);
             },
             erro => this.msgErro = erro,
@@ -48,35 +50,28 @@ export class PalestranteListaComponent implements OnInit {
     }
     
     escolherPagina(numeroPagina: number){
-        console.log(this.numPaginas);
         this.palestrantesService.getAllByPage(numeroPagina+1, this.idEvento).subscribe(
             palestrantes => this.palestrantes = palestrantes,
             erro => this.msgErro = erro,
         );
     }
-    
-    getAllOrderByName(){
-        this.palestrantesService.getAllOrderByNome(this.idEvento)
-            .subscribe(
-            palestrantes => this.palestrantes = palestrantes,
-            erro => this.msgErro = erro
-            );
-    }
-    
-    getAllOrderByEmail(){
-        this.palestrantesService.getAllOrderByEmail(this.idEvento)
-            .subscribe(
-            palestrantes => this.palestrantes = palestrantes,
-            erro => this.msgErro = erro
-            );
-    }
-    
-    getAllOrderByTituloPalestra(){
-        this.palestrantesService.getAllOrderByTituloPalestra(this.idEvento)
-            .subscribe(
-            palestrantes => this.palestrantes = palestrantes,
-            erro => this.msgErro = erro
-            );
+
+    filtrar(){
+       if(this.palestrantes !== undefined){
+            if(this.palestrantes.length === 0 || this.filtro === undefined || this.filtro.trim() === ''){
+                return this.palestrantes;
+            }
+
+            return this.palestrantes.filter((v) => {
+                    if(v.nome.toLowerCase().indexOf(this.filtro.toLowerCase()) >=0 ||
+                     v.email.toLowerCase().indexOf(this.filtro.toLowerCase()) >= 0 ||
+                     v.filiacao.toLowerCase().indexOf(this.filtro.toLowerCase()) >= 0){
+                         return true;
+                    }
+                    return false;
+                });
+        }
+
     }
 
 
