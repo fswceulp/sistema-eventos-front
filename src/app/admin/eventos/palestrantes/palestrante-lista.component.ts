@@ -19,13 +19,16 @@ export class PalestranteListaComponent implements OnInit {
     numPaginas: any;
     tabelaFiltrados: any;
     filtro: string;
+    usuarioPermissao: boolean = false;
+    usuarioEvento: any;
 
     constructor(private palestrantesService: PalestrantesService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
-    ngOnInit() { 
+    ngOnInit() {
         // subscribe to router event
         this.activatedRoute.params.subscribe((params: Params) => {
             this.idEvento = params['id'];
+            this.verificaPermissaoUsuario();
         });
 
         this.palestrantesService.getAllByPage(1,this.idEvento).subscribe(
@@ -36,6 +39,33 @@ export class PalestranteListaComponent implements OnInit {
         this.paginar();
     }
 
+    verificaPermissaoUsuario(){
+
+        /*
+        * Simular que um usuário está logado
+        * userId: 1 para administrador do evento 1 (Neste estão os palestrantes), 
+        * userId: 1 para administrador do evento 2,
+        * userId: 2 para administrador do evento 3,
+        */
+        sessionStorage.setItem('usuario', JSON.stringify({
+            id: 1,
+            nome: "admin",
+            senha: "admin"
+        }));
+        
+        //Busca os dados do usuário logado no 
+        let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+
+        this.palestrantesService.verificaPermissaoUsuario(usuario.id, this.idEvento).subscribe(
+            usuarioEvento => {
+                this.usuarioEvento = usuarioEvento;
+                if(usuario !== null && this.usuarioEvento.length !== 0)
+                    this.usuarioPermissao = true;
+            },
+            erro => this.msgErro = erro,
+        );
+
+    }
     
     paginar(){
         this.palestrantesService.all(this.idEvento).subscribe(

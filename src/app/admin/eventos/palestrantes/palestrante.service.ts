@@ -30,25 +30,10 @@ export class PalestrantesService {
             
     }
 
-    getAllOrderByNome(idEvento: number): Observable<any[]> {
-        return this.http.get('http://localhost:3000/palestrantes?_sort=nome&eventoId='+ idEvento)
-            .map(response => response.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
-            
-    }
-
-    getAllOrderByEmail(idEvento: number): Observable<any[]> {
-        return this.http.get('http://localhost:3000/palestrantes?_sort=email&eventoId='+ idEvento)
-            .map(response => response.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
-            
-    }
-
-    getAllOrderByTituloPalestra(idEvento: number): Observable<any[]> {
-        return this.http.get('http://localhost:3000/palestrantes?_sort=palestra.nome&eventoId='+ idEvento)
-            .map(response => response.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
-            
+    verificaPermissaoUsuario(idUsuario: number, idEvento: number): Observable<any[]> {
+         return this.http.get('http://localhost:3000/eventos?idUsuario='+idUsuario+'&id='+idEvento)
+             .map(response => response.json())
+             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }
 
     getPalestranteById(idPalestrante: number): Observable<any> {

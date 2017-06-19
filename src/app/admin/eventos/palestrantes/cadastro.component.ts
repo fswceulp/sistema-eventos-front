@@ -16,6 +16,8 @@ export class PalestranteCadastroComponent implements OnInit {
     idPalestrante: number = null;
     status: boolean;
     msgErro: any = '';
+    usuarioPermissao: boolean = false;
+    usuarioEvento: any;
 
     constructor(private palestrantesService: PalestrantesService, private activatedRoute: ActivatedRoute
     , private router: Router) { }
@@ -24,12 +26,29 @@ export class PalestranteCadastroComponent implements OnInit {
          // subscribe to router event
         this.activatedRoute.params.subscribe((params: Params) => {
             this.idEvento = params['id'];
+            this.verificaPermissaoUsuario();
                 this.activatedRoute.params.subscribe((params: Params) => {
                     this.idPalestrante = params['idPalestrante'];
                     this.palestrantesService.getPalestranteById(this.idPalestrante).subscribe(
                         palestrante => this.palestrante = palestrante);
                 });
         });
+    }
+
+    verificaPermissaoUsuario(){
+
+        //Busca os dados do usuário logado no 
+        let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+
+        this.palestrantesService.verificaPermissaoUsuario(usuario.id, this.idEvento).subscribe(
+            usuarioEvento => {
+                this.usuarioEvento = usuarioEvento;
+                if(usuario !== null && this.usuarioEvento.length !== 0)
+                    this.usuarioPermissao = true;
+            },
+            erro => this.msgErro = erro,
+        );
+
     }
 
     save(){
