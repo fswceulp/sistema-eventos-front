@@ -1,0 +1,81 @@
+<h1>Programacoes</h1>
+
+<div *ngIf="!(programacoes == '')">
+
+    <div class="alert alert-success" *ngIf="status" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Sucesso!</strong>Programação EXCLUÍDA com sucesso.
+    </div>
+
+    <div class="row" style="float: right; display:-webkit-inline-box; margin-bottom: 8px;">
+        <button class="btn btn-primary opcoes" (click)="cadastrarProgramacao()"><span class="fa fa-plus" aria-hidden="true"></span></button>
+        <div class="col-lg-8">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Pesquisar Por...">
+                <span class="input-group-btn">
+            <button class="btn btn-default" type="button"><span class="fa fa-search" aria-hidden="true"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descricao</th>
+                <th>Local</th>
+                <th>Data/Hora Inicio</th>
+                <th>Data/Hora Termíno</th>
+                <th>Opcoes</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="programacoes">
+            <tr *ngFor="let p of programacoes">
+                <td> {{ p.nome }} </td>
+                <td> {{ p.descricao }} </td>
+                <td> {{ p.local }} </td>
+                <td> {{ p.datahorainicio }} </td>
+                <td> {{ p.datahoratermino }} </td>
+                <td>
+                    <div class="buttons" style="display: -webkit-inline-box;">
+                        <button (click)="programacaoSelecionada=p" type="button" class="btn btn-danger fa fa-trash-o" aria-hidden="true" data-toggle="modal"
+                            data-target="#exampleModal"></button>
+                        <button class="btn btn-warning opcoes" (click)="editarProgramacao(p);"><span class="fa fa-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-primary opcoes" (click)="visualizarProgramacao(p)"><span class="fa fa-eye" aria-hidden="true"></span></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="programacoes == '' ">
+    <br>
+    <h4>Não há PROGRAMAÇÕES cadastradas neste evento</h4>
+</div>
+
+<!-- Confirmar Exclusão -->
+<div *ngIf="programacaoSelecionada" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                Deseja realmente excluir a programacao <strong>{{programacaoSelecionada.nome}}</strong> ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" (click)="excluirProgramacao(programacaoSelecionada)" data-dismiss="modal">Confirmar Exclusão</button>
+            </div>
+        </div>
+    </div>
+</div>

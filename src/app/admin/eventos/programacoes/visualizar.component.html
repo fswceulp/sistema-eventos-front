@@ -1,0 +1,11 @@
+<h1>Detalhes da Programação</h1>
+
+<div class="jumbotron">
+    <h2>{{programacao.nome}}</h2>
+    <p>{{programacao.descricao}}</p>
+    <p>Data e Hora de Início: {{programacao.datahorainicio}}<p>
+    <p>Data e Hora de Termíno: {{programacao.datahoratermino}}<p>
+    <p>Local: {{programacao.local}}</p>  
+    <p *ngIf="programacao.artigo">Artigo: <strong>{{programacao.artigo.titulo}}</strong></p>
+    <p *ngIf="programacao.palestra">Palestra: <strong>{{programacao.palestra.tema}}</strong></p>
+</div>    

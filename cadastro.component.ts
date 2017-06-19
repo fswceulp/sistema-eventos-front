@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { EstadosService } from './estados.service';
+import { ProgramacoesService } from './programacoes.service';
 
 
 @Component({
     templateUrl: 'cadastro.component.html'
 })
-export class EstadoCadastroComponent implements OnInit {
-    constructor(private estadosService: EstadosService) { }
+export class ProgramacaoCadastroComponent implements OnInit {
+    constructor(private programacoesService: ProgramacoesService) { }
 
     ngOnInit() { }
 
     salvar() {
-        this.estadosService.save("Pará", "PA")
+        this.programacoesService.save("Pará", "PA")
             .subscribe(
                 estado => console.log(estado),
                 erro => console.log(erro));
