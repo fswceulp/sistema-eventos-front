@@ -2,18 +2,33 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { EventoManagerComponent } from './evento-manager.component';
+import { CidadesService } from './cidades.service';
+import { EstadosService } from './estados.service';
+import { AppRoutingModule } from './app-routing.module';
+import { PublicModule } from './public/public.module';
+import { AdminModule } from './admin/admin.module';
+import { EventosModule } from './eventos/eventos.module';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
-        HttpModule
+        HttpModule,
+        EventosModule,
+        AdminModule,
+        PublicModule,
+        AppRoutingModule
     ],
     declarations: [
         AppComponent,
-        EventoManagerComponent
+        PaginaNaoEncontradaComponent
+    ],
+    providers: [
+        CidadesService,
+        EstadosService
     ],
     bootstrap: [AppComponent]
 })

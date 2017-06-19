@@ -1,0 +1,59 @@
+<h1>Cidades</h1>
+<div *ngIf="!idCidade">
+    <h2>Cadastro de Cidades</h2>
+</div>
+
+<div *ngIf="idCidade">
+    <h2>Edição de Cidades</h2>
+</div>
+
+<button class="btn btn-info opcoes" style="margin-bottom: 8px;" (click)="voltar();"><i class="fa fa-arrow-left" aria-hidden="true"></i><b> Voltar</b></button>
+<br/>
+<br/>
+
+<!-- Mensagem de Sucesso -->
+<div class="alert alert-success alert-dismissible fade show" *ngIf="status" role="alert">
+  <button type="button" class="close" data-dismiss="alert" (click)="status=false" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <span *ngIf="!idCidade">
+    <strong>Sucesso!</strong> O cadastro do palestrante foi efetuado.
+  </span>
+  <span *ngIf="idCidade">
+    <strong>Sucesso!</strong> A atualização do palestrante foi efetuada.
+  </span>
+  
+</div>
+
+<!-- Mensagem de Erro -->
+<div class="alert alert-danger alert-dismissible fade show" *ngIf="msgErro!=''" role="alert">
+  <button type="button" class="close" data-dismiss="alert" (click)="msgErro=''" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Erro!</strong> {{msgErro}}.
+</div>
+
+<form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" class="form-control"
+            [(ngModel)]="cidade.nome" #nome="ngModel"
+            placeholder="Nome da Cidade" required>
+        <div class="alert alert-danger" [hidden]="nome.valid || nome.pristine">Você deve informar o nome da Cidade.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="estadoId">Estado</label>
+        <select id="estadoId" name="estadoId" class="form-control" [(ngModel)]="cidade.estadoId" #estadoId="ngModel" required>
+            <option value="">Selecione um Estado</option>
+            <option *ngFor="let estado of pegaEstados()" [value]="estado.id">
+                {{estado.nome}}
+            </option>
+        </select>
+        
+        <div class="alert alert-danger" [hidden]="estadoId.valid || estadoId.pristine">Você deve informar o id do estado.</div>
+    </div>
+    
+    <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
+    <button type="button" class="btn btn-default" (click)="preencherNova(); formCadastro.reset()">Novo</button>
+</form>

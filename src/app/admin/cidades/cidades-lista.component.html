@@ -1,0 +1,65 @@
+<header class="row">
+    <div class="col-md-8">
+        <h1>Cidades</h1> 
+    </div>
+    <div class="col-md-4">
+        <a class="nav-link" routerLink="cadastro/">
+            <button type="button" class="btn btn-primary">Novo</button>
+        </a>
+    </div>
+</header>
+
+<table class="table table-stripped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Cidade</th>
+            <th>idEstado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cidade of cidades">
+            <td *ngIf="cidade.id">{{cidade.id}}</td>
+            <td *ngIf="cidade.id">{{cidade.nome}}</td>
+            <td *ngIf="cidade.id">{{cidade.estado.nome}}</td>
+            <td *ngIf="cidade.id">
+                <button class="btn btn-warning" (click)="editarCidade(cidade)"><i class='glyphicon glyphicon-edit'></i></button>
+                <button class="btn btn-danger" (click)="clickExcluir(cidade)"><i class='glyphicon glyphicon-trash'></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<nav aria-label="Paginacao" id="paginacao-palestrantes">
+  <ul class="pagination">
+    <li class="page-item">
+      <button class="page-link" (click)="escolherPagina(0)" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </button>
+    </li>
+    <span *ngFor="let i of totalPaginas">
+      <li class="page-item"><button id="pagina-{{i+1}}" class="page-link" (click)="escolherPagina(i);">{{i+1}}</button></li>
+    </span>
+    <li class="page-item">
+      <button class="page-link" (click)="escolherPagina(this.numPaginas-1)" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Fim</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- Modal content-->
+<div class="modal-content" style="width: 40%;text-align: center; margin-top: -15%; margin-left: 20%;" [hidden]="!excluir">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="clickCancela()">&times;</button>
+        <h5 class="modal-title">Tem certeza que deseja confirmar a exclusão?</h5>
+    </div>
+    <div class="modal-body">
+        <p>Caso exclua, você não poderá recuperar a cidade.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="clickCancela()">Cancelar</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="clickConfirma()">Confirmar</button>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "nome": "XIX Congresso de Computação e Sistemas de Informação",
+        "sigla": "ENCOINFO",
+        "inicio": "2017-05-15",
+        "termino": "2017-05-18",
+        "local": "Centro Universitário Luterano de Palmas",
+        "cidade": "Palmas",
+        "estado": "TO",
+        "url": "http://ulbra-to.br/encoinfo"
+    },
+    {
+        "id": 2,
+        "nome": "XIII Simpósio Brasileiro de Sistemas de Informação",
+        "sigla": "SBSI",
+        "inicio": "2017-06-05",
+        "termino": "2017-06-08",
+        "local": "Universidade Federal de Lavras",
+        "cidade": "Lavras",
+        "estado": "MG", 
+        "url": "http://sbsi2017.dcc.ufla.br/"
+    },
+    {
+        "id": 3,
+        "nome": "XXXVII Congresso da Sociedade Brasileira de Computação",
+        "sigla": "CSBC",
+        "inicio": "2017-07-02",
+        "termino": "2017-07-06",
+        "local": "Universidade Presbiteriana Mackenzie",
+        "cidade": "São Paulo",
+        "estado": "SP", 
+        "url": "http://csbc2017.mackenzie.br/"
+    }
+]

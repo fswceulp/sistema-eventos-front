@@ -1,0 +1,22 @@
+[
+    {
+        "uf": "TO",
+        "nome": "Tocantins"
+    },
+    {
+        "uf": "GO",
+        "nome": "Goiás"
+    },
+    {
+        "uf": "MG",
+        "nome": "Minas Gerais"
+    },
+    {
+        "uf": "SP",
+        "nome": "São Paulo"
+    },
+    {
+        "uf": "RJ",
+        "nome": "Rio de Janeiro"
+    }
+]

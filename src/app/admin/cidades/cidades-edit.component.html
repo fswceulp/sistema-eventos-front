@@ -1,0 +1,26 @@
+<h1>Cidades</h1>
+
+<form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" class="form-control"
+            [(ngModel)]="cidade.nome" #nome="ngModel"
+            placeholder="Nome da Cidade" required>
+        <div class="alert alert-danger" [hidden]="nome.valid || nome.pristine">Você deve informar o nome da Cidade.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="estadoId">Estado</label>
+        <select id="estadoId" name="estadoId" class="form-control" [(ngModel)]="cidade.estadoId" #estadoId="ngModel" required>
+            <option value="">Selecione um Estado</option>
+            <option *ngFor="let estado of pegaEstados()" [value]="estado.id">
+                {{estado.nome}}
+            </option>
+        </select>
+        
+        <div class="alert alert-danger" [hidden]="estadoId.valid || estadoId.pristine">Você deve informar o id do estado.</div>
+    </div>
+    
+    <button type="submit" class="btn btn-success" [disabled]="!formCadastro.form.valid">Salvar</button>
+    <button type="button" class="btn btn-default" (click)="preencherNova(); formCadastro.reset()">Novo</button>
+</form>

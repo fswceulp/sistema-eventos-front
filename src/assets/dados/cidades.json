@@ -1,0 +1,38 @@
+[
+    {
+        "nome": "Palmas",
+        "uf": "TO"
+    },
+    {
+        "nome": "Paraíso do Tocantins",
+        "uf": "TO"
+    },
+    {
+        "nome": "Gurupi",
+        "uf": "TO"
+    },
+    {
+        "nome": "Araguaína",
+        "uf": "TO"
+    },
+    {
+        "nome": "Porto Nacional",
+        "uf": "TO"
+    },
+    {
+        "nome": "Belo Horizonte",
+        "uf": "MG"
+    },
+    {
+        "nome": "Goiânia",
+        "uf": "GO"
+    },
+    {
+        "nome": "São Paulo",
+        "uf": "SP"
+    },
+    {
+        "nome": "Rio de Janeiro",
+        "uf": "RJ"
+    }
+]
