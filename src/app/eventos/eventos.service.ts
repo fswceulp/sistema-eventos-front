@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Evento } from './Evento';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Evento } from './Evento';
+import { Artigo } from '../artigos/Artigo';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
@@ -15,20 +16,22 @@ export class EventosService {
         this.options = new RequestOptions({ headers: this.headers });
     }
 
-    all(): Observable<any[]> {
+	all(): Observable<any[]> {
         return this.http.get('http://localhost:3000/conferencias')
             .map(response => response.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }
-
-    find(id: number): Observable<Evento> {
-        return this.all()
-            .map(eventos => eventos.find(evento => evento.id === id));
+	
+	getEventoById(eventoId): Observable<Evento> {
+        return this.http.get('http://localhost:3000/conferencias/'+eventoId+'?_expand=cidade')
+            .map(response => response.json() as Evento)
+            .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }
 	
-	getArtigosByEvento(idEvento: number): Observable<any[]>{
-		return this.http.get('http://localhost:3000/artigos?idEvento=' + idEvento)
-            .map(response => response.json())
+	getArtigosByEvento(eventoId: number): Observable<any[]>{
+		return this.http.get('http://localhost:3000/artigos?eventoId=' + eventoId)
+            .map(response => response.json() as Artigo[])
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
 	}
+
 }

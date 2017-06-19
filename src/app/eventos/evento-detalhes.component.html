@@ -3,11 +3,13 @@
 	<hr>
 	<div class="jumbotron">
 		<h2>Sobre</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus ipsum vel lectus tincidunt vehicula. 
-		Sed mollis nisi ut tellus feugiat, nec scelerisque magna vulputate.
-		Phasellus tortor ipsum, blandit rutrum pretium non, imperdiet sed lectus.</p>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus ipsum vel lectus tincidunt vehicula.
+			Sed mollis nisi ut tellus feugiat, nec scelerisque magna vulputate.
+			Phasellus tortor ipsum, blandit rutrum pretium non, imperdiet sed lectus.
+		</p>
 		<p>De {{evento.inicio}} a {{evento.termino}}</p>
-		<p>{{evento.local}}, em {{evento.cidade}} - {{evento.estado}}</p>
+		<p>Local: {{evento.local}}, {{evento.cidade.nome}}</p>
 		<div class="row">
 			<h2>Programação - </h2>
 			<button class="btn btn-info botoes" (click)="detalhesProgramacao(evento)">Ver mais</button>

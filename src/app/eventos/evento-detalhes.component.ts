@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { EventosService } from './eventos.service';
 import { Evento } from './Evento';
 import { Artigo } from '../artigos/Artigo';
-import { EventosService } from './eventos.service';
 import 'rxjs/add/operator/switchMap';
 
 
@@ -12,9 +12,11 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class EventoDetalhesComponent implements OnInit {
-    evento: Evento;
-	artigos: any[];
-	idEvento: number;
+    evento: any;
+	artigos: Artigo[];
+	eventoId: number;
+	idCidade: number = null;
+	cidade: any;
 	
     constructor(
         private eventosService: EventosService,
@@ -22,19 +24,14 @@ export class EventoDetalhesComponent implements OnInit {
 		private router: Router) { }
 
     ngOnInit() {
-        this.route.params
-            .switchMap(params => {
-                let id: number = Number.parseInt(params['id']);
-				
-                return this.eventosService.find(id);
-            })
-            .subscribe(evento => this.evento = evento );
 		this.route.params.subscribe((params: Params) => {
-            this.idEvento = params['id'];
-		
+            this.eventoId = params['id'];
+			this.eventosService.getEventoById(this.eventoId)
+			.subscribe(evento => this.evento = evento);
         });
-		this.eventosService.getArtigosByEvento(this.idEvento).
-            subscribe(artigos => this.artigos = artigos);
+		
+		this.eventosService.getArtigosByEvento(this.eventoId)
+		.subscribe(artigos => this.artigos = artigos);
     }
 	
 	detalhesProgramacao(evento: Evento) {
