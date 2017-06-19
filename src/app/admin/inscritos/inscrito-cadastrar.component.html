@@ -9,8 +9,8 @@
     <div class="alert alert-danger" [hidden]="nome.valid || !nome.touched">Você deve informar o nome do inscrito.</div>
   </div>
   <div class="form-group">
-    <input type="text" id="email" name="email" class="form-control" [(ngModel)]="usuario.email" #nome="ngModel" placeholder="E-mail do inscrito" required>
-    <!--ERRO AQUI <div class="alert alert-danger" [hidden]="email.valid || !email.touched">Você deve informar o E-mail do inscrito.</div>-->
+    <input type="text" id="email" name="email" class="form-control" [(ngModel)]="usuario.email" #email="ngModel" placeholder="E-mail do inscrito" required>
+    <div class="alert alert-danger" [hidden]="email.valid || !email.touched">Você deve informar o E-mail do inscrito.</div>
   </div>
   <br>
   <hr>

@@ -2,18 +2,18 @@
 <hr>
 <h4>Editar inscritos</h4>
 <br>
-<form (ngSubmit)="alterar()" #formCadastro="ngForm">
+<form (ngSubmit)="alterar()" #formEditar="ngForm" *ngIf="usuario">
 
   <div class="form-group">
     <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="usuario.nome" #nome="ngModel" placeholder="Nome do inscrito" required>
     <div class="alert alert-danger" [hidden]="nome.valid || !nome.touched">Você deve informar o nome do inscrito.</div>
   </div>
   <div class="form-group">
-    <input type="text" id="email" name="email" class="form-control" [(ngModel)]="usuario.email" #nome="ngModel" placeholder="E-mail do inscrito" required>
-    <!--<div class="alert alert-danger" [hidden]="email.valid || !email.touched">Você deve informar o E-mail do inscrito.</div>-->
+    <input type="text" id="email" name="email" class="form-control" [(ngModel)]="usuario.email" #email="ngModel" placeholder="E-mail do inscrito" required>
+    <div class="alert alert-danger" [hidden]="email.valid || !email.touched">Você deve informar o E-mail do inscrito.</div>
   </div>
   <br>
   <hr>
-  <button class="btn btn-success" [disabled]="!formCadastro.form.valid" (click)="alterar();formCadastro.reset(); ">Salvar</button>
-  <button type="button" class="btn btn-danger" (click)="formCadastro.reset();cancelar()">Cancelar</button>
+  <button class="btn btn-success" [disabled]="!formEditar.form.valid" (click)="alterar();formEditar.reset(); ">Salvar</button>
+  <button type="button" class="btn btn-danger" (click)="formEditar.reset();cancelar()">Cancelar</button>
 </form>

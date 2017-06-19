@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http,Response,RequestOptions,Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/find';
@@ -7,8 +7,11 @@ import 'rxjs/add/operator/find';
 @Injectable()
 export class UsuariosService {
     private options = null;
+    private headers = null;
 
     constructor(private http: Http) {
+        this.headers = new Headers({ 'content-type': 'application/json' });
+        this.options = new RequestOptions({ headers: this.headers });
     }
 
     all(): Observable<any[]> {
@@ -30,7 +33,7 @@ export class UsuariosService {
 
     update(usuario: any) {
         const user = { id: usuario.id, nome: usuario.nome, email: usuario.email };
-        return this.http.put('http://localhost:3000/usuarios/' + usuario.id, JSON.stringify(user), this.options)
+        return this.http.patch('http://localhost:3000/usuarios/' + usuario.id, JSON.stringify(user), this.options)
             .map(response => response.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
     }

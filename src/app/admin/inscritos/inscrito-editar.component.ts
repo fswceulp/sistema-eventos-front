@@ -12,7 +12,7 @@ import { UsuariosService } from './usuario.service';
     templateUrl: 'inscrito-editar.component.html'
 })
 export class InscritoEditarComponent implements OnInit {
-    constructor(private usuariosService: UsuariosService,private inscritosService: InscritosService,private eventosService: EventosService,private router: Router,private route: ActivatedRoute) { }
+    constructor( private usuariosService: UsuariosService,private inscritosService: InscritosService,private eventosService: EventosService,private router: Router,private route: ActivatedRoute) { }
     evento: Evento;
     inscrito: any;
     usuario: Usuario = new Usuario(0,"","");
@@ -30,15 +30,15 @@ export class InscritoEditarComponent implements OnInit {
                 let id: number = Number.parseInt(params['idInsc']);
                 return this.inscritosService.find(id);
             })
-            .subscribe(inscrito => this.inscrito = inscrito);
+            .subscribe(inscrito => {this.inscrito = inscrito; this.usuario = this.inscrito.usuario});
     }
 
     alterar() {
         this.usuariosService.update(this.usuario)
             .subscribe(
-                inscrito => console.log(inscrito),
+                inscrito => {console.log(inscrito);this.cancelar();},
                 erro => console.log(erro));
-        this.cancelar();
+                
     }
 
     cancelar(){

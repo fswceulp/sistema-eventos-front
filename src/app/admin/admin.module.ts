@@ -43,7 +43,7 @@ import { UsuariosService } from './inscritos/usuario.service';
     providers: [
         UsuariosService,
         EstadosService,
-        InscritosService
+        InscritosService,
     ],
 })
 export class AdminModule { }

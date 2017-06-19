@@ -14,7 +14,7 @@ import { UsuariosService } from './usuario.service';
 export class InscritoCadastroComponent implements OnInit {
     constructor(private usuariosService: UsuariosService,private inscritosService: InscritosService,private eventosService: EventosService,private router: Router,private route: ActivatedRoute) { }
     evento: Evento = null;
-    usuario: Usuario = new Usuario(0,"leo","leo");
+    usuario: Usuario = new Usuario(0,"","");
     inscrito: any = {conferenciaId: 1,usuarioId: 3};
     user: Usuario = new Usuario(0,"","");
     status: any;
@@ -30,21 +30,32 @@ export class InscritoCadastroComponent implements OnInit {
     }
 
     salvar() {
-        //this.salvarUser(this.usuario);   
-        this.inscritosService.save(this.inscrito).subscribe(
-                    inscrito => this.status = true,
-                    erro => this.msgErro = erro );
-        this.cancelar();
+        this.salvarUser();
     }
 
-    salvarUser(usuario: any){
+    salvarUser(){
         console.log(this.usuario);
-        this.usuariosService.save(usuario).subscribe(
-                    usuario => this.status = true,
+        this.usuariosService.save(this.usuario).subscribe(
+                    usuario =>{ 
+                        this.status = true;
+                        this.user = usuario;
+                        console.log(this.user);
+                        this.salvarInsc()
+                    },
+                    erro => this.msgErro = erro );
+        
+    }
+
+    salvarInsc(){
+        this.inscrito.usuarioId = this.user.id;
+        this.inscrito.conferenciaId = this.evento.id;
+        console.log(this.inscrito);
+        this.inscritosService.save(this.inscrito).subscribe(
+                    inscrito => {console.log(inscrito);this.cancelar();},
                     erro => this.msgErro = erro );
     }
 
     cancelar(){
-            this.router.navigate(['/admin','eventos', this.evento.id]);
+            this.router.navigate(['/admin/eventos/'+this.evento.id]);
     }
 }
