@@ -43,39 +43,44 @@
         Formulário de cadastro/edição
     -->
     <form (ngSubmit)="save()" #formCadastro="ngForm">
-
-        <!-- Nome do Palestrante -->
-        <div class="form-group">
-            <label for="nome">Nome Completo</label>
-            <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="palestrante.nome" #nome="ngModel" placeholder="Nome do palestrante" required>
-            <div class="alert alert-danger" [hidden]="nome.valid || !nome.touched">Você deve informar o nome do palestrante.</div>
-        </div>  
-
-        <!--Email do Palestrante-->
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control" [(ngModel)]="palestrante.email" #email="ngModel" placeholder="Email do palestrante" required>
-            <div class="alert alert-danger" [hidden]="email.valid || !email.touched">Você deve informar o email do palestrante.</div>
+        <div class="row">
+            <!-- Nome do Palestrante -->
+            <div class="form-group col-lg-12 col-md-12">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" name="nome" class="form-control" [(ngModel)]="palestrante.nome" #nome="ngModel" placeholder="Nome do palestrante" required>
+                <div class="alert alert-danger" [hidden]="nome.valid || !nome.touched">Você deve informar o nome do palestrante.</div>
+            </div>  
         </div>
 
-        <!--Filiacao do Palestrante-->
-        <div class="form-group">
-            <label for="filiacao">Filiacao</label>
-            <input type="text" id="filiacao" name="filiacao" class="form-control" [(ngModel)]="palestrante.filiacao" #filiacao="ngModel" placeholder="Filiação do palestrante" required>
-            <div class="alert alert-danger" [hidden]="filiacao.valid || !filiacao.touched">Você deve informar a filiação do palestrante.</div>
+        <div class="row">
+            <!--Email do Palestrante-->
+            <div class="form-group col-lg-6 col-md-6">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" [(ngModel)]="palestrante.email" #email="ngModel" placeholder="Email do palestrante" required>
+                <div class="alert alert-danger" [hidden]="email.valid || !email.touched">Você deve informar o email do palestrante.</div>
+            </div>        
+
+            <!--Filiacao do Palestrante-->
+            <div class="form-group col-lg-6 col-md-6">
+                <label for="filiacao">Filiacao</label>
+                <input type="text" id="filiacao" name="filiacao" class="form-control" [(ngModel)]="palestrante.filiacao" #filiacao="ngModel" placeholder="Filiação do palestrante" required>
+                <div class="alert alert-danger" [hidden]="filiacao.valid || !filiacao.touched">Você deve informar a filiação do palestrante.</div>
+            </div>
         </div>
 
-        <!--Link para o Lattes-->
-        <div class="form-group">
-            <label for="linkLattes">Link para o curriculum Lattes</label>
-            <input type="url" id="linkLattes" name="linkLattes" class="form-control" [(ngModel)]="palestrante.linkLattes" #linkLattes="ngModel" placeholder="Link do Lattes" required>
-            <div class="alert alert-danger" [hidden]="linkLattes.valid || !linkLattes.touched">Você deve informar o link para o curriculum Lattes do palestrante.</div>
-        </div>
+        <div class="row">
+            <!--Link para o Lattes-->
+            <div class="form-group col-lg-6 col-md-6">
+                <label for="linkLattes">Link para o curriculum Lattes</label>
+                <input type="url" id="linkLattes" name="linkLattes" class="form-control" [(ngModel)]="palestrante.linkLattes" #linkLattes="ngModel" placeholder="Link do Lattes" required>
+                <div class="alert alert-danger" [hidden]="linkLattes.valid || !linkLattes.touched">Você deve informar o link para o curriculum Lattes do palestrante.</div>
+            </div>
 
-        <!--Link para o site do Palestrante-->
-        <div class="form-group">
-            <label for="site">Link para o site do Palestrante</label>
-            <input type="url" id="site" name="site" class="form-control" [(ngModel)]="palestrante.site" #site="ngModel" placeholder="Site do Palestrante">
+            <!--Link para o site do Palestrante-->
+            <div class="form-group col-lg-6 col-md-6">
+                <label for="site">Link para o site do Palestrante</label>
+                <input type="url" id="site" name="site" class="form-control" [(ngModel)]="palestrante.site" #site="ngModel" placeholder="Site do Palestrante">
+            </div>
         </div>
 
         <!--Mini Biografia do Palestrante-->
