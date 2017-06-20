@@ -1,4 +1,95 @@
-<h1>Estados</h1>
-<pre>
-    {{estados | async | json}}
-</pre>
+
+<div class="container">
+	<h1>Estados</h1>
+	
+	<div>
+		<form (ngSubmit)="atualizar()">
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" onkeydown="atualizar()" placeholder="Pesquisar por..." name="filtro" [(ngModel)]="filtro">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">
+							<i class="glyphicon glyphicon-search" style="font-size: 20px"></i>
+						</button>
+					</span>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<div *ngIf="filtro==''">
+	<div class="container" *ngIf="filtro==''">
+		<table class="table table-stripped">
+			<thead>
+				<tr>
+					<th>Sigla</th>
+					<th>Nome</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let estado of estados | slice:0:6">
+					<td>{{estado.uf}}</td>
+					<td>{{estado.nome}}</td>
+					<button type="button" class="btn btn-warning" (click)="estadoSelecionado=estado;telaEditar()"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+					<button class="btn btn-danger opcoes" (click)="estadoSelecionado = estado" data-toggle="modal" data-target="#confirmarExclusao"><i class="fa fa-trash-o"  aria-hidden="true"></i></button>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</div>
+	<br>
+	<div *ngIf="filtro!=''">
+	<div class="container">
+		<table class="table table-stripped">
+			<thead>
+				<tr>
+					<th>Sigla</th>
+					<th>Nome</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let estado of estados">
+					<td>{{estado.uf}}</td>
+					<td>{{estado.nome}}</td>
+					<button type="button" class="btn btn-warning" (click)="estadoSelecionado=estado;telaEditar()"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+					<button class="btn btn-danger opcoes" (click)="estadoSelecionado = estado" data-toggle="modal" data-target="#confirmarExclusao"><i class="fa fa-trash-o"  aria-hidden="true"></i></button>
+				</tr>
+			</tbody>
+		</table>
+
+		<!---->
+		
+	</div>
+	</div>
+	<div class="col-md-4">
+		<button class="btn btn-default navbar-btn"(click)="telaCadastro()">Novo</button>
+	</div>
+	<br>
+	<div >
+		<button class="btn btn-default navbar-btn " (click)="paginacao(n=n-1)">Older<span aria-hidden="true">&laquo;</span></button>
+		<button class="btn btn-default navbar-btn " (click)="paginacao(n=n+1)"><span aria-hidden="true">&raquo;</span>Newer</button>
+	</div>
+
+
+<div *ngIf="estadoSelecionado" class="modal fade" id="confirmarExclusao" tabindex="-1" role="dialog" aria-labelledby="confirmarExclusaoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmarExclusaoLabel">Confirmar Exclusão</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Deseja realmente excluir o estado <strong>{{estadoSelecionado.nome}}</strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+        <button type="button" class="btn btn-primary" (click)="excluirEstado(estadoSelecionado);"  data-dismiss="modal">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>

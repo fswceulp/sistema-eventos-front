@@ -1,0 +1,83 @@
+<div class="container">
+	<h2>Cadastro de eventos</h2>
+    <form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
+
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" class="form-control"
+            [(ngModel)]="evento.nome" #nome="ngModel"
+            placeholder="Nome do evento" required>
+        <div class="alert alert-danger" [hidden]="nome.valid || nome.pristine">Você deve informar o nome do evento.</div>
+    </div>
+	
+	<div class="form-group">
+        <label for="sigla">Sigla</label>
+        <input type="text" id="sigla" name="sigla" class="form-control"
+            [(ngModel)]="evento.sigla" #sigla="ngModel"
+            placeholder="Sigla do evento" required>
+        <div class="alert alert-danger" [hidden]="sigla.valid || sigla.pristine">Você deve informar a sigla do evento.</div>
+    </div>
+	
+	<div class="form-group">
+        <label for="inicio">Início</label>
+        <input type="text" id="inicio" name="inicio" class="form-control"
+            [(ngModel)]="evento.inicio" #inicio="ngModel"
+            placeholder="Data de início do evento" required>
+        <div class="alert alert-danger" [hidden]="inicio.valid || inicio.pristine">Você deve informar a data de início do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="termino">Término</label>
+        <input type="text" id="termino" name="termino" class="form-control"
+            [(ngModel)]="evento.termino" #termino="ngModel"
+            placeholder="Data de término do evento" required>
+        <div class="alert alert-danger" [hidden]="termino.valid || termino.pristine">Você deve informar a data de término do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="url">Url</label>
+        <input type="text" id="url" name="url" class="form-control"
+            [(ngModel)]="evento.url" #url="ngModel"
+            placeholder="Url do evento" required>
+        <div class="alert alert-danger" [hidden]="url.valid || url.pristine">Você deve informar a url do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" class="form-control"
+            [(ngModel)]="evento.cidade" #cidade="ngModel"
+            placeholder="Cidade do evento" required>
+        <div class="alert alert-danger" [hidden]="cidade.valid || cidade.pristine">Você deve informar a cidade do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <input type="text" id="estado" name="estado" class="form-control"
+            [(ngModel)]="evento.estado" #estado="ngModel"
+            placeholder="Estado do evento" required>
+        <div class="alert alert-danger" [hidden]="estado.valid || estado.pristine">Você deve informar o estado do evento.</div>
+    </div>
+
+    <div class="form-group">
+        <label for="local">Local</label>
+        <input type="text" id="local" name="local" class="form-control"
+            [(ngModel)]="evento.local" #local="ngModel"
+            placeholder="Local do evento" required>
+        <div class="alert alert-danger" [hidden]="local.valid || local.pristine">Você deve informar o local do evento.</div>
+    </div>
+	
+    <button type="submit" class="btn btn-default" [disabled]="!formCadastro.form.valid">Salvar</button>
+	
+    <button type="button" class="btn btn-default" (click)="novoEvento(); formCadastro.reset()">Novo</button>
+	
+	<button class="btn btn-primary"(click)="telaEventos()">Sair</button>
+    </form>
+</div>
+
+<!---
+
+
+    
+
+    
+--->

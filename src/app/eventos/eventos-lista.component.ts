@@ -22,4 +22,10 @@ export class EventosListaComponent implements OnInit {
     mostrarDetalhes(evento: Evento) {
         this.router.navigate(['/eventos', evento.id]);
     }
+	telaHome() {
+        this.router.navigate(['/']);
+    }
+	telaCadastro() {
+        this.router.navigate(['/eventos/cadastro']);
+    }
 }

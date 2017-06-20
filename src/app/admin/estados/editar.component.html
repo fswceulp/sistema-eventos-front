@@ -1,6 +1,6 @@
 <div class="container">
 	<form (ngSubmit)="onSubmit()" #formCadastro="ngForm">
-		<h1>Cadastro de estados</h1>
+		<h1>Editar Estado</h1>
 		<div class="form-group">
 			<label for="nome">Nome</label>
 			<input type="text" id="nome" name="nome" class="form-control"
@@ -17,7 +17,6 @@
 			<div class="alert alert-danger" [hidden]="uf.valid || uf.pristine">Você deve informar a uf do estado.</div>
 		</div>
 		<button type="submit" class="btn btn-default" [disabled]="!formCadastro.form.valid">Salvar</button>
-		<button class="btn btn-default"(click)="telaHome()">Sair</button>
+		<button class="btn btn-default"(click)="telaHome()">Cancelar</button>
 	</form>
-	
 </div>

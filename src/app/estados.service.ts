@@ -12,4 +12,5 @@ export class EstadosService {
         return this.http.get('assets/dados/estados.json')
             .map(response => response.json());
     }
+
 }

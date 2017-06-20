@@ -19,7 +19,7 @@ import { EventosService } from './eventos.service';
     declarations: [
         EventosHomeComponent,
         EventoDetalhesComponent,
-        EventosListaComponent,
+        EventosListaComponent
     ],
     providers: [
         EventosService

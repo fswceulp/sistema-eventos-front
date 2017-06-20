@@ -1,3 +1,4 @@
+<div class="container">
 <div *ngIf="evento">
     <h1>{{evento.sigla}} - {{evento.nome}}</h1>
     <p>{{evento.inicio}} a {{evento.termino}}</p>
@@ -10,4 +11,28 @@
     <p>O evento que você procura não pode ser encontrado. Veja a 
         <a routerLink="/eventos">lista dos eventos</a>.
     </p>
+</div>
+<button class="btn btn-primary"(click)="telaEventos()">Sair</button>
+
+
+<div *ngIf="evento" class="panel panel-default">
+		<div class="panel-heading">
+			<div class="panel-body">
+				<h3>Artigos do evento: {{evento.nome}}</h3>
+			</div>
+			<table class="table" style="width:100%">
+				<tr  *ngFor="let artigo of getArtigos(evento.id)">
+					<td > 
+						<a href="#" class="list-group-item" (click)="descricao=true;descricaoArtigo=false">{{artigo.titulo}} </a>
+					</td>
+					<td>
+						<button class="btn btn-primary"
+						(click)="detalhesTalhes(artigo)">Detalhes</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<button type="button" class="btn btn-default" (click)="tela();descricao=true;eventoSelecionado=null">Sair</button>
 </div>

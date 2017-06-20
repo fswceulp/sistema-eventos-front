@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Headers } from '@angular/http';
+import { Http, RequestOptions,Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { Estado } from './Estado';
+
 
 @Injectable()
 export class EstadosService {
@@ -18,6 +20,16 @@ export class EstadosService {
         return this.http.get('http://localhost:3000/estados')
             .map(response => response.json());
     }
+	
+	pagina(pagina:String): Observable<any[]> {
+        return this.http.get('http://localhost:3000/estados'+pagina)
+            .map(response => response.json());
+    }
+	
+	getEstados(filtro: string) : Observable<Estado[]> {
+        return this.http.get('http://localhost:3000/estados'+'?q=' + filtro)
+            .map(response => response.json());
+	}
 
     save(nome: string, uf: string) {
         const estado = { nome: nome, uf: uf };
@@ -37,6 +49,9 @@ export class EstadosService {
         return this.http.delete('http://localhost:3000/estados/' + id, this.options)
             .map(response => response.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Erro ao conectar ao servidor.'));
-    }    
-    
+    }  
+	
+    find(id: number): Observable<Estado> {
+        return this.all().map(estados => estados.find(estado => estado.id === id));
+    }
 }

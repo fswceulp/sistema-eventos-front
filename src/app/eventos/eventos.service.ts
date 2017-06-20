@@ -19,4 +19,8 @@ export class EventosService {
         return this.all()
             .map(eventos => eventos.find(evento => evento.id === id));
     }
+	allArtigos(): Observable<any[]> {
+        return this.http.get('http://localhost:3000/artigos')
+            .map(response => response.json());
+    }
 }

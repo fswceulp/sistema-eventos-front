@@ -11,6 +11,8 @@ import { PublicModule } from './public/public.module';
 import { AdminModule } from './admin/admin.module';
 import { EventosModule } from './eventos/eventos.module';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
     imports: [
@@ -20,11 +22,12 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
         EventosModule,
         AdminModule,
         PublicModule,
-        AppRoutingModule
+        AppRoutingModule,
+		NgbModule.forRoot(),
     ],
     declarations: [
         AppComponent,
-        PaginaNaoEncontradaComponent
+        PaginaNaoEncontradaComponent,
     ],
     providers: [
         CidadesService,

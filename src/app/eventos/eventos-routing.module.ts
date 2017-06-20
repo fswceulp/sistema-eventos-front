@@ -4,16 +4,14 @@ import { EventosHomeComponent } from './eventos-home.component';
 import { EventosListaComponent } from './eventos-lista.component';
 import { EventoDetalhesComponent } from './evento-detalhes.component';
 
+
 const rotas: Routes = [
     {
-        path: 'eventos',
-        component: EventosHomeComponent,
-        children: [
+        path: 'eventos', component: EventosHomeComponent, children: [
             { path: ':id', component: EventoDetalhesComponent },
-            { path: '', component: EventosListaComponent },
+            { path: '', component: EventosListaComponent }
         ]
     },
-
 ];
 
 @NgModule({
