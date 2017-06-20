@@ -17,8 +17,8 @@ export class PalestranteListaComponent implements OnInit {
     msgErro: string = '';
     totalPaginas: any = [];
     numPaginas: any;
-    tabelaFiltrados: any;
-    filtro: string;
+    palestrantesFiltrados: any;
+    filtro: string = '';
     usuarioPermissao: boolean = false;
     usuarioEvento: any;
 
@@ -37,6 +37,7 @@ export class PalestranteListaComponent implements OnInit {
         );
 
         this.paginar();
+        this.filtrar();
     }
 
     verificaPermissaoUsuario(){
@@ -87,19 +88,25 @@ export class PalestranteListaComponent implements OnInit {
     }
 
     filtrar(){
-       if(this.palestrantes !== undefined){
-            if(this.palestrantes.length === 0 || this.filtro === undefined || this.filtro.trim() === ''){
-                return this.palestrantes;
-            }
+        if(this.filtro === undefined || this.filtro === ''){
+            this.filtro = '';
+            this.palestrantesService.all(this.idEvento).subscribe(
+                palestrantes => this.palestrantesFiltrados = palestrantes
+            );
 
-            return this.palestrantes.filter((v) => {
+            return this.palestrantesFiltrados;
+        }
+        else{
+           if(this.palestrantesFiltrados !== undefined){     
+                return this.palestrantesFiltrados.filter((v) => {
                     if(v.nome.toLowerCase().indexOf(this.filtro.toLowerCase()) >=0 ||
-                     v.email.toLowerCase().indexOf(this.filtro.toLowerCase()) >= 0 ||
-                     v.filiacao.toLowerCase().indexOf(this.filtro.toLowerCase()) >= 0){
-                         return true;
+                        v.email.toLowerCase().indexOf(this.filtro.toLowerCase()) >= 0 ||
+                        v.filiacao.toLowerCase().indexOf(this.filtro.toLowerCase()) >= 0){
+                            return true;
                     }
                     return false;
                 });
+           }
         }
 
     }

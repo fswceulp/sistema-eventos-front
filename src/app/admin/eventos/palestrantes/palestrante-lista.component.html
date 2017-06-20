@@ -30,10 +30,10 @@
         Filtro
       </button>
     </div>
-    <input type="text" id="filtro" class="form-control" aria-label="Text input with button" [(ngModel)]="filtro">
+    <input type="text" id="filtro" class="form-control" aria-label="Text input with button" [(ngModel)]="filtro" (keyup)="filtrar()">
   </div>
 
-  <table *ngIf="!(palestrantes == '')" class="table table-stripped table-hover table-responsive">
+  <table *ngIf="!(palestrantes == '')" class="table table-stripped table-hover">
       <thead>
           <tr>
               <th>#</th>
@@ -47,7 +47,23 @@
               <th>Opções</th>
           </tr>
       </thead>
-      <tbody>
+      <tbody class="col-lg-12" *ngIf="!filtro">
+          <tr *ngFor="let palestrante of palestrantes">
+              <td scope="row">{{palestrante.id}}</td>
+              <td>{{palestrante.nome}}</td>
+              <td>{{palestrante.email}}</td>
+              <td>{{palestrante.filiacao}}</td>
+              <td>{{palestrante.linkLattes}}</td>
+              <td>{{palestrante.site}}</td>
+              <td class="miniBiografia">{{palestrante.miniBiografia}}</td>  
+              <td>{{palestrante.palestra.nome}}</td>
+              <td id="opcoes">
+                  <button class="btn btn-warning opcoes" (click)="editarPalestrante(palestrante);"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                  <button class="btn btn-danger opcoes" (click)="palestranteSelecionado = palestrante" data-toggle="modal" data-target="#confirmarExclusao"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              </td>
+          </tr>
+      </tbody>
+      <tbody class="col-lg-12" *ngIf="filtro">
           <tr *ngFor="let palestrante of filtrar()">
               <td scope="row">{{palestrante.id}}</td>
               <td>{{palestrante.nome}}</td>
@@ -65,6 +81,7 @@
       </tbody>
   </table>
 
+  <span *ngIf="filtro === ''">
   <nav aria-label="Paginacao" *ngIf="!(palestrantes == '')" id="paginacao-palestrantes">
     <ul class="pagination">
       <li class="page-item">
@@ -83,6 +100,7 @@
       </li>
     </ul>
   </nav>
+  </span>
 
   <div *ngIf="(palestrantes == '')">
       <br/>
